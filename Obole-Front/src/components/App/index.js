@@ -3,7 +3,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 // == Import
-import reactLogo from './react-logo.svg';
 import './styles.css';
 
 // == Composant
