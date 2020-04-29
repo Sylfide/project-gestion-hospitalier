@@ -8,7 +8,7 @@ const app = express();
 
 app.use(cors());
 
-app.use(express.urlencoded({entended: true}));
+app.use(express.urlencoded({extended: true}));
 
 const router = require('./app/router');
 app.use(router);
