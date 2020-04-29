@@ -1,30 +1,34 @@
 // == Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+
+import { } from 'src/store/actions';
 
 // Styles
 import './styles.scss';
 
-// == Import Components
-import Menu from 'src/components/Menu';
-import Activity from 'src/components/Activity';
+// == Import
 
 
 // == Composant
-const App = () => {
+const Activity = () => {
   const dispatch = useDispatch();
   const clickCount = useSelector((state) => state.counter);
 
   return (
-    <div id = "layout" >
-      <Menu />
-      <div>
-        <p>fifoufoui</p>
-      </div>
-      <Activity />
+    <div id="activity">
+      <ul>
+        <li>
+          CH_1
+        </li>
+        <li>
+          CH_2
+        </li>
+      </ul>
     </div>
   );
 };
 
 // == Export
-export default App;
+export default Activity;
