@@ -1,3 +1,4 @@
+
 const moment=require('moment');
 
 const pg=require('pg');
@@ -33,7 +34,7 @@ const dbConfig = {
     }
   };
  
-
+  
   await client.query('TRUNCATE TABLE deceased CASCADE');
   await client.query('TRUNCATE TABLE "user"');
   await client.query('TRUNCATE TABLE embalmer CASCADE');
