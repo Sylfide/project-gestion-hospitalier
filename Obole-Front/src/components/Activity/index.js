@@ -18,14 +18,28 @@ const Activity = () => {
 
   return (
     <div id="activity">
-      <ul>
-        <li>
-          CH_1
-        </li>
-        <li>
-          CH_2
-        </li>
-      </ul>
+      <div className="room">
+        <p className="name">chambre A</p>
+        <div className="count">
+          <p className="free">5</p>
+          <p className="capacity">40</p>
+        </div>
+      </div>
+      <div className="room">
+        <p className="name">chambre B</p>
+        <div className="count">
+          <p className="free">5</p>
+          <p className="capacity">40</p>
+        </div>
+      </div>
+      <div className="room">
+        <p className="name">chambre C</p>
+        <div className="count">
+          <p className="free">5</p>
+          <p className="capacity">40</p>
+        </div>
+      </div>
+
     </div>
   );
 };
