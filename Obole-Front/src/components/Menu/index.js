@@ -15,9 +15,9 @@ const Menu = () => {
   const clickCount = useSelector((state) => state.counter);
 
   return (
-    <nav>
+    <div id="menu">
       <img src={logo} />
-      <div>
+      <nav>
         <a href="">
         <p>chambres</p>
         </a>
@@ -37,8 +37,8 @@ const Menu = () => {
         <a href="">
         <p>thanatopracteurs</p>
         </a>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 };
 

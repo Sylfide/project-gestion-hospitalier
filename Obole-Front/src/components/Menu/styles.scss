@@ -1,5 +1,30 @@
-nav {
+#menu {
   height: 100vh;
-  background-color: tomato;
+  display: grid;
+  grid-template-rows: 200px 1fr;
+  justify-items: center;
+  align-items: flex-start;
+  background-color: #DFE6ED;
   text-align: center;
+  text-transform: capitalize;
+
+  img {
+    align-self: center;
+    height: 60px;
+  }
+
+  nav {
+
+    a {
+      display: block;
+      width: 100%;
+      margin: 5px 0;
+      padding: 5px 20px;
+  
+      &:hover {
+        background-color: unset;
+      }
+    }
+  }
+
 }
