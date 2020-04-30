@@ -1,12 +1,12 @@
 // ==> Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
-// import { LOGIN } from 'src/store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { LOGIN } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 
 // ==> Styles
 import logo from 'src/assets/img/logo-obole.svg';
@@ -44,21 +44,26 @@ const validateMessages = {
 
 // ==> Composant
 const LoginForm = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
-  // const history = useHistory();
+  const history = useHistory();
+
+  const [form] = Form.useForm();
+  const onReset = () => {
+    form.resetFields();
+  };
 
   return (
     <Container>
       <img alt="logo" src={logo} />
       <Form
+        form={form}
         size="large"
         name="normal_login"
         className="login-form"
         validateMessages={validateMessages}
         onFinish={(values) => {
-          console.log('values: ', values);
-          // dispatch({ type: LOGIN, history, values });
+          dispatch({ type: LOGIN, history, values });
         }}
       >
         <Form.Item
@@ -83,9 +88,18 @@ const LoginForm = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="login-form-button">
-            Log in
-          </Button>
+          <Row>
+            <Col flex={1}>
+              <Button type="primary" htmlType="submit" className="login-form-button">
+                Log in
+              </Button>
+            </Col>
+            <Col flex={1}>
+              <Button htmlType="button" onClick={onReset}>
+                Reset
+              </Button>
+            </Col>
+          </Row>
         </Form.Item>
       </Form>
     </Container>

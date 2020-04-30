@@ -1,4 +1,4 @@
-import  { applyMiddleware } from 'redux';
+import { applyMiddleware } from 'redux';
 
 import authMW from './auth';
 import routesMW from './routes';
