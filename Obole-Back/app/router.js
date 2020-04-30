@@ -23,6 +23,9 @@ router.post('/connection',mainController.connection);
 
 //routes pour les rooms 
 router.post('/room/new',adminAuthentified,roomController.addRoom);
+router.post('/room/modify/:id',adminAuthentified,roomController.modifyRoom);
+router.get('/room/list',adminAuthentified,roomController.listRooms);
+router.post('/room/details/:id',adminAuthentified,roomController.seeRoom)
 
 // traitement 404
 router.use( (req, res) => {res.status(404).render('404')});
