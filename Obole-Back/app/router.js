@@ -9,10 +9,13 @@ const userController = require('./controllers/userController');
 // les routes
 router.get('/', mainController.homePage);
 
-// routes pour les users
-router.get('/user/list', userController.allUsers);
+// routes pour les admins / gestion des users
+router.get('/admin/user/list', userController.allUsers);
+router.post('/admin/user/new', userController.newUser);
+
+// routes profil
 router.get('/user/:id', userController.oneUser);
-router.post('/user/new', userController.newUser);
+router.patch('/user/:id', userController.updateUser);
 
 // traitement 404
 router.use( (req, res) => {res.status(404).send('404')});

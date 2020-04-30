@@ -7,7 +7,7 @@ const userController = {
          
         try {
             const users = await dataMapper.getAllUsers();
-            console.log(users);
+            // console.log(users);
 
             res.send(users);
         } catch(err){
@@ -32,7 +32,7 @@ const userController = {
     },
 
     newUser: async (req, res) => {
-        console.log(req.body);
+        // console.log(req.body);
         if (!req.body.firstname || !req.body.lastname || !req.body.role || !req.body.email || !req.body.password) {
             return res.send('Veuillez remplir tous les champs');
         }
@@ -40,9 +40,27 @@ const userController = {
         try {
             let token=uid2(64);
 
-            await dataMapper.addUser(req.body, token);
+            let result = await dataMapper.addUser(req.body, token);
+            console.log(result);
 
-            res.redirect('/user/list');
+            if (result = 'Cet utilisateur existe déjà') {
+                res.send(result);
+            } else {
+                res.redirect('/admin/user/list');
+            }
+
+        } catch(err) {
+            console.trace(err);
+            res.status(500).send(500, {err});
+        }
+    },
+
+    updateUser: async (req, res) => {
+        try {
+            const userId = req.params.id;
+            const updatedUser = await dataMapper.updateUser(userId, req.body);
+
+            res.send(updatedUser);
 
         } catch(err) {
             console.trace(err);
