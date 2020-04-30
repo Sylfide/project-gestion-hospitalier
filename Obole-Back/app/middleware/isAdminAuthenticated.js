@@ -12,8 +12,11 @@ const db=require('../db_connection.js')
             if(findUser.rows[0].role!='ROLE_ADMIN'){
                 res.status(401).json({message:'unauthorized'})
             }
-            req.user=findUser.rows[0]
-            next()
+            else{
+                req.user=findUser.rows[0]
+                next()
+            }
+            
         }
 
         else{

@@ -34,9 +34,41 @@ const dataMapper = {
 
         console.log(name);
         console.log(capacity);
-        const insert=await db.query("INSERT INTO room (name,capacity) VALUES ($1,$2)",[name,capacity]);
+        const insert=await db.query("INSERT INTO room (name,capacity) VALUES ($1,$2) RETURNING name,capacity",[name,capacity]);
         
-        console.log(insert)
+        return insert.rows[0];
+    },
+
+    modifyRoom:async(name,capacity,roomId)=>{
+        if(name){
+            await db.query(`UPDATE room SET name=$1 WHERE id=$2`,[name,roomId])
+         
+        }
+
+        if(capacity){
+           await db.query(`UPDATE room SET capacity=$1 WHERE id=$2`,[capacity,roomId])
+            
+        }
+
+        const modifiedRoom=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
+        console.log(modifiedRoom.rows[0]);
+        return modifiedRoom.rows[0];
+        
+    },
+
+    seeRoom:async(roomId)=>{
+       const room= await db.query(`SELECT * FROM room WHERE id=$1`,[roomId]);
+       
+       return room.rows;
+
+    },
+
+   
+
+    listRooms:async()=>{
+        const rooms=await db.query(`SELECT * FROM room`);
+        
+        return rooms.rows
     }
 
 
