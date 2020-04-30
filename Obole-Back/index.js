@@ -6,6 +6,10 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+const formidableMiddleware = require("express-formidable");
+
+app.use(formidableMiddleware()); 
+
 app.use(cors());
 
 app.use(express.urlencoded({extended: true}));
