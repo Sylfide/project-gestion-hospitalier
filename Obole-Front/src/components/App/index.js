@@ -1,19 +1,40 @@
 // == Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Redirect, Switch } from 'react-router';
 
-// == Import
+// Styles
 
+// == Import Components
+import LoginForm from 'src/components/LoginForm';
+import Obole from 'src/components/Obole';
 
 // == Composant
 const App = () => {
   const dispatch = useDispatch();
-  const clickCount = useSelector((state) => state.counter);
+  const connected = useSelector((state) => state.connected);
 
   return (
-    <div className="app">
+    <>
+      <Switch>
+        <Route exact path="/">
+          <LoginForm />
+        </Route>
 
-    </div>
+        <Route
+          exact
+          path="/obole"
+          render={() => {
+            if (!connected) {
+              return <Redirect to="/" />;
+            }
+            return <Obole />;
+          }}
+        />
+
+        <Route>404</Route>
+      </Switch>
+    </>
   );
 };
 

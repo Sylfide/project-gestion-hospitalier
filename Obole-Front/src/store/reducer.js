@@ -3,16 +3,17 @@ import {
 } from './actions';
 
 const initialState = {
-  counter: 0,
+  connected: true,
+  admin: true,
 };
 
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case 'INCREMENT': {
+    case 'DISCO': {
       return {
         ...state,
-        counter: state.counter + 1,
+        connected: !connected,
       };
     }
     default: {

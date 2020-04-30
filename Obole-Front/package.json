@@ -47,12 +47,14 @@
     "webpack-merge": "*"
   },
   "dependencies": {
+    "antd": "^4.1.5",
     "prop-types": "*",
     "react": "*",
     "react-dom": "*",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.0"
   }
 }
