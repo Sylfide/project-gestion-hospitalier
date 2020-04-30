@@ -25,13 +25,14 @@ const MakeForm = () => {
       <Form.Item
         name={['user', 'firstname']}
         label="Nom"
-        layout="inline"
+        layout="vertical"
       >
         <Input />
       </Form.Item>
       <Form.Item
         name={['user', 'lastname']}
         label="Prénom"
+        layout="vertical"
       >
         <Input />
       </Form.Item>
