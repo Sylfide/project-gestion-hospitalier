@@ -1,7 +1,9 @@
 import  { applyMiddleware } from 'redux';
 
-// import authMW from './auth';
+import authMW from './auth';
+import routesMW from './routes';
 
 export default applyMiddleware(
-  // auth,
+  authMW,
+  routesMW,
 );
