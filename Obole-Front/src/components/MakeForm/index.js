@@ -6,14 +6,14 @@ import { useHistory } from 'react-router';
 import { } from 'src/store/actions';
 
 // == Import antd
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Select } from 'antd';
 
 
 // == Composant
 const MakeForm = () => {
   const layout = {
     labelCol: {
-      span: 8,
+      span: 16,
     },
     wrapperCol: {
       span: 8,
@@ -21,18 +21,16 @@ const MakeForm = () => {
   };
 
   return (
-    <Form {...layout} >
+    <Form {...layout} layout="vertical">
       <Form.Item
         name={['user', 'firstname']}
         label="Nom"
-        layout="vertical"
       >
         <Input />
       </Form.Item>
       <Form.Item
         name={['user', 'lastname']}
         label="Prénom"
-        layout="vertical"
       >
         <Input />
       </Form.Item>
@@ -75,6 +73,26 @@ const MakeForm = () => {
         ]}
       >
         <Input />
+      </Form.Item>
+      <Form.Item
+        name={['user', 'password']}
+        label="Mot de passe temporaire"
+        rules={[
+          {
+            type: 'password',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name={['user', 'role']}
+        label="Rôle de l'utilisateur"
+      >
+        <Select>
+          <Option value="user">User</Option>
+          <Option value="admin">Admin</Option>
+        </Select>
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
           <Button type="primary" htmlType="submit">
