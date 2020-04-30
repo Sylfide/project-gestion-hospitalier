@@ -15,6 +15,6 @@ router.get('/user/:id', userController.oneUser);
 router.post('/user/new', userController.newUser);
 
 // traitement 404
-router.use( (req, res) => {res.status(404).render('404')});
+router.use( (req, res) => {res.status(404).send('404')});
 
 module.exports = router;
