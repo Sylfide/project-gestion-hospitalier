@@ -2,13 +2,13 @@ const dataMapper = require('../dataMapper');
 
 const userController = {
 
-    allUsers: (req, res) => {
+    allUsers: async (req, res) => {
          
         try {
-            const users = dataMapper.getAllUsers();
-            console.log(users.rows);
+            const users = await dataMapper.getAllUsers();
+            console.log(users);
 
-            res.send(users.rows);
+            res.send(users);
         } catch(err){
             console.trace(err);
             res.status(500).send(500, {err});

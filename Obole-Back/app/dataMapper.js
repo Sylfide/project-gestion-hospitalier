@@ -5,7 +5,8 @@ const dataMapper = {
     getAllUsers: async () => {
         
         const allUsers = await db.query(`SELECT * FROM "user";`);
-        return allUsers;
+        console.log(allUsers.rows);
+        return allUsers.rows;
     }
 };
 
