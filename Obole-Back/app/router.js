@@ -11,7 +11,7 @@ router.get('/', mainController.homePage);
 
 // routes pour les users
 router.get('/user/list', userController.allUsers);
-// router.get('/user/:id', userController.oneUser);
+router.get('/user/:id', userController.oneUser);
 // router.post('/user/new', userController.newUser);
 
 // traitement 404
