@@ -18,7 +18,7 @@ const Container = styled.div`
   margin: auto;
   width: 300px;
   display: grid;
-  grid-template-rows: 60px 1fr;
+  grid-template-rows: 100px 1fr;
   grid-gap: 24px;
   justify-content: center;
   justify-items: center;
