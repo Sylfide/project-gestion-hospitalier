@@ -1,44 +1,47 @@
 // == Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useHistory } from 'react-router';
 import { } from 'src/store/actions';
+import styled from 'styled-components';
 
-// Styles
-import './styles.scss';
+// ==> Components
+import { Layout, Button } from 'antd';
+import Nav from 'src/components/Nav';
+
+// ==> Styles
 import logo from './logo-obole.svg';
+
+const { Sider } = Layout;
+
+// ==> CSS in JS
+const Container = styled(Sider)`
+  & > *{
+    display: grid;
+    grid-template-rows: max-content 1fr max-content;
+  }
+  img {
+    height: 40px;
+    justify-self: center;
+    margin: 15px;
+  }
+  Button {
+    justify-self: center;
+    margin: 15px;
+  }
+`;
 
 // == Composant
 const Menu = () => {
-  const dispatch = useDispatch();
-  const clickCount = useSelector((state) => state.counter);
+  // const dispatch = useDispatch();
+  // const clickCount = useSelector((state) => state.counter);
 
   return (
-    <div id="menu">
-      <img src={logo} />
-      <nav>
-        <a href="">
-        <p>chambres</p>
-        </a>
-
-        <a href="">
-        <p>graphiques</p>
-        </a>
-
-        <a href="">
-        <p>employés</p>
-        </a>
-
-        <a href="">
-        <p>défunts</p>
-        </a>
-
-        <a href="">
-        <p>thanatopracteurs</p>
-        </a>
-      </nav>
-    </div>
+    <Container theme="light">
+      <img alt="logo" src={logo} />
+      <Nav />
+      <Button type="primary">Profil</Button>
+    </Container>
   );
 };
 
