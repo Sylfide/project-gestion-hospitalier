@@ -1,0 +1,6 @@
+%syntax-version=1.0.0
+%project=obole
+
+init 2020-04-28T12:33:24Z Laurafillatre <laurafillatre@hotmail.fr> # création des tables
+usertoken 2020-04-29T04:34:52Z ReubenC <chourakirgit@yahoo.com> # add token to user
+room_occupation 2020-05-01T10:31:47Z Laurafillatre <laurafillatre@hotmail.fr> # room occupation
