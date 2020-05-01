@@ -10,8 +10,9 @@ import { Layout, Button } from 'antd';
 import Nav from 'src/components/Nav';
 
 // ==> Styles
-import logo from './logo-obole.svg';
+import logo from 'src/assets/img/logo-obole.svg';
 
+// Ant Design sub components
 const { Sider } = Layout;
 
 // ==> CSS in JS
@@ -31,7 +32,7 @@ const Container = styled(Sider)`
   }
 `;
 
-// == Composant
+// ==> Composant
 const Menu = () => {
   // const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
