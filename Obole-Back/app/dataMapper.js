@@ -28,7 +28,7 @@ const dataMapper = {
 
         const existingUser = await db.query(`SELECT * FROM "user" WHERE lastname = $1 AND firstname = $2 AND email = $3;`, [lastname, firstname, email]);
         // console.log(existingUser.rows);
-        if (existingUser.rows) {
+        if (existingUser.rows[0]) {
             return `Cet utilisateur existe déjà`;
         } else {
 
@@ -63,6 +63,13 @@ const dataMapper = {
         }
 
         return updateUser.rows[0];
+    },
+
+    deleteUser: async (userId) => {
+
+        const deletedUser = await db.query(`DELETE FROM "user" WHERE id = $1 RETURNING firstname, lastname, email, password, token`, [userId]);
+
+        return deletedUser.rows[0];
     }
 };
 

@@ -43,7 +43,7 @@ const userController = {
             let result = await dataMapper.addUser(req.body, token);
             console.log(result);
 
-            if (result = 'Cet utilisateur existe déjà') {
+            if (result === 'Cet utilisateur existe déjà') {
                 res.send(result);
             } else {
                 res.redirect('/admin/user/list');
@@ -61,6 +61,23 @@ const userController = {
             const updatedUser = await dataMapper.updateUser(userId, req.body);
 
             res.send(updatedUser);
+
+        } catch(err) {
+            console.trace(err);
+            res.status(500).send(500, {err});
+        }
+    },
+
+    deleteOneUser: async (req, res) => {
+        try {
+            const userId = req.params.id;
+            const deletedUser = await dataMapper.deleteUser(userId);
+
+            if (deletedUser) {
+                res.send(`Utilisateur supprimé`);
+            } else {
+                res.send(`Suppression échouée`);
+            }
 
         } catch(err) {
             console.trace(err);
