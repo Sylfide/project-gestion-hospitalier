@@ -121,7 +121,14 @@ const dataMapper = {
         const rooms=await db.query(`SELECT * FROM room`);
         
         return rooms.rows
-    }
+    },
+
+    getAllEmbalmers: async () => {
+
+        const allEmbalmers = await db.query(`SELECT * FROM embalmer;`);
+
+        return allEmbalmers.rows;
+    },
 };
 
 module.exports = dataMapper;
