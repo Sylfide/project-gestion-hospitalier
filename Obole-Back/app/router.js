@@ -34,6 +34,6 @@ router.get('/room/list',adminAuthentified,roomController.listRooms);
 router.post('/room/details/:id',adminAuthentified,roomController.seeRoom)
 
 // traitement 404
-router.use( (req, res) => {res.status(404).render('404')});
+router.use( (req, res) => {res.status(404).send('404')});
 
 module.exports = router;
