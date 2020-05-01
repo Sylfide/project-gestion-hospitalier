@@ -122,8 +122,6 @@ const dataMapper = {
         
         return rooms.rows
     }
-
-
 };
 
 module.exports = dataMapper;
