@@ -195,10 +195,16 @@ const dataMapper = {
         const momentDate=moment().format();
 
         const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
-    }
+    },
 
 
 
+    getAllEmbalmers: async () => {
+
+        const allEmbalmers = await db.query(`SELECT * FROM embalmer;`);
+
+        return allEmbalmers.rows;
+    },
 };
 
 module.exports = dataMapper;
