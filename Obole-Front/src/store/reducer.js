@@ -1,5 +1,5 @@
 import {
-  //actions,
+  LOGIN,
 } from './actions';
 
 const initialState = {
@@ -10,10 +10,10 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
-    case 'DISCO': {
+    case LOGIN: {
+      console.log('LOGIN !');
       return {
         ...state,
-        connected: !connected,
       };
     }
     default: {

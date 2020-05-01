@@ -1,17 +1,22 @@
-// == Import npm
+// ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-
+// import { useDispatch, useSelector } from 'react-redux';
+// import { useHistory } from 'react-router';
 import { } from 'src/store/actions';
+import styled from 'styled-components';
 
-// == Import
+// ==> Components
 
+// ==> Styles
 
-// == Composant
+// ==> Ant Design sub components
+
+// ==> CSS in JS
+
+// ==> Composant
 const tmp_component = () => {
-  const dispatch = useDispatch();
-  const clickCount = useSelector((state) => state.counter);
+  // const dispatch = useDispatch();
+  // const clickCount = useSelector((state) => state.counter);
 
   return (
    
