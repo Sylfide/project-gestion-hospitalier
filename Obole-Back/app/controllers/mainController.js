@@ -9,19 +9,29 @@ const mainController = {
     connection:async(req,res)=>{
         try{
          
-            //console.log(hashedPassword);
+         
            
             const findUser=await dataMapper.connection(req.fields.email,req.fields.password)
             
-            
+        
             if(findUser[0]){
-                res.send(findUser[0])
+                const findUserInfo={
+                    email:findUser[0].email,
+                    firstname:findUser[0].firstname,
+                    lastname:findUser[0].lastname,
+                    token:findUser[0].token
+                }
+
+                console.log('user actually exsits')
+                res.send(findUserInfo)
             }
-    
             else{
-                console.log('else phase')
-                res.json({message:'invalid email or password'});
+                console.log('not defined')
+                res.status(401).json({message:'invalid username or password'});
             }
+           
+
+            
             
         }
 

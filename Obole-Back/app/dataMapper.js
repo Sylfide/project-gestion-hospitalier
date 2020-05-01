@@ -1,7 +1,10 @@
 const db = require('./db_connection');
 const SHA256 = require('crypto-js/sha256');
 const encBase64 = require('crypto-js/enc-base64');
+
+const moment=require('moment');
 const uid2 = require('uid2');
+
 
 const dataMapper = {
 
@@ -74,12 +77,16 @@ const dataMapper = {
 
     connection:async(email,password)=>{
 
+      
+
         const salt=password.substring(0,3)
 
         const hashedPassword=SHA256(password+salt).toString(encBase64);
         const user=await db.query(`SELECT * FROM "user" WHERE email=$1 AND password=$2`,[email,hashedPassword]);
-       
+
         return user.rows;
+       
+        
     },
 
     addRoom:async(name,capacity)=>{
@@ -121,7 +128,77 @@ const dataMapper = {
         const rooms=await db.query(`SELECT * FROM room`);
         
         return rooms.rows
+    },
+
+
+    enterDeceased:async (req)=>{
+        try{
+            const objectKeys=Object.keys(req.fields);
+        const objectValues=Object.values(req.fields);
+        const splitKeys=[...objectKeys].join(',');
+        const splitValues=[...objectValues].join(',');
+
+        console.log(...objectValues);
+
+        //console.log(splitKeys);
+        //console.log(splitValues);
+
+        const parameterArr=[];
+      
+
+        for(let i=0;i<objectKeys.length;i++){
+            
+            if(objectKeys[i]=="deceased_date" || objectKeys[i]=="entry_date"){
+                let number=i+1;
+                let parameter="$"+number;
+                parameter=parameter.toString();
+                parameterArr.push(parameter)
+             
+            }
+
+            else{
+               let number=i+1;
+               let parameter="$"+number;
+               parameter=parameter.toString();
+               parameterArr.push(parameter);
+            }
+
+            
+        }
+
+
+       const parameterStr=[...parameterArr].join(',');
+
+        const string="INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"";
+        //console.log(string);
+        //console.log(splitValues);
+        
+        
+        const insertDeceased =await db.query("INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"",[...objectValues]);
+        //console.log(insertDeceased.rows);
+        return insertDeceased.rows;
+        }
+
+        catch(error){
+            console.log(error.message);
+        }
+        
+    },
+
+    getAllDeceased:async()=>{
+        const deceasedList=await db.query("SELECT * FROM deceased");
+        return deceasedList.rows;
+    },
+
+    removeDeceased:async(deceasedId)=>{
+
+        const momentDate=moment().format();
+
+        const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
     }
+
+
+
 };
 
 module.exports = dataMapper;
