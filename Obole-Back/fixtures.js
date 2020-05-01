@@ -47,7 +47,7 @@ const dbConfig = {
     user:[{
         firstname:"admin",
         lastname:"admin",
-        role:"ROLE_ADMIN",
+        role:"admin",
         password:hashedPassword,
         email:'admin@admin.com',
         token:token
@@ -82,7 +82,7 @@ const dbConfig = {
     let userPassword=hashedPassword;
     let userEmail="user"+i+'@user.com';
     let userToken=token;
-    let role="ROLE_USER"
+    let role="user"
 
     fixtures1.user.push({firstname:userFirstname,lastname:userLastName,password:userPassword,email:userEmail,token:userToken,role:role})
 

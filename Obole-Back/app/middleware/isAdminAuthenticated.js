@@ -9,7 +9,7 @@ const db=require('../db_connection.js')
         console.log(findUser.rows);
         
         if(findUser.rows[0]){ 
-            if(findUser.rows[0].role!='ROLE_ADMIN'){
+            if(findUser.rows[0].role!='admin'){
                 res.status(401).json({message:'unauthorized'})
             }
             else{
