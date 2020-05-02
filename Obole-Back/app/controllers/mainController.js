@@ -17,6 +17,7 @@ const mainController = {
             if(findUser[0]){
                 const findUserInfo={
                     email:findUser[0].email,
+                    role:findUser[0].role,
                     firstname:findUser[0].firstname,
                     lastname:findUser[0].lastname,
                     token:findUser[0].token
