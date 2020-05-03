@@ -129,6 +129,80 @@ const dataMapper = {
 
         return allEmbalmers.rows;
     },
+
+    getOneEmbalmer: async (embalmerId) => {
+
+        const oneEmbalmer = await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [embalmerId]);
+        return oneEmbalmer.rows[0];
+    },
+
+    addEmbalmer: async (embalmerInfo) => {
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = embalmerInfo;
+
+        const existingEmbalmer = await db.query(`SELECT * FROM embalmer WHERE lastname = $1 AND firstname = $2 AND email = $3 AND address = $4 AND zip_code = $5 AND city = $6;`, [lastname, firstname, email, address, zip_code, city]);
+
+        if (existingEmbalmer.rows[0]) {
+            return `Ce thanatopracteur existe déjà`
+        } else if (!tel) {
+
+            const addedEmbalmer = await db.query(`INSERT INTO embalmer (lastname, firstname, address, zip_code, city, email) VALUES
+                ($1, $2, $3, $4, $5, $6) RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, firstname, address, zip_code, city, email]);
+
+            return addedEmbalmer.rows[0];
+        } else {
+
+            const addedEmbalmer = await db.query(`INSERT INTO embalmer (lastname, firstname, address, zip_code, city, email, tel) VALUES
+                ($1, $2, $3, $4, $5, $6, $7) RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, firstname, address, zip_code, city, email, tel]);
+
+            return addedEmbalmer.rows[0];
+        }
+
+    },
+
+    updateEmbalmer: async (embalmerId, embalmerInfo) => {
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = embalmerInfo;
+
+        let updatedEmbalmer;
+
+        if (lastname) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET lastname = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, embalmerId]);
+        }
+
+        if (firstname) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET firstname = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [firstname, embalmerId]);
+        }
+
+        if (address) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET address = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [address, embalmerId]);
+        }
+
+        if (zip_code) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET zip_code = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [zip_code, embalmerId]);
+        }
+
+        if (city) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET city = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [city, embalmerId]);
+        }
+
+        if (email) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET email = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [email, embalmerId]);
+        }
+
+        if (tel) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET tel = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [tel, embalmerId]);
+        }
+
+        return updatedEmbalmer.rows[0];
+    },
+
+    deleteEmbalmer: async (embalmerId) => {
+
+        const deletedEmbalmer = await db.query(`DELETE FROM embalmer WHERE id = $1 RETURNING lastname, firstname, address, zip_code, city, email, tel;` [embalmerId]);
+
+        return deletedEmbalmer.rows[0];
+    },
 };
 
 module.exports = dataMapper;

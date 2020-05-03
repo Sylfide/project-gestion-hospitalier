@@ -36,10 +36,10 @@ router.post('/room/details/:id',adminAuthentified,roomController.seeRoom)
 
 // routes pour les thanato
 router.get('/embalmer/list', userAuthentified, embalmerController.allEmbalmers);
-// router.get('/embalmer/:id', userAuthentified, embalmerController);
-// router.post('/embalmer/new', userAuthentified, embalmerController);
-// router.patch('/embalmer/:id', userAuthentified, embalmerController);
-// router.delete('/embalmer/:id/delete', userAuthentified, embalmerController);
+router.get('/embalmer/:id', userAuthentified, embalmerController.oneEmbalmer);
+router.post('/embalmer/new', userAuthentified, embalmerController.newEmbalmer);
+router.patch('/embalmer/:id', userAuthentified, embalmerController.updateEmbalmer);
+router.delete('/embalmer/:id/delete', userAuthentified, embalmerController.deleteOneEmbalmer);
 
 // traitement 404
 router.use( (req, res) => {res.status(404).render('404')});
