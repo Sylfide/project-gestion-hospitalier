@@ -10,9 +10,12 @@ import { } from 'src/store/actions';
 // Ant Design
 import { Menu } from 'antd';
 
+// == Styles
+import './styles.scss';
+
 // Styles
 const NavMenu = styled(Menu)`
-  
+
 `;
 
 // == Composant
@@ -22,6 +25,7 @@ const Nav = () => {
 
   return (
     <NavMenu
+      className="obole--navMenu"
       mode="inline"
     >
       <Menu.Item key="1">

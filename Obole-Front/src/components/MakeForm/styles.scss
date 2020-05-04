@@ -1,0 +1,26 @@
+.obole--makeForm {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ant-form {
+  margin-left: 50px;
+  margin-top: 30px;
+}
+
+.cp, .tel {
+  margin-right: 10px;
+}
+
+.ant-form-item {
+  margin: 5px;
+}
+
+.obole--makeForm Button {
+  margin-top: 10px;
+  background: #2c88d9;
+  border-radius: 5px;
+}

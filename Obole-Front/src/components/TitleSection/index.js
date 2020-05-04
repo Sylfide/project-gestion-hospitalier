@@ -7,6 +7,8 @@ import { } from 'src/store/actions';
 
 // == Import
 
+// == Styles
+import './styles.scss';
 
 // == Composant
 const TitleSection = () => {
@@ -14,7 +16,10 @@ const TitleSection = () => {
   const clickCount = useSelector((state) => state.counter);
 
   return (
-   <p>Titre de la section</p>
+    <div className="obole--titleSection">
+      <p>Employés</p>
+    </div>
+   
   );
 };
 

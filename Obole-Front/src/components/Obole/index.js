@@ -7,8 +7,8 @@ import styled from 'styled-components';
 
 // == Import Components
 import Menu from 'src/components/Menu';
-// import TitleSection from 'src/components/TitleSection';
-// import ContentNav from 'src/components/ContentNav';
+import TitleSection from 'src/components/TitleSection';
+import ContentNav from 'src/components/ContentNav';
 import Form from 'src/components/Form';
 import Activity from 'src/components/Activity';
 
@@ -35,8 +35,8 @@ const Obole = () => {
     <Container>
       <Menu />
       <Content>
-        {/* <TitleSection />
-        <ContentNav /> */}
+        <TitleSection />
+        <ContentNav />
         <Form />
       </Content>
       <Sider theme="light">
