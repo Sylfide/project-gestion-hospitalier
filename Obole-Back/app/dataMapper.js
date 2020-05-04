@@ -199,7 +199,7 @@ const dataMapper = {
 
     deleteEmbalmer: async (embalmerId) => {
 
-        const deletedEmbalmer = await db.query(`DELETE FROM embalmer WHERE id = $1 RETURNING lastname, firstname, address, zip_code, city, email, tel;` [embalmerId]);
+        const deletedEmbalmer = await db.query(`DELETE FROM embalmer WHERE id = $1 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [embalmerId]);
 
         return deletedEmbalmer.rows[0];
     },

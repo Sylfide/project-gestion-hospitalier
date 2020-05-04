@@ -8,7 +8,7 @@ const app = express();
 
 const formidableMiddleware = require("express-formidable");
 
-app.use(formidableMiddleware()); 
+// app.use(formidableMiddleware()); 
 
 app.use(cors());
 
