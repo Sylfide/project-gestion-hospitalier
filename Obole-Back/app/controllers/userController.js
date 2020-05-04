@@ -42,7 +42,7 @@ const userController = {
             let token=uid2(64);
 
             let result = await dataMapper.addUser(req.body, token);
-            console.log(result);
+            // console.log(result);
 
             if (result === 'Cet utilisateur existe déjà') {
                 res.send(result);

@@ -31,7 +31,8 @@ const embalmerController = {
 
     newEmbalmer: async (req, res) => {
         try {
-            if (!req.body.firstname || !req.body.lastname || !req.body.adress || !req.zip_code || !req.body.city || req.body.email) {
+            console.log(req.body);
+            if (!req.body.firstname || !req.body.lastname || !req.body.address || !req.body.zip_code || !req.body.city || !req.body.email) {
                 return res.send('Veuillez remplir tous les champs obligatoires');
             }
 
@@ -78,7 +79,7 @@ const embalmerController = {
 
         } catch(err){
             console.trace(err);
-            res.status(500).send(500, {err});
+            res.status(500).send(err);
         }
     },
 };
