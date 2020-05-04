@@ -1,8 +1,7 @@
 // ==> Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { LOGIN } from 'src/store/actions';
+import { login } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
@@ -24,11 +23,9 @@ const Container = styled.div`
   justify-items: center;
   align-items: center;
   text-align: center;
-
   img {
     height: 60px;
   }
-
   input {
     text-align: center;
   }
@@ -46,7 +43,6 @@ const validateMessages = {
 const LoginForm = () => {
   const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
-  const history = useHistory();
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -63,7 +59,7 @@ const LoginForm = () => {
         className="login-form"
         validateMessages={validateMessages}
         onFinish={(values) => {
-          dispatch({ type: LOGIN, history, values });
+          dispatch(login(values));
         }}
       >
         <Form.Item

@@ -12,23 +12,23 @@ import Obole from 'src/components/Obole';
 // == Composant
 const App = () => {
   const dispatch = useDispatch();
-  const connected = useSelector((state) => state.connected);
+  const role = useSelector((state) => state.user.role);
 
   return (
     <>
       <Switch>
-        <Route exact path="/">
+        {/* <Route exact path="/">
           <LoginForm />
-        </Route>
+        </Route> */}
 
         <Route
           exact
-          path="/obole"
+          path="/"
           render={() => {
-            if (!connected) {
-              return <Redirect to="/" />;
+            if (role === 'admin' || role === 'user') {
+              return <Obole />;
             }
-            return <Obole />;
+            return <LoginForm />;
           }}
         />
 
