@@ -12,6 +12,7 @@ const mainController = require('./controllers/mainController');
 const userController = require('./controllers/userController');
 const roomController=require('./controllers/roomController');
 const deceasedController=require('./controllers/deceasedController')
+const embalmerController = require('./controllers/embalmerController');
 
 // les routes
 router.get('/', mainController.homePage);
@@ -38,6 +39,12 @@ router.post('/room/details/:id',adminAuthentified,roomController.seeRoom)
 //deceased routes
 router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased);
 router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
+// routes pour les thanato
+router.get('/embalmer/list', userAuthentified, embalmerController.allEmbalmers);
+router.get('/embalmer/:id', userAuthentified, embalmerController.oneEmbalmer);
+router.post('/embalmer/new', userAuthentified, embalmerController.newEmbalmer);
+router.patch('/embalmer/:id', userAuthentified, embalmerController.updateEmbalmer);
+router.delete('/embalmer/:id/delete', userAuthentified, embalmerController.deleteOneEmbalmer);
 
 // traitement 404
 router.use( (req, res) => {res.status(404).send('404')});

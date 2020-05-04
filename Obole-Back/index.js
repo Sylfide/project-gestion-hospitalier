@@ -11,9 +11,7 @@ app.use(cors());
 
 const formidableMiddleware = require("express-formidable");
 
-app.use(formidableMiddleware()); 
-
-
+// app.use(formidableMiddleware()); 
 
 app.use(express.urlencoded({extended: true}));
 

@@ -17,7 +17,7 @@ const userController = {
         
     },
 
-    // à faire : one user et new user et update user
+    // à faire : one user et new user et update user : DONE
 
     oneUser: async (req, res) => {
         try {
@@ -32,16 +32,17 @@ const userController = {
     },
 
     newUser: async (req, res) => {
-        // console.log(req.body);
-        if (!req.body.firstname || !req.body.lastname || !req.body.role || !req.body.email || !req.body.password) {
-            return res.send('Veuillez remplir tous les champs');
-        }
-
+        
         try {
+            // console.log(req.body);
+            if (!req.body.firstname || !req.body.lastname || !req.body.role || !req.body.email || !req.body.password) {
+                return res.send('Veuillez remplir tous les champs');
+            }
+            
             let token=uid2(64);
 
             let result = await dataMapper.addUser(req.body, token);
-            console.log(result);
+            // console.log(result);
 
             if (result === 'Cet utilisateur existe déjà') {
                 res.send(result);
