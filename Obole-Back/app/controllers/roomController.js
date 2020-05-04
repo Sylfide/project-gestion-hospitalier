@@ -3,7 +3,7 @@ const dataMapper = require('../dataMapper');
 const roomController={
     addRoom:async(req,res)=>{
         try{
-           const newRoom= await dataMapper.addRoom(req.fields.name,req.fields.capacity);
+           const newRoom= await dataMapper.addRoom(req.body.name,req.body.capacity);
             res.json(newRoom);
         
     }
@@ -16,8 +16,8 @@ const roomController={
 
     modifyRoom:async(req,res)=>{
         try{
-            const modifiedRoom=await dataMapper.modifyRoom(req.fields.name,req.fields.capacity,req.params.id);
-           
+            const modifiedRoom=await dataMapper.modifyRoom(req.body.name,req.body.capacity,req.params.id);
+            console.log(req.body);
             res.json(modifiedRoom);
             //res.json({message:'room sucessfully updated'});
         }
