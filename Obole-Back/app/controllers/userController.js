@@ -17,7 +17,9 @@ const userController = {
         
     },
 
-    // à faire : one user et new user et update user : DONE
+ 
+
+    // à faire : one user et new user et update user
 
     oneUser: async (req, res) => {
         try {

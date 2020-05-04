@@ -25,6 +25,7 @@ router.get('/admin/user/list', adminAuthentified, userController.allUsers);
 router.post('/admin/user/new', adminAuthentified, userController.newUser);
 router.delete('/admin/user/:id/delete', adminAuthentified, userController.deleteOneUser);
 
+
 // routes profil
 router.get('/user/:id', userAuthentified, userController.oneUser);
 router.patch('/user/:id', userAuthentified, userController.updateUser);
