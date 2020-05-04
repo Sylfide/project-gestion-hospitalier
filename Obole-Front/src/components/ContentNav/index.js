@@ -5,8 +5,11 @@ import { useHistory } from 'react-router';
 
 import { } from 'src/store/actions';
 
-// == Import
+// == Import antd
+import { Button } from 'antd';
 
+// == Styles
+import './styles.scss';
 
 // == Composant
 const ContentNav = () => {
@@ -14,7 +17,12 @@ const ContentNav = () => {
   const clickCount = useSelector((state) => state.counter);
 
   return (
-   <p>Menu du centre</p>
+    <div className="obole--contentNav">
+      <Button className="obole--contentNav--button" block>Nouveau</Button>
+      <Button className="obole--contentNav--button" block>Liste</Button>
+      <Button className="obole--contentNav--button" block>Historique</Button>
+    </div>
+   
   );
 };
 
