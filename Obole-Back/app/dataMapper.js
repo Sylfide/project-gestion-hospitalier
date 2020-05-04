@@ -197,7 +197,25 @@ const dataMapper = {
         const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
     },
 
+    addConservation: async (deceasedId, conservationInfo) => {
 
+        const { date, embalmer } = conservationInfo;
+
+        const embalmerToArray = embalmer.split(' ');
+        const embalmerLastname = embalmerToArray[1];
+        const embalmerFirstname = embalmerToArray[0];
+
+        const embalmerId = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
+
+        const addedConservation = await db.query(`INSERT INTO conservation (date, deceased_id, embalmer_id) VALUES
+            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId]);
+
+        return addedConservation.rows[0];
+    },
+
+    updateConservation: async (deceasedId) => {
+
+    },
 
     getAllEmbalmers: async () => {
 

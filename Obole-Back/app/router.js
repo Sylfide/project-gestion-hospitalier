@@ -39,6 +39,9 @@ router.post('/room/details/:id',adminAuthentified,roomController.seeRoom)
 //deceased routes
 router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased);
 router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
+// router.post('/deceased/:id/conservation/add', userAuthentified, deceasedController);
+// router.patch('/deceased/:id/conservation/update', userAuthentified, deceasedController);
+
 // routes pour les thanato
 router.get('/embalmer/list', userAuthentified, embalmerController.allEmbalmers);
 router.get('/embalmer/:id', userAuthentified, embalmerController.oneEmbalmer);
