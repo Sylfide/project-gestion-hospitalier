@@ -10,7 +10,8 @@ import { Layout, Button } from 'antd';
 import Nav from 'src/components/Nav';
 
 // ==> Styles
-import logo from 'src/assets/img/logo-obole.svg';
+import logo from './logo-obole.svg';
+import './styles.scss';
 
 // Ant Design sub components
 const { Sider } = Layout;
@@ -22,13 +23,15 @@ const Container = styled(Sider)`
     grid-template-rows: max-content 1fr max-content;
   }
   img {
-    height: 40px;
+    height: 70px;
     justify-self: center;
-    margin: 15px;
+    margin-top: 7em;
   }
   Button {
     justify-self: center;
-    margin: 15px;
+    margin-bottom: 10em;
+    background: #2c88d9;
+    border-radius: 5px;
   }
 `;
 
@@ -38,7 +41,7 @@ const Menu = () => {
   // const clickCount = useSelector((state) => state.counter);
 
   return (
-    <Container theme="light">
+    <Container className="obole--menuContainer" theme="light">
       <img alt="logo" src={logo} />
       <Nav />
       <Button type="primary">Profil</Button>
