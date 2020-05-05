@@ -17,11 +17,7 @@ const App = () => {
   return (
     <>
       <Switch>
-        {/* <Route exact path="/">
-          <LoginForm />
-        </Route> */}
-
-        <Route
+        {/* <Route
           exact
           path="/"
           render={() => {
@@ -30,7 +26,8 @@ const App = () => {
             }
             return <LoginForm />;
           }}
-        />
+        /> */}
+        <Obole />
 
         <Route>404</Route>
       </Switch>

@@ -19,7 +19,6 @@ const TitleSection = () => {
     <div className="obole--titleSection">
       <p>Employés</p>
     </div>
-   
   );
 };
 

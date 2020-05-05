@@ -11,11 +11,10 @@ import { } from 'src/store/actions';
 import { Menu } from 'antd';
 
 // == Styles
-import './styles.scss';
 
 // Styles
 const NavMenu = styled(Menu)`
-
+  background: #dfe6ed;
 `;
 
 // == Composant
@@ -25,7 +24,6 @@ const Nav = () => {
 
   return (
     <NavMenu
-      className="obole--navMenu"
       mode="inline"
     >
       <Menu.Item key="1">

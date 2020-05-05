@@ -2,6 +2,7 @@
 import React from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -11,13 +12,14 @@ import Nav from 'src/components/Nav';
 
 // ==> Styles
 import logo from 'src/assets/img/logo-obole.svg';
-import './styles.scss';
 
 // Ant Design sub components
 const { Sider } = Layout;
 
 // ==> CSS in JS
 const Container = styled(Sider)`
+  background: #dfe6ed;
+
   & > *{
     display: grid;
     grid-template-rows: max-content 1fr max-content;
@@ -25,7 +27,7 @@ const Container = styled(Sider)`
   img {
     height: 70px;
     justify-self: center;
-    margin-top: 7em;
+    margin: 5em 0;
   }
   Button {
     justify-self: center;
@@ -41,10 +43,12 @@ const Menu = () => {
   // const clickCount = useSelector((state) => state.counter);
 
   return (
-    <Container className="obole--menuContainer" theme="light">
+    <Container theme="light">
       <img alt="logo" src={logo} />
       <Nav />
-      <Button type="primary">Profil</Button>
+      <Button type="primary">
+        <Link to="/truc">Profil</Link>
+      </Button>
     </Container>
   );
 };

@@ -16,8 +16,6 @@ import Activity from 'src/components/Activity';
 import { Layout } from 'antd';
 
 // == Styles
-// import './styles.scss';
-// import logo from './logo-obole.svg';
 
 const { Sider, Content } = Layout;
 
@@ -39,9 +37,7 @@ const Obole = () => {
         <ContentNav />
         <Form />
       </Content>
-      <Sider theme="light">
-        <Activity />
-      </Sider>
+      <Activity />
     </Container>
   );
 };
