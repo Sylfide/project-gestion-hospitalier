@@ -9,11 +9,25 @@ const uid2 = require('uid2');
 const dataMapper = {
 
     getAllUsers: async () => {
-        
-        const allUsers = await db.query(`SELECT * FROM "user";`);
+        try{
+            const allUsers = await db.query(`SELECT * FROM "user";`);
         // console.log(allUsers.rows);
         return allUsers.rows;
+        }
+
+        catch(error){
+            res.json(error.message);
+        }
+        
     },
+
+    getAdmins:async()=>{
+        
+        const adminUsers=await db.query(`SELECT * FROM "user" WHERE role=$1`,['admin']);
+        return adminUsers.rows;
+    },
+
+    
 
     getOneUser: async (userId) => {
 
@@ -115,10 +129,25 @@ const dataMapper = {
         
     },
 
+    incrementRoomCapacity:async(roomId)=>{
+        const roomTargeted=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
+        const currentOccupation=roomTargeted.rows[0].occupation;
+        const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2 RETURNING name,occupation,capacity",[currentOccupation+1,roomId]);
+        return modifiedRoom.rows;
+    },
+
+    decrementRoomCapacity:async(roomId)=>{
+        const roomTargeted=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
+        const currentOccupation=roomTargeted.rows[0].occupation;
+
+        const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2",[currentOccupation-1,roomId]);
+        return modifiedRoom.rows;
+    },
+
     seeRoom:async(roomId)=>{
        const room= await db.query(`SELECT * FROM room WHERE id=$1`,[roomId]);
        
-       return room.rows;
+       return room.rows[0];
 
     },
 
@@ -133,12 +162,12 @@ const dataMapper = {
 
     enterDeceased:async (req)=>{
         try{
-            const objectKeys=Object.keys(req.fields);
-        const objectValues=Object.values(req.fields);
+        const objectKeys=Object.keys(req.body);
+        const objectValues=Object.values(req.body);
         const splitKeys=[...objectKeys].join(',');
         const splitValues=[...objectValues].join(',');
 
-        console.log(...objectValues);
+        //console.log(...objectValues);
 
         //console.log(splitKeys);
         //console.log(splitValues);
@@ -169,14 +198,19 @@ const dataMapper = {
 
        const parameterStr=[...parameterArr].join(',');
 
+       
+
         const string="INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"";
         //console.log(string);
         //console.log(splitValues);
         
         
         const insertDeceased =await db.query("INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"",[...objectValues]);
+
+        //const getRoomInfo=await db.query("SELECT occupation FROM room WHERE id=$1",[getDeceased.rows[0].room_id]);
         //console.log(insertDeceased.rows);
-        return insertDeceased.rows;
+        
+        return insertDeceased.rows[0];
         }
 
         catch(error){
