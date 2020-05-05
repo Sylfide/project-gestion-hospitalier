@@ -145,8 +145,6 @@ const dataMapper = {
 
     },
 
-   
-
     listRooms:async()=>{
         const rooms=await db.query(`SELECT * FROM room`);
         
