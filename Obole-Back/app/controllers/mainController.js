@@ -11,7 +11,7 @@ const mainController = {
          
          
            
-            const findUser=await dataMapper.connection(req.body.email,req.body.password)
+            const findUser=await dataMapper.connection(req.fields.email,req.fields.password)
             
         
             if(findUser[0]){
