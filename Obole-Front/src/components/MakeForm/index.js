@@ -44,7 +44,7 @@ const MakeForm = () => {
   return (
     <Form
       {...layout}
-      layout="vertical"
+      // layout="vertical"
       form={form}
       onFinish={(values) => { console.log(values); }}
       className="obole--makeForm"
