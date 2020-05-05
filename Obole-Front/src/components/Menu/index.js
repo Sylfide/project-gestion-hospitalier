@@ -10,7 +10,7 @@ import { Layout, Button } from 'antd';
 import Nav from 'src/components/Nav';
 
 // ==> Styles
-import logo from './logo-obole.svg';
+import logo from 'src/assets/img/logo-obole.svg';
 import './styles.scss';
 
 // Ant Design sub components
