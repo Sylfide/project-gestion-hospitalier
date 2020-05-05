@@ -40,7 +40,7 @@ const dataMapper = {
 
         const { firstname, lastname, role, email, password } = userInfo;
 
-        const salt=uid2(12);
+        const salt=password.substring(0,3);
         const hashedPassword= SHA256(password+ salt).toString(encBase64);
 
         const existingUser = await db.query(`SELECT * FROM "user" WHERE lastname = $1 AND firstname = $2 AND email = $3;`, [lastname, firstname, email]);
@@ -89,16 +89,19 @@ const dataMapper = {
         return deletedUser.rows[0];
     },
 
-    connection:async(email,password)=>{
+    connection:async(email)=>{
 
       
+        // const salt=password.substring(0,3);
 
-        const salt=password.substring(0,3)
+        // console.log(email);
 
-        const hashedPassword=SHA256(password+salt).toString(encBase64);
-        const user=await db.query(`SELECT * FROM "user" WHERE email=$1 AND password=$2`,[email,hashedPassword]);
+        // const hashedPassword=SHA256(password+salt).toString(encBase64);
+        const findeduser = await db.query(`SELECT * FROM "user" WHERE "email" = $1;`, [email]);
 
-        return user.rows;
+        // console.log(findeduser.rows[0]);
+
+        return findeduser.rows[0];
        
         
     },
