@@ -19,30 +19,24 @@ const Activity = () => {
   return (
     <div id="activity">
       <div className="room">
-        <p className="name">Chambre Hogwarts</p>
+        <h3>Chambre Tinlinlin</h3>
         <div className="count">
-          <p className="capacity--title">Capacités</p>
-          <p className="capacity--nbr">40</p>
-          <p className="free--title">Libre</p>
-          <p className="free--nbr">5</p>
+          <p>Capacité</p>
+          <p className="nbr">40</p>
+          <span />
+          <p>Libre</p>
+          <p className="nbr">5</p>
         </div>
       </div>
+
       <div className="room">
-        <p className="name">Chambre Beauxbâtons</p>
+        <h3>Chambre Truc</h3>
         <div className="count">
-          <p className="capacity--title">Capacités</p>
-          <p className="capacity--nbr">40</p>
-          <p className="free--title">Libre</p>
-          <p className="free--nbr">5</p>
-        </div>
-      </div>
-      <div className="room">
-        <p className="name">Chambre Ilvermorny</p>
-        <div className="count">
-          <p className="capacity--title">Capacités</p>
-          <p className="capacity--nbr">40</p>
-          <p className="free--title">Libre</p>
-          <p className="free--nbr">5</p>
+          <p>Capacité</p>
+          <p className="nbr">30</p>
+          <span />
+          <p>Libre</p>
+          <p className="nbr">10</p>
         </div>
       </div>
 

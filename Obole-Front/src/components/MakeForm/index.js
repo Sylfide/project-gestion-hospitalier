@@ -6,11 +6,12 @@ import { useHistory } from 'react-router';
 
 import { } from 'src/store/actions';
 
+// == Styles
+
 // == Import antd
 import { Form, Input, Button, Select, Row, Col } from 'antd';
 
-// == Styles
-import './styles.scss';
+const { Option } = Select;
 
 // const Container = styled.div`
 //   margin: auto;
@@ -31,21 +32,28 @@ const MakeForm = () => {
 
   const layout = {
     labelCol: {
-      span: 8,
+      span: 12,
     },
     wrapperCol: {
-      span: 8,
+      span: 24,
     },
   };
 
+  const [form] = Form.useForm();
+
   return (
-    <Form {...layout} layout="vertical" className="obole--makeForm">
+    <Form
+      {...layout}
+      // layout="vertical"
+      form={form}
+      onFinish={(values) => { console.log(values); }}
+      className="obole--makeForm"
+    >
       <Form.Item
         name={['user', 'firstname']}
         label="Nom"
         rules={[
           {
-            type: 'password',
             required: true
           },
         ]}
@@ -57,7 +65,6 @@ const MakeForm = () => {
         label="Prénom"
         rules={[
           {
-            type: 'password',
             required: true
           },
         ]}
@@ -74,7 +81,7 @@ const MakeForm = () => {
       
       <Form.Item>
         <Row>
-          <Col flex={0}>
+          <Col flex={1}>
             <Form.Item 
               className="cp"
               name={['user', 'zip_code']}
@@ -93,33 +100,33 @@ const MakeForm = () => {
       </Form.Item>
 
       <Form.Item>
-        <Row>
-          <Col flex={0}>
+        <Row justify="center">
+          <Col>
             <Form.Item 
               className="tel"
               name={['user', 'phone']}
               label="Téléphone"
-              rules={[
-                {
-                  type: 'tel',
-                },
-              ]}
+              // rules={[
+              //   {
+              //     type: 'tel',
+              //   },
+              // ]}
               >
               <Input/>
             </Form.Item>
           </Col>
-          <Col flex={1}>
-            <Form.Item 
+          <Col>
+            <Form.Item
               name={['user', 'email']}
               label="Email"
               rules={[
                 {
                   type: 'email',
-                  required: true
+                  required: true,
                 },
               ]}
               >
-              <Input  />
+              <Input />
             </Form.Item>
           </Col>
         </Row>
@@ -130,8 +137,8 @@ const MakeForm = () => {
         label="Mot de passe temporaire"
         rules={[
           {
-            type: 'password',
-            required: true
+            // type: 'password',
+            // required: true,
           },
         ]}
       >
@@ -142,7 +149,7 @@ const MakeForm = () => {
         label="Rôle de l'utilisateur"
         rules={[
           {
-            required: true,
+            // required: true,
           }
         ]}
       >
@@ -152,9 +159,9 @@ const MakeForm = () => {
         </Select>
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol }}>
-          <Button type="primary" htmlType="submit">
-            Enregistrer
-          </Button>
+        <Button type="primary" htmlType="submit">
+          Enregistrer
+        </Button>
       </Form.Item>
     </Form>
   );

@@ -11,11 +11,10 @@ import { } from 'src/store/actions';
 import { Menu } from 'antd';
 
 // == Styles
-import './styles.scss';
 
 // Styles
 const NavMenu = styled(Menu)`
-
+  background: #dfe6ed;
 `;
 
 // == Composant
@@ -25,8 +24,8 @@ const Nav = () => {
 
   return (
     <NavMenu
-      className="obole--navMenu"
       mode="inline"
+      defaultSelectedKeys={['3']}
     >
       <Menu.Item key="1">
         <Link to="">Chambres</Link>
@@ -41,7 +40,7 @@ const Nav = () => {
         <Link to="">Défunts</Link>
       </Menu.Item>
       <Menu.Item key="5">
-        <Link to="/chambres">Thanatopracteurs</Link>
+        <Link to="/rooms">Thanatopracteurs</Link>
       </Menu.Item>
     </NavMenu>
   );
