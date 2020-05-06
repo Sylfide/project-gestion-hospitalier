@@ -25,6 +25,7 @@ const Nav = () => {
   return (
     <NavMenu
       mode="inline"
+      defaultSelectedKeys={['3']}
     >
       <Menu.Item key="1">
         <Link to="">Chambres</Link>
@@ -39,7 +40,7 @@ const Nav = () => {
         <Link to="">Défunts</Link>
       </Menu.Item>
       <Menu.Item key="5">
-        <Link to="/chambres">Thanatopracteurs</Link>
+        <Link to="/rooms">Thanatopracteurs</Link>
       </Menu.Item>
     </NavMenu>
   );

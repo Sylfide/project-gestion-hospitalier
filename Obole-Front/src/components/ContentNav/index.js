@@ -22,7 +22,6 @@ const ContentNav = () => {
       <Button className="obole--contentNav--button" block>Liste</Button>
       <Button className="obole--contentNav--button" block>Historique</Button>
     </div>
-   
   );
 };
 
