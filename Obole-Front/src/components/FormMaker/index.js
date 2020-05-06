@@ -1,8 +1,8 @@
 // ==> Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
-import { } from 'src/store/actions';
+import { creatUser } from 'src/store/actions';
 // import styled from 'styled-components';
 
 // ==> Components
@@ -18,7 +18,7 @@ const { Option } = Select;
 
 // ==> Composant
 const FormMaker = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
 
   const [form] = Form.useForm();
@@ -44,7 +44,7 @@ const FormMaker = () => {
         role: 'user',
       }}
       onFinish={(values) => {
-        console.log(values);
+        dispatch(creatUser(values));
       }}
     >
       <Col span={12} offset={6}>
