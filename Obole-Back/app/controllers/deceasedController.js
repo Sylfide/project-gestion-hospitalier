@@ -85,6 +85,11 @@ const deceasedController={
     updateConservation: async (req, res) => {
         try {
 
+            const deceasedId = req.params.id;
+            const updatedConservation = await dataMapper.updateConservation(deceasedId, req.body);
+
+            // res.redirect('route pour un défunt');
+
         } catch(err){
             console.trace(err);
             res.status(500).send(err);
