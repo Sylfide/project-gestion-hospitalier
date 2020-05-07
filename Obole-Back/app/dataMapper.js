@@ -227,7 +227,21 @@ const dataMapper = {
         return addedConservation.rows[0];
     },
 
-    updateConservation: async (deceasedId) => {
+    updateConservation: async (deceasedId, conservationInfo) => {
+
+        const conservation = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(conservationInfo)) {
+            if (valueInfo) {
+                conservation[keyInfo] = valueInfo;
+
+                await db.query("UPDATE conservation SET "+keyInfo+" = $1 WHERE deceased_id = $2", [valueInfo, deceasedId]);
+            }
+        }
+
+        const updatedConservation = await db.query(`SELECT * FROM conservation WHERE deceaced_id = $1;`, [deceasedId]);
+
+        return updatedConservation.rows[0];
 
     },
 
