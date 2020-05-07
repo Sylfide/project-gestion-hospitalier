@@ -11,6 +11,7 @@ import TitleSection from 'src/components/TitleSection';
 import ContentNav from 'src/components/ContentNav';
 import Form from 'src/components/Form';
 import Activity from 'src/components/Activity';
+import ListUser from 'src/components/ListUser';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -20,7 +21,7 @@ import { Layout } from 'antd';
 const { Sider, Content } = Layout;
 
 const Container = styled(Layout)`
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
 `;
 
@@ -36,6 +37,7 @@ const Obole = () => {
         <TitleSection />
         <ContentNav />
         <Form />
+        <ListUser />
       </Content>
       <Activity />
     </Container>

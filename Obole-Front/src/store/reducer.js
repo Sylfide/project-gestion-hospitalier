@@ -1,6 +1,6 @@
 import {
   ENTER_OBOLE,
-  AUTO_CONNECT,
+  GET_USERS,
 } from './actions';
 
 const initialState = {
@@ -9,7 +9,9 @@ const initialState = {
     firstname: '',
     lastname: '',
     email: '',
+    token: '',
   },
+  staffMembers: [],
 };
 
 export default (state = initialState, action = {}) => {
@@ -18,23 +20,19 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         user: {
-          role: action.data.role,
-          firstname: action.data.firstname,
-          lastname: action.data.lastname,
-          email: action.data.email,
-        },
-      };
-    }
-
-    case AUTO_CONNECT: {
-      return {
-        ...state,
-        user: {
           role: action.values.role,
           firstname: action.values.firstname,
           lastname: action.values.lastname,
           email: action.values.email,
+          token: action.values.token,
         },
+      };
+    }
+
+    case GET_USERS: {
+      return {
+        ...state,
+        staffMembers: action.values,
       };
     }
 
