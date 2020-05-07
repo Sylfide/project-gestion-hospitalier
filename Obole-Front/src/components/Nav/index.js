@@ -33,7 +33,7 @@ const Nav = () => {
         defaultSelectedKeys={['3']}
       >
         <Menu.Item key="1">
-          <NavLink to="/chambres">Chambres</NavLink>
+          <Link to="/chambres">Chambres</Link>
         </Menu.Item>
         <Menu.Item key="2">
           <Link to="/graphiques">Graphiques</Link>

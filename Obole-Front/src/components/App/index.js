@@ -1,16 +1,13 @@
 // == Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 
 // Styles
 
 // == Import Components
 import LoginForm from 'src/components/LoginForm';
 import Obole from 'src/components/Obole';
-import Chambres from 'src/components/Chambres';
-import Defunts from 'src/components/Defunts';
-import Employes from 'src/components/Employes';
 
 // == Composant
 const App = () => {
@@ -20,7 +17,7 @@ const App = () => {
   return (
     <>
       <Switch>
-        <Route
+        {/* <Route
           exact
           path="/"
           render={() => {
@@ -29,11 +26,8 @@ const App = () => {
             }
             return <LoginForm />;
           }}
-        />
-        {/* <Obole /> */}
-        <Route path="/chambres" component={Chambres} />
-        <Route path="/employes" component={Employes} />
-        <Route path="/defunts" component={Defunts} />  
+        /> */}
+        <Obole />
         <Route>404</Route>
       </Switch>
     </>
