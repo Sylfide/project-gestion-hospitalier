@@ -58,7 +58,44 @@ const dataMapper = {
 
     updateUser: async (userId, userInfo) => {
 
-        const user = {};
+        try{
+            const user= {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
+            if (valueInfo) {
+                user[keyInfo] = valueInfo;
+                if(keyInfo=='password'){
+                    const salt=valueInfo.substring(0,3);
+                    const hashedPassword = SHA256(valueInfo + salt).toString(encBase64);
+                    await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [hashedPassword, userId]);
+                }
+                else{
+                     await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [valueInfo, userId]);
+                }
+
+               
+            }
+        }
+
+        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
+
+        if(updatedUser.rows[0].user_connected==false){
+            await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
+
+            updatedUser=await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [userId]);
+        }
+
+        return updatedUser.rows[0];
+        }
+
+        catch(error){
+           console.log(error.message)
+        }
+        
+
+      /*
+        const { firstname, lastname, email, password } = userInfo;
+        let updateUser;
 
         for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
             if (valueInfo) {
@@ -71,6 +108,16 @@ const dataMapper = {
         const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
 
         return updatedUser.rows[0];
+        if (password) {
+            const salt = password.substring(0, 3);
+            const hashedPassword = SHA256(password + salt).toString(encBase64);
+            updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
+        } 
+
+        console.log(updateUser);
+
+        return updateUser.rows[0];
+        */
     },
 
     deleteUser: async (userId) => {
