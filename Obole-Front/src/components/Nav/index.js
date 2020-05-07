@@ -2,10 +2,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { } from 'src/store/actions';
+
+// == Import Components
+// import FormMaker from 'src/components/FormMaker';
+// import DeceasedForm from 'src/components/DeceasedForm';
+import Chambres from 'src/components/Chambres';
 
 // Ant Design
 import { Menu } from 'antd';
@@ -23,26 +28,27 @@ const Nav = () => {
   const admin = useSelector((state) => state.admin);
 
   return (
-    <NavMenu
-      mode="inline"
-      defaultSelectedKeys={['3']}
-    >
-      <Menu.Item key="1">
-        <Link to="">Chambres</Link>
-      </Menu.Item>
-      <Menu.Item key="2">
-        <Link to="">Graphiques</Link>
-      </Menu.Item>
-      <Menu.Item key="3">
-        <Link to="">Employés</Link>
-      </Menu.Item>
-      <Menu.Item key="4">
-        <Link to="">Défunts</Link>
-      </Menu.Item>
-      <Menu.Item key="5">
-        <Link to="/rooms">Thanatopracteurs</Link>
-      </Menu.Item>
-    </NavMenu>
+      <NavMenu
+        mode="inline"
+        defaultSelectedKeys={['3']}
+      >
+        <Menu.Item key="1">
+          <NavLink to="/chambres">Chambres</NavLink>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/graphiques">Graphiques</Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Link to="/employes">Employés</Link>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <Link to="/defunts">Défunts</Link>
+        </Menu.Item>
+        <Menu.Item key="5">
+          <Link to="/thanatopracteurs">Thanatopracteurs</Link>
+        </Menu.Item>
+      </NavMenu>
+    
   );
 };
 

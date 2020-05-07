@@ -7,8 +7,8 @@ import { } from 'src/store/actions';
 
 // == Import Components
 import FormMaker from 'src/components/FormMaker';
-// import DeceasedForm from 'src/comonents/DeceasedForm';
-// import GrafForm from 'src/comonents/GrafForm';
+import DeceasedForm from 'src/components/DeceasedForm';
+import GrafForm from 'src/components/GrafForm';
 
 
 // == Composant
@@ -19,8 +19,8 @@ const Form = () => {
   return (
     <div>
       <FormMaker />
-      {/* <DeceasedForm />
-      <GrafForm /> */}
+      <DeceasedForm />
+      <GrafForm />
     </div>
   );
 };

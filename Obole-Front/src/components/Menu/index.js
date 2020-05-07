@@ -47,7 +47,7 @@ const Menu = () => {
       <img alt="logo" src={logo} />
       <Nav />
       <Button type="primary">
-        <Link to="/truc">Profil</Link>
+        <Link to="/profil">Profil</Link>
       </Button>
     </Container>
   );

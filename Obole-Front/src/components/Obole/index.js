@@ -2,6 +2,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Switch, Route } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -11,6 +12,10 @@ import TitleSection from 'src/components/TitleSection';
 import ContentNav from 'src/components/ContentNav';
 import Form from 'src/components/Form';
 import Activity from 'src/components/Activity';
+import Chambres from 'src/components/Chambres';
+import Defunts from 'src/components/Defunts';
+import Employes from 'src/components/Employes';
+
 
 // Ant Design
 import { Layout } from 'antd';
@@ -35,7 +40,7 @@ const Obole = () => {
       <Content>
         <TitleSection />
         <ContentNav />
-        <Form />
+        <Form />    
       </Content>
       <Activity />
     </Container>
