@@ -1,12 +1,13 @@
 import axios from 'axios';
 // import Cookies from 'js-cookie';
-import { CREATE_USER } from 'src/store/actions';
+import { CREATE_USER, DELETE_USER } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
+  const { token } = JSON.parse(sessionStorage.getItem('user'));
+  // const token = sessionStorage.getItem('user.token');
   switch (action.type) {
     case CREATE_USER: {
       // console.log(action.values);
-      const token = sessionStorage.getItem('token');
       axios({
         method: 'post',
         url: 'http://localhost:3000/admin/user/new',
@@ -21,6 +22,20 @@ export default (store) => (next) => (action) => {
         });
       return;
     }
+
+    case DELETE_USER: {
+      console.log(token);
+      axios({
+        method: 'delete',
+        url: `http://localhost:3000/admin/user/${action.id}/delete`,
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          console.log('status: ', res.status);
+        });
+      return;
+    }
+
     default: {
       next(action);
     }

@@ -8,7 +8,9 @@ const initialState = {
     firstname: '',
     lastname: '',
     email: '',
+    token: '',
   },
+  staffMembers: [],
 };
 
 export default (state = initialState, action = {}) => {

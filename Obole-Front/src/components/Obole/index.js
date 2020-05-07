@@ -14,6 +14,9 @@ import FormMaker from 'src/components/FormMaker';
 import GrafForm from 'src/components/GrafForm';
 import DeceasedForm from 'src/components/DeceasedForm';
 import Activity from 'src/components/Activity';
+import ListUser from 'src/components/ListUser';
+
+// Ant Design
 import { Layout } from 'antd';
 
 // ==> Styles
@@ -23,7 +26,7 @@ const { Content } = Layout;
 
 // ==> CSS in JS
 const Container = styled(Layout)`
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
 `;
 
