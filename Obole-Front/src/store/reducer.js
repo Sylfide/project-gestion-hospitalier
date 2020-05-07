@@ -1,5 +1,6 @@
 import {
   ENTER_OBOLE,
+  AUTO_CONNECT,
 } from './actions';
 
 const initialState = {
@@ -24,6 +25,19 @@ export default (state = initialState, action = {}) => {
         },
       };
     }
+
+    case AUTO_CONNECT: {
+      return {
+        ...state,
+        user: {
+          role: action.values.role,
+          firstname: action.values.firstname,
+          lastname: action.values.lastname,
+          email: action.values.email,
+        },
+      };
+    }
+
     default: {
       return state;
     }
