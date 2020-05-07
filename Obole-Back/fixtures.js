@@ -1,7 +1,6 @@
 const moment=require('moment');
 const pg=require('pg');
-
-const connectionString= "pg://obole:obole@obole.c5dairitzweb.us-east-1.rds.amazonaws.com/obole";
+const connectionString= "postgres://obole:obole@obole.c5dairitzweb.us-east-1.rds.amazonaws.com/obole";
 
 const client = new pg.Client(connectionString);
 

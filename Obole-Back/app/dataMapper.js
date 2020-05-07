@@ -74,7 +74,7 @@ const dataMapper = {
         }
 
         if (password) {
-            const salt = password.substring(0, 3);
+            const salt = password.substring(0,3);
             const hashedPassword = SHA256(password + salt).toString(encBase64);
             updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
         }
@@ -165,53 +165,41 @@ const dataMapper = {
 
     enterDeceased:async (req)=>{
         try{
-        const objectKeys=Object.keys(req.body);
-        const objectValues=Object.values(req.body);
-        const splitKeys=[...objectKeys].join(',');
-        const splitValues=[...objectValues].join(',');
+       
 
-        //console.log(...objectValues);
+        const objectDeceased={};
 
-        //console.log(splitKeys);
-        //console.log(splitValues);
+        const objectEntires=Object.entries(req.body);
+
+        for(let[keyInfo,valueInfo] of objectEntires){
+            if(valueInfo){
+                objectDeceased[keyInfo]=valueInfo
+            }
+        }
+
+        const deceasedKeys=Object.keys(objectDeceased);
+        const deceasedValues=Object.values(objectDeceased);
+      
 
         const parameterArr=[];
       
 
-        for(let i=0;i<objectKeys.length;i++){
+        for(let i=0;i<deceasedKeys.length;i++){
             
-            if(objectKeys[i]=="deceased_date" || objectKeys[i]=="entry_date"){
                 let number=i+1;
                 let parameter="$"+number;
                 parameter=parameter.toString();
                 parameterArr.push(parameter)
-             
-            }
-
-            else{
-               let number=i+1;
-               let parameter="$"+number;
-               parameter=parameter.toString();
-               parameterArr.push(parameter);
-            }
-
             
         }
 
 
        const parameterStr=[...parameterArr].join(',');
 
-       
-
-        const string="INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"";
-        //console.log(string);
-        //console.log(splitValues);
         
-        
-        const insertDeceased =await db.query("INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"",[...objectValues]);
+        const insertDeceased =await db.query("INSERT INTO deceased ("+deceasedKeys+") VALUES ("+parameterStr+") RETURNING "+deceasedKeys+"",[...deceasedValues]);
 
-        //const getRoomInfo=await db.query("SELECT occupation FROM room WHERE id=$1",[getDeceased.rows[0].room_id]);
-        //console.log(insertDeceased.rows);
+      
         
         return insertDeceased.rows[0];
         }
