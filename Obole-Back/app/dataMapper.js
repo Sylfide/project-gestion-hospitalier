@@ -58,7 +58,44 @@ const dataMapper = {
 
     updateUser: async (userId, userInfo) => {
 
-        const user = {};
+        try{
+            const user= {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
+            if (valueInfo) {
+                user[keyInfo] = valueInfo;
+                if(keyInfo=='password'){
+                    const salt=valueInfo.substring(0,3);
+                    const hashedPassword = SHA256(valueInfo + salt).toString(encBase64);
+                    await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [hashedPassword, userId]);
+                }
+                else{
+                     await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [valueInfo, userId]);
+                }
+
+               
+            }
+        }
+
+        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
+
+        if(updatedUser.rows[0].user_connected==false){
+            await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
+
+            updatedUser=await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [userId]);
+        }
+
+        return updatedUser.rows[0];
+        }
+
+        catch(error){
+           console.log(error.message)
+        }
+        
+
+      /*
+        const { firstname, lastname, email, password } = userInfo;
+        let updateUser;
 
         for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
             if (valueInfo) {
@@ -71,6 +108,16 @@ const dataMapper = {
         const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
 
         return updatedUser.rows[0];
+        if (password) {
+            const salt = password.substring(0, 3);
+            const hashedPassword = SHA256(password + salt).toString(encBase64);
+            updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
+        } 
+
+        console.log(updateUser);
+
+        return updateUser.rows[0];
+        */
     },
 
     deleteUser: async (userId) => {
@@ -156,41 +203,53 @@ const dataMapper = {
 
     enterDeceased:async (req)=>{
         try{
-       
+        const objectKeys=Object.keys(req.body);
+        const objectValues=Object.values(req.body);
+        const splitKeys=[...objectKeys].join(',');
+        const splitValues=[...objectValues].join(',');
 
-        const objectDeceased={};
+        //console.log(...objectValues);
 
-        const objectEntires=Object.entries(req.body);
-
-        for(let[keyInfo,valueInfo] of objectEntires){
-            if(valueInfo){
-                objectDeceased[keyInfo]=valueInfo
-            }
-        }
-
-        const deceasedKeys=Object.keys(objectDeceased);
-        const deceasedValues=Object.values(objectDeceased);
-      
+        //console.log(splitKeys);
+        //console.log(splitValues);
 
         const parameterArr=[];
       
 
-        for(let i=0;i<deceasedKeys.length;i++){
+        for(let i=0;i<objectKeys.length;i++){
             
+            if(objectKeys[i]=="deceased_date" || objectKeys[i]=="entry_date"){
                 let number=i+1;
                 let parameter="$"+number;
                 parameter=parameter.toString();
                 parameterArr.push(parameter)
+             
+            }
+
+            else{
+               let number=i+1;
+               let parameter="$"+number;
+               parameter=parameter.toString();
+               parameterArr.push(parameter);
+            }
+
             
         }
 
 
        const parameterStr=[...parameterArr].join(',');
 
-        
-        const insertDeceased =await db.query("INSERT INTO deceased ("+deceasedKeys+") VALUES ("+parameterStr+") RETURNING "+deceasedKeys+"",[...deceasedValues]);
+       
 
-      
+        const string="INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"";
+        //console.log(string);
+        //console.log(splitValues);
+        
+        
+        const insertDeceased =await db.query("INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"",[...objectValues]);
+
+        //const getRoomInfo=await db.query("SELECT occupation FROM room WHERE id=$1",[getDeceased.rows[0].room_id]);
+        //console.log(insertDeceased.rows);
         
         return insertDeceased.rows[0];
         }

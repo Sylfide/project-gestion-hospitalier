@@ -26,10 +26,6 @@ const deceasedController={
                     console.log('yes');
                     sendMail(admins,room.name)
                 }
-            
-
-          
-
         
             res.json(insertion);
 
