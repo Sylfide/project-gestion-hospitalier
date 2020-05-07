@@ -2,7 +2,7 @@
 const moment=require('moment');
 
 const pg=require('pg');
-const connectionString= "pg://postgres:js4life@localhost:5432/obole";
+const connectionString= "postgres://obole:obole@obole.c5dairitzweb.us-east-1.rds.amazonaws.com/obole";
 
 const client = new pg.Client(connectionString);
 client.connect();
@@ -37,9 +37,9 @@ const dbConfig = {
   };
  
   
-  await client.query('TRUNCATE TABLE deceased CASCADE');
-  await client.query('TRUNCATE TABLE "user"');
-  await client.query('TRUNCATE TABLE embalmer CASCADE');
+  //await client.query('TRUNCATE TABLE deceased CASCADE');
+  //await client.query('TRUNCATE TABLE "user"');
+  //await client.query('TRUNCATE TABLE embalmer CASCADE');
   
  
   
