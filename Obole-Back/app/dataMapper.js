@@ -38,7 +38,7 @@ const dataMapper = {
 
     addUser: async (userInfo, token) => {
 
-        const { firstname, lastname, role, email, password } = userInfo;
+        const { firstname, lastname, role, email, password, tel} = userInfo;
 
         const salt=password.substring(0,3);
         const hashedPassword= SHA256(password+ salt).toString(encBase64);
@@ -74,7 +74,7 @@ const dataMapper = {
         }
 
         if (password) {
-            const salt = uid2(12);
+            const salt = password.substring(0, 3);
             const hashedPassword = SHA256(password + salt).toString(encBase64);
             updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
         }
@@ -251,18 +251,26 @@ const dataMapper = {
 
     addEmbalmer: async (embalmerInfo) => {
 
-        const { lastname, firstname, address, zip_code, city, email, tel } = embalmerInfo;
+        const embalmerEmail = embalmerInfo.email;
 
-        const existingEmbalmer = await db.query(`SELECT * FROM embalmer WHERE lastname = $1 AND firstname = $2 AND email = $3 AND address = $4 AND zip_code = $5 AND city = $6;`, [lastname, firstname, email, address, zip_code, city]);
+        const existingEmbalmer = await db.query(`SELECT * FROM embalmer WHERE email = $1;`, [embalmerEmail]);
+
+        const newEmbalmer = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(embalmerInfo)) {
+            if (!valueInfo) {
+                newEmbalmer[keyInfo] = null;
+            } else {
+                newEmbalmer[keyInfo] = valueInfo;
+            }
+        }
+
+        // console.log(newEmbalmer);
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = newEmbalmer;
 
         if (existingEmbalmer.rows[0]) {
             return `Ce thanatopracteur existe déjà`
-        } else if (!tel) {
-
-            const addedEmbalmer = await db.query(`INSERT INTO embalmer (lastname, firstname, address, zip_code, city, email) VALUES
-                ($1, $2, $3, $4, $5, $6) RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, firstname, address, zip_code, city, email]);
-
-            return addedEmbalmer.rows[0];
         } else {
 
             const addedEmbalmer = await db.query(`INSERT INTO embalmer (lastname, firstname, address, zip_code, city, email, tel) VALUES
@@ -275,37 +283,17 @@ const dataMapper = {
 
     updateEmbalmer: async (embalmerId, embalmerInfo) => {
 
-        const { lastname, firstname, address, zip_code, city, email, tel } = embalmerInfo;
+        const embalmer = {};
 
-        let updatedEmbalmer;
+        for (let [keyInfo, valueInfo] of Object.entries(embalmerInfo)) {
+            if (valueInfo) {
+                embalmer[keyInfo] = valueInfo;
 
-        if (lastname) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET lastname = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, embalmerId]);
+                await db.query("UPDATE embalmer SET "+keyInfo+" = $1 WHERE id = $2", [valueInfo, embalmerId]);
+            }
         }
 
-        if (firstname) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET firstname = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [firstname, embalmerId]);
-        }
-
-        if (address) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET address = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [address, embalmerId]);
-        }
-
-        if (zip_code) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET zip_code = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [zip_code, embalmerId]);
-        }
-
-        if (city) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET city = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [city, embalmerId]);
-        }
-
-        if (email) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET email = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [email, embalmerId]);
-        }
-
-        if (tel) {
-            updatedEmbalmer = await db.query(`UPDATE embalmer SET tel = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [tel, embalmerId]);
-        }
+        const updatedEmbalmer = await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [embalmerId]);
 
         return updatedEmbalmer.rows[0];
     },
