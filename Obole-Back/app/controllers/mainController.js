@@ -26,7 +26,7 @@ const mainController = {
                 res.status(401).json({message:'Cet utilisateur n\'existe pas'});
                 
             }
-            else{
+            else {
 
                 // const findUserInfo={
                 //     email:findUser.email,

@@ -58,28 +58,19 @@ const dataMapper = {
 
     updateUser: async (userId, userInfo) => {
 
-        const { firstname, lastname, email, password } = userInfo;
-        let updateUser;
+        const user = {};
 
-        if (firstname) {
-            updateUser = await db.query(`UPDATE "user" SET firstname = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [firstname, userId]);
+        for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
+            if (valueInfo) {
+                user[keyInfo] = valueInfo;
+
+                await db.query(`UPDATE "user" SET `+keyInfo+` = $1 WHERE id = $2;`, [valueInfo, userId]);
+            }
         }
 
-        if (lastname) {
-            updateUser = await db.query(`UPDATE "user" SET lastname = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [lastname, userId]);
-        }
+        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
 
-        if (email) {
-            updateUser = await db.query(`UPDATE "user" SET email = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [email, userId]);
-        }
-
-        if (password) {
-            const salt = password.substring(0,3);
-            const hashedPassword = SHA256(password + salt).toString(encBase64);
-            updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
-        }
-
-        return updateUser.rows[0];
+        return updatedUser.rows[0];
     },
 
     deleteUser: async (userId) => {
