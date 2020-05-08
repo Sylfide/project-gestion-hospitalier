@@ -3,16 +3,13 @@ const sendMail=require('../email/send-email');
 const deceasedController={
     enterDeceased:async(req,res)=>{
         try{
-            
-           
-            
 
-            const insertion= await dataMapper.enterDeceased(req);
+            const insertion= await dataMapper.enterDeceased(req.body);
 
            
             //console.log(insertion);
             const admins=await dataMapper.getAdmins();
-            console.log(admins);
+            // console.log(admins);
 
             
             await dataMapper.incrementRoomCapacity(insertion.room_id);
@@ -96,6 +93,20 @@ const deceasedController={
             const oneDeceased = await dataMapper.getOneDeceased(deceasedId);
 
             res.send(oneDeceased);
+
+        } catch(err){
+            console.trace(err);
+            res.status(500).send(err);
+        }
+    },
+
+    updateDeceased: async (req, res) => {
+        try {
+
+            const deceasedId = req.params.id;
+            const updatedDeceased = await dataMapper.updateDeceased(deceasedId, req.body);
+
+            res.send(updatedDeceased);
 
         } catch(err){
             console.trace(err);
