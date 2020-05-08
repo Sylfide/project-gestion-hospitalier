@@ -5,7 +5,7 @@ import React from 'react'; // couche 1
 import { render } from 'react-dom'; // couche 2
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { autoConnect } from 'src/store/actions';
+import { enterObole } from 'src/store/actions';
 
 // == Import : local
 // Composants
@@ -14,7 +14,7 @@ import store from 'src/store';
 
 const user = JSON.parse(sessionStorage.getItem('user'));
 if (user) {
-  store.dispatch(autoConnect(user));
+  store.dispatch(enterObole(user));
 }
 // == Render
 // 1. Élément React racine (celui qui contient l'ensemble de l'app)
