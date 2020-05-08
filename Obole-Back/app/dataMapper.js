@@ -243,24 +243,34 @@ const dataMapper = {
 
         return updatedDeceased.rows[0];
     },
+    
+    removeDeceased:async(deceasedId)=>{
+        
+        const momentDate=moment().format();
+        
+        const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
+    },
+    
+    getAllPresentDeceased: async () => {
 
-    updateDeceasedOnDeceasedRefId : async (deceasedId, deceasedRefId) => {
+        const allPresentDeceased = await db.query(`SELECT * FROM deceased WHERE exit_date IS NULL;`);
 
-        await db.query(`UPDATE deceased SET deceased_ref_id = $1 WHERE id = $2;`, [deceasedRefId, deceasedId]);
+        return allPresentDeceased.rows;
     },
 
+
     addConservation: async (deceasedId, conservationInfo) => {
-        
+
         const { date, embalmer } = conservationInfo;
 
         const embalmerToArray = embalmer.split(' ');
         const embalmerLastname = embalmerToArray[1];
         const embalmerFirstname = embalmerToArray[0];
 
-        const getEmbalmer = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
-        const embalmerId = getEmbalmer.rows[0];
+        const embalmerId = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
+
         const addedConservation = await db.query(`INSERT INTO conservation (date, deceased_id, embalmer_id) VALUES
-            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId.id]);
+            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId]);
 
         return addedConservation.rows[0];
     },
@@ -281,25 +291,6 @@ const dataMapper = {
 
         return updatedConservation.rows[0];
 
-    },
-
-    addDeceasedRef: async (deceasedRefInfo) => {
-
-        const newDeceasedRef = {};
-
-        for (let [keyInfo, valueInfo] of Object.entries(deceasedRefInfo)) {
-            if (!valueInfo) {
-                newDeceasedRef[keyInfo] = null;
-            } else {
-                newDeceasedRef[keyInfo] = valueInfo;
-            }
-        }
-
-        const { lastname, firstname, address, zip_code, city, email, tel } = newDeceasedRef;
-
-        const addedDeceasedRef = await db.query(`INSERT INTO deceased_ref (lastname, firstname, "address", zip_code, city, email, tel) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [lastname, firstname, address, zip_code, city, email, tel]);
-
-        return addedDeceasedRef.rows[0];
     },
 
     getAllEmbalmers: async () => {
