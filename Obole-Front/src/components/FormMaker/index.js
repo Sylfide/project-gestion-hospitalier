@@ -6,7 +6,8 @@ import { creatUser } from 'src/store/actions';
 // import styled from 'styled-components';
 
 // ==> Components
-
+import TitleSection from 'src/components/TitleSection';
+import ContentNav from 'src/components/ContentNav';
 // ==> Styles
 
 // ==> Ant Design sub components
@@ -25,18 +26,12 @@ const FormMaker = () => {
   const onReset = () => {
     form.resetFields();
   };
-  // const layout = {
-  //   labelCol: {
-  //     span: 8,
-  //   },
-  //   wrapperCol: {
-  //     span: 12,
-  //   },
-  // };
 
   return (
+    <div>
+      
+    
     <Form
-      // {...layout}
       layout="vertical"
       size="large"
       form={form}
@@ -129,6 +124,7 @@ const FormMaker = () => {
         </Form.Item>
       </Col>
     </Form>
+    </div>
   );
 };
 

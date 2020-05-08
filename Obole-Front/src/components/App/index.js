@@ -1,7 +1,7 @@
 // == Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Redirect, Switch } from 'react-router';
+import { Route, Switch } from 'react-router-dom';
 
 // Styles
 
@@ -28,7 +28,6 @@ const App = () => {
           }}
         />
         {/* <Obole /> */}
-
         <Route>404</Route>
       </Switch>
     </>
