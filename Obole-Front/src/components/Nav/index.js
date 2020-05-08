@@ -33,7 +33,7 @@ const Nav = () => {
           <Link to="/chambres">Chambres</Link>
         </Menu.Item>
         <Menu.Item key="2">
-          <Link to="/graph">Graphiques</Link>
+          <Link to="/graphs">Graphiques</Link>
         </Menu.Item>
         <Menu.Item key="3">
           <Link to="/employes">Employés</Link>
@@ -42,7 +42,7 @@ const Nav = () => {
           <Link to="/defunts">Défunts</Link>
         </Menu.Item>
         <Menu.Item key="5">
-          <Link to="/thanato">Thanatopracteurs</Link>
+          <Link to="/thanatos">Thanatopracteurs</Link>
         </Menu.Item>
       </NavMenu>
     );
@@ -53,7 +53,7 @@ const Nav = () => {
         <Link to="/defunts">Défunts</Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to="/thanato">Thanatopracteurs</Link>
+        <Link to="/thanatos">Thanatopracteurs</Link>
       </Menu.Item>
     </NavMenu>
   );

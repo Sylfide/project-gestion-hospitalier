@@ -42,7 +42,7 @@ const Obole = () => {
       <Route path="/chambres">
         <FormMaker />
       </Route>
-      <Route path="/graph">
+      <Route path="/graphs">
         <GrafForm />
       </Route>
       <Route path="/employes">
@@ -51,7 +51,7 @@ const Obole = () => {
       <Route path="/defunts">
         <DeceasedForm />
       </Route>
-      <Route path="/thanato">
+      <Route path="/thanatos">
         <FormMaker />
       </Route>
     </Content>
