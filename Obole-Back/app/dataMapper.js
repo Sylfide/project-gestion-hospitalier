@@ -200,20 +200,55 @@ const dataMapper = {
         }
         
     },
-
-    getAllDeceased:async()=>{
-        const deceasedList=await db.query("SELECT * FROM deceased");
-        return deceasedList.rows;
-    },
-
+    
     removeDeceased:async(deceasedId)=>{
-
+        
         const momentDate=moment().format();
-
+        
         const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
     },
+    
+    getAllPresentDeceased: async () => {
+
+        const allPresentDeceased = await db.query(`SELECT * FROM deceased WHERE exit_date IS NULL;`);
+
+        return allPresentDeceased.rows;
+    },
 
 
+    addConservation: async (deceasedId, conservationInfo) => {
+
+        const { date, embalmer } = conservationInfo;
+
+        const embalmerToArray = embalmer.split(' ');
+        const embalmerLastname = embalmerToArray[1];
+        const embalmerFirstname = embalmerToArray[0];
+
+        const embalmerId = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
+
+        const addedConservation = await db.query(`INSERT INTO conservation (date, deceased_id, embalmer_id) VALUES
+            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId]);
+
+        return addedConservation.rows[0];
+    },
+
+    updateConservation: async (deceasedId, conservationInfo) => {
+
+        const conservation = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(conservationInfo)) {
+            if (valueInfo) {
+                conservation[keyInfo] = valueInfo;
+
+                await db.query("UPDATE conservation SET "+keyInfo+" = $1 WHERE deceased_id = $2", [valueInfo, deceasedId]);
+            }
+        }
+
+        const updatedConservation = await db.query(`SELECT * FROM conservation WHERE deceaced_id = $1;`, [deceasedId]);
+
+        return updatedConservation.rows[0];
+
+    },
 
     getAllEmbalmers: async () => {
 

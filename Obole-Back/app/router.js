@@ -25,7 +25,6 @@ router.get('/admin/user/list', adminAuthentified, userController.allUsers);
 router.post('/admin/user/new', adminAuthentified, userController.newUser);
 router.delete('/admin/user/:id/delete', adminAuthentified, userController.deleteOneUser);
 
-
 // routes profil
 router.get('/user/:id', userAuthentified, userController.oneUser);
 router.patch('/user/:id', userAuthentified, userController.updateUser);
@@ -34,12 +33,20 @@ router.patch('/user/:id', userAuthentified, userController.updateUser);
 router.post('/room/new',adminAuthentified,roomController.addRoom);
 router.post('/room/modify/:id',adminAuthentified,roomController.modifyRoom);
 router.get('/room/list',adminAuthentified,roomController.listRooms);
-router.post('/room/details/:id',adminAuthentified,roomController.seeRoom)
-
+router.post('/room/details/:id',adminAuthentified,roomController.seeRoom);
 
 //deceased routes
 router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased);
 router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
+// router.get('/deceased/list/current', userAuthentified, deceasedController);
+// router.get('/deceased/list/history', userAuthentified, deceasedController);
+// router.get('/deceased/:id', userAuthentified, deceasedController);
+// router.patch('deceased/:id/update', userAuthentified, deceasedController);
+// router.post('/deceased/:id/conservation/add', userAuthentified, deceasedController);
+// router.patch('/deceased/:id/conservation/update', userAuthentified, deceasedController);
+// router.post('/deceased/:id/deceased_ref/add', userAuthentified, deceasedController);
+// router.patch('/deceased/:id/deceased_ref/update', userAuthentified, deceasedController);
+
 // routes pour les thanato
 router.get('/embalmer/list', userAuthentified, embalmerController.allEmbalmers);
 router.get('/embalmer/:id', userAuthentified, embalmerController.oneEmbalmer);
