@@ -215,6 +215,12 @@ const dataMapper = {
         return allPresentDeceased.rows;
     },
 
+    getAllDeceased: async () => {
+
+        const allDeceased = await db.query(`SELECT * FROM deceased;`);
+
+        return allDeceased.rows;
+    },
 
     addConservation: async (deceasedId, conservationInfo) => {
 

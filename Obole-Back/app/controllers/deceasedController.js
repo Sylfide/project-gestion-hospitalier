@@ -75,6 +75,19 @@ const deceasedController={
         }
     },
 
+    allDeceased: async (req, res) => {
+        try {
+
+            const allDeceased = await dataMapper.getAllDeceased();
+
+            res.send(allDeceased);
+
+        } catch(err){
+            console.trace(err);
+            res.status(500).send(err);
+        }
+    },
+
     addConservation: async (req, res) => {
         try {
             if (!req.body.date || !req.body.embalmer) {
