@@ -154,46 +154,11 @@ const dataMapper = {
     },
 
 
-    enterDeceased:async (body)=>{
+    enterDeceased:async (deceasedInfo)=>{
         try{
        
             console.log(body);
-
-            const objectDeceased={};
-
-            const objectEntires=Object.entries(body);
-
-            for(let[keyInfo,valueInfo] of objectEntires){
-                if(valueInfo){
-                    objectDeceased[keyInfo]=valueInfo
-                }
-            }
-
-            const deceasedKeys=Object.keys(objectDeceased);
-            const deceasedValues=Object.values(objectDeceased);
-        
-
-            const parameterArr=[];
-        
-
-            for(let i=0;i<deceasedKeys.length;i++){
-                
-                    let number=i+1;
-                    let parameter="$"+number;
-                    parameter=parameter.toString();
-                    parameterArr.push(parameter)
-                
-            }
-
-
-            const parameterStr=[...parameterArr].join(',');
-
             
-            const insertDeceased =await db.query("INSERT INTO deceased ("+deceasedKeys+") VALUES ("+parameterStr+") RETURNING "+deceasedKeys+"",[...deceasedValues]);
-
-        
-            
-            return insertDeceased.rows[0];
         }
 
         catch(error){
