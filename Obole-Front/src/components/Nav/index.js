@@ -24,19 +24,16 @@ const NavMenu = styled(Menu)`
 
 // == Composant
 const Nav = () => {
-  const dispatch = useDispatch();
-  const admin = useSelector((state) => state.admin);
-
-  return (
-      <NavMenu
-        mode="inline"
-        defaultSelectedKeys={['3']}
-      >
+  const role = useSelector((state) => state.user.role);
+​
+  if (role === 'admin') {
+    return (
+      <NavMenu mode="inline">
         <Menu.Item key="1">
           <Link to="/chambres">Chambres</Link>
         </Menu.Item>
         <Menu.Item key="2">
-          <Link to="/graphiques">Graphiques</Link>
+          <Link to="/graph">Graphiques</Link>
         </Menu.Item>
         <Menu.Item key="3">
           <Link to="/employes">Employés</Link>
@@ -45,12 +42,23 @@ const Nav = () => {
           <Link to="/defunts">Défunts</Link>
         </Menu.Item>
         <Menu.Item key="5">
-          <Link to="/thanatopracteurs">Thanatopracteurs</Link>
+          <Link to="/thanato">Thanatopracteurs</Link>
         </Menu.Item>
       </NavMenu>
-    
+    );
+  }
+  return (
+    <NavMenu mode="inline">
+      <Menu.Item key="1">
+        <Link to="/defunts">Défunts</Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link to="/thanato">Thanatopracteurs</Link>
+      </Menu.Item>
+    </NavMenu>
   );
 };
+
 
 // == Export
 export default Nav;
