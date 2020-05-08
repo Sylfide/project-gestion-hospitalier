@@ -1,9 +1,6 @@
 import {
   ENTER_OBOLE,
-<<<<<<< HEAD
-=======
   GET_USERS,
->>>>>>> wip list
 } from './actions';
 
 const initialState = {
