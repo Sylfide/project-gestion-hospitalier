@@ -2,7 +2,7 @@
 
   const domain=process.env.DOMAIN;
   const apiKey=process.env.PRIVATE_MG_KEY;
-// const mailgun=require('mailgun-js')({apiKey:apiKey,domain:domain});
+  const mailgun=require('mailgun-js')({apiKey:apiKey,domain:domain});
 
 const sendRoomCapacityAlert=(adminList,roomName)=>{
     console.log(domain);
