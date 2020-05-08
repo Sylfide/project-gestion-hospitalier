@@ -154,45 +154,46 @@ const dataMapper = {
     },
 
 
-    enterDeceased:async (req)=>{
+    enterDeceased:async (body)=>{
         try{
        
+            console.log(body);
 
-        const objectDeceased={};
+            const objectDeceased={};
 
-        const objectEntires=Object.entries(req.body);
+            const objectEntires=Object.entries(body);
 
-        for(let[keyInfo,valueInfo] of objectEntires){
-            if(valueInfo){
-                objectDeceased[keyInfo]=valueInfo
+            for(let[keyInfo,valueInfo] of objectEntires){
+                if(valueInfo){
+                    objectDeceased[keyInfo]=valueInfo
+                }
             }
-        }
 
-        const deceasedKeys=Object.keys(objectDeceased);
-        const deceasedValues=Object.values(objectDeceased);
-      
+            const deceasedKeys=Object.keys(objectDeceased);
+            const deceasedValues=Object.values(objectDeceased);
+        
 
-        const parameterArr=[];
-      
+            const parameterArr=[];
+        
 
-        for(let i=0;i<deceasedKeys.length;i++){
+            for(let i=0;i<deceasedKeys.length;i++){
+                
+                    let number=i+1;
+                    let parameter="$"+number;
+                    parameter=parameter.toString();
+                    parameterArr.push(parameter)
+                
+            }
+
+
+            const parameterStr=[...parameterArr].join(',');
+
             
-                let number=i+1;
-                let parameter="$"+number;
-                parameter=parameter.toString();
-                parameterArr.push(parameter)
-            
-        }
-
-
-       const parameterStr=[...parameterArr].join(',');
+            const insertDeceased =await db.query("INSERT INTO deceased ("+deceasedKeys+") VALUES ("+parameterStr+") RETURNING "+deceasedKeys+"",[...deceasedValues]);
 
         
-        const insertDeceased =await db.query("INSERT INTO deceased ("+deceasedKeys+") VALUES ("+parameterStr+") RETURNING "+deceasedKeys+"",[...deceasedValues]);
-
-      
-        
-        return insertDeceased.rows[0];
+            
+            return insertDeceased.rows[0];
         }
 
         catch(error){
@@ -228,6 +229,23 @@ const dataMapper = {
 
         return oneDeceased.rows[0];
 
+    },
+
+    updateDeceased: async (deceasedId, deceasedInfo) => {
+
+        const deceased = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
+            if (valueInfo) {
+                deceased[keyInfo] = valueInfo;
+
+                await db.query("UPDATE deceased SET "+keyInfo+" = $1 WHERE id = $2;", [valueInfo, deceasedId]);
+            }
+        }
+
+        const updatedDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
+
+        return updatedDeceased.rows[0];
     },
 
     addConservation: async (deceasedId, conservationInfo) => {
