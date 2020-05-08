@@ -4,6 +4,36 @@ const deceasedController={
     enterDeceased:async(req,res)=>{
         try{
 
+            // 1. décortiquer le req.body comprenant les 3 sous-objets en trois parties : deceasedInfo, conservationInfo et deceasedRefInfo
+
+            const deceasedInfo = req.body.deceased;
+
+                // 1.2 isoler req.body.deceased.room
+                // 1.3 appeler datamapper pour avoir l'id de la room d'après son nom
+                // 1.4 rajouter l'id à l'objet deceasedInfo 
+
+            const conservationInfo = req.body.conservation;
+            const deceasedRefInfo = req.body.deceased_ref;
+
+            // 2. faire l'insertion du deceased
+                // 2.1 faire la méthode dans le datamapper en renvoyant le deceased
+                // 2.2 faire appel à cette méthode en lui passant deceasedInfo
+
+            // 3. incrémenter la room occupation - voir ci-dessous méthode de Reuben
+
+            // 4. faire l'insertion du conservation s'il y en a un
+                // 4.1 faire la méthode datamapper 
+                // 4.2 appeler cette méthode en lui passant conservationInfo
+
+            // 5. faire l'insertion du deceased_ref s'il y en a un
+                // 5.1 faire la méthode datamapper en renvoyant le deceased_ref
+                // 5.2 appeler cette méthode en lui passant deceasedRefInfo
+                // 5.3 faire un update sur deceased pour le champ deceased_ref_id
+
+            // 6. appeler la méthode getOneDeceased avec le nouvel id
+
+            // 7. envoyer l'email aux admins si on atteint la capacité max de la chambre - voir ci-dessous méthode de Reuben
+
             const insertion= await dataMapper.enterDeceased(req.body);
 
            
