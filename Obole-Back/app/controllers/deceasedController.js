@@ -65,7 +65,9 @@ const deceasedController={
     allPresentDeceased: async (req, res) => {
         try {
 
-            
+            const presentsDeceased = await dataMapper.getAllPresentDeceased();
+
+            res.send(presentsDeceased);
 
         } catch(err){
             console.trace(err);
