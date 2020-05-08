@@ -14,6 +14,12 @@ import FormMaker from 'src/components/FormMaker';
 import GrafForm from 'src/components/GrafForm';
 import DeceasedForm from 'src/components/DeceasedForm';
 import Activity from 'src/components/Activity';
+<<<<<<< HEAD
+=======
+import ListUser from 'src/components/ListUser';
+
+// Ant Design
+>>>>>>> wip list
 import { Layout } from 'antd';
 
 // ==> Styles
@@ -23,7 +29,7 @@ const { Content } = Layout;
 
 // ==> CSS in JS
 const Container = styled(Layout)`
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
 `;
 
@@ -38,6 +44,7 @@ const Obole = () => {
       <Content>
         <TitleSection />
         <ContentNav />
+<<<<<<< HEAD
         <Route path="/chambres">
           <FormMaker />
         </Route>
@@ -53,6 +60,10 @@ const Obole = () => {
         <Route path="/thanatos">
           <FormMaker />
         </Route>
+=======
+        <Form />
+        <ListUser />
+>>>>>>> wip list
       </Content>
       <Activity />
     </Container>

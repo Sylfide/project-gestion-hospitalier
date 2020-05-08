@@ -2,8 +2,12 @@
 export const LOGIN = 'actions/LOGIN';
 export const ENTER_OBOLE = 'actions/ENTER_OBOLE';
 export const CREATE_USER = 'actions/CREATE_USE';
+export const GET_USERS = 'actions/GET_USERS';
+export const DELETE_USER = 'actions/DELETE_USER';
 
 // ==> Action creators
 export const login = (values) => ({ type: LOGIN, values });
 export const enterObole = (values) => ({ type: ENTER_OBOLE, values });
 export const creatUser = (values) => ({ type: CREATE_USER, values });
+export const getUsers = (values) => ({ type: GET_USERS, values });
+export const deleteUser = (id) => ({ type: DELETE_USER, id });
