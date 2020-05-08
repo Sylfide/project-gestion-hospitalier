@@ -1,5 +1,6 @@
 const dataMapper = require('../dataMapper');
 const sendMail=require('../email/send-email');
+const moment=require('moment');
 const deceasedController={
     enterDeceased:async(req,res)=>{
         try{
@@ -59,6 +60,22 @@ const deceasedController={
         }
         catch(error){
             res.json(error.message);
+        }
+    },
+
+    listDeceased:async(req,res)=>{
+        try{
+            const getDeceasedList=await dataMapper.getAllDeceased();
+            for(let i=0;i<getDeceasedList.length;i++){
+                //console.log(getDeceasedList[i].entry_date);
+                console.log(moment(getDeceasedList[i].entry_date).format());
+                console.log(typeof moment(getDeceasedList[i].entry_date).format());
+            }
+            res.send(getDeceasedList);
+
+        }
+        catch(error){
+            res.json(error.message)
         }
     }
 }
