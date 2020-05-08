@@ -77,7 +77,8 @@ const userController = {
             const deletedUser = await dataMapper.deleteUser(userId);
 
             if (deletedUser) {
-                res.redirect('/admin/user/list');
+                const userList = await dataMapper.getAllUsers();
+                res.send(userList);
             } else {
                 res.send(`Suppression échouée`);
             }
