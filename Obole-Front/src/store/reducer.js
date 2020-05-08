@@ -1,5 +1,6 @@
 import {
   ENTER_OBOLE,
+  GET_USERS,
 } from './actions';
 
 const initialState = {
@@ -8,7 +9,9 @@ const initialState = {
     firstname: '',
     lastname: '',
     email: '',
+    token: '',
   },
+  staffMembers: [],
 };
 
 export default (state = initialState, action = {}) => {
@@ -21,7 +24,15 @@ export default (state = initialState, action = {}) => {
           firstname: action.values.firstname,
           lastname: action.values.lastname,
           email: action.values.email,
+          token: action.values.token,
         },
+      };
+    }
+
+    case GET_USERS: {
+      return {
+        ...state,
+        staffMembers: action.values,
       };
     }
 

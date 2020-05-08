@@ -1,8 +1,8 @@
 // ==> Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -14,6 +14,9 @@ import FormMaker from 'src/components/FormMaker';
 import GrafForm from 'src/components/GrafForm';
 import DeceasedForm from 'src/components/DeceasedForm';
 import Activity from 'src/components/Activity';
+import ListUser from 'src/components/ListUser';
+
+// Ant Design
 import { Layout } from 'antd';
 
 // ==> Styles
@@ -23,14 +26,14 @@ const { Content } = Layout;
 
 // ==> CSS in JS
 const Container = styled(Layout)`
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
 `;
 
 // ==> Composant
 const Obole = () => {
   // const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  const role = useSelector((state) => state.user.role);
 
   return (
     <Container>
@@ -39,13 +42,13 @@ const Obole = () => {
         <TitleSection />
         <ContentNav />
         <Route path="/chambres">
-          <FormMaker />
+          {role === 'admin' ? <FormMaker /> : <Redirect to="/" />}
         </Route>
         <Route path="/graphs">
-          <GrafForm />
+          {role === 'admin' ? <GrafForm /> : <Redirect to="/" />}
         </Route>
         <Route path="/employes">
-          <FormMaker />
+          {role === 'admin' ? <ListUser /> : <Redirect to="/" />}
         </Route>
         <Route path="/defunts">
           <DeceasedForm />
