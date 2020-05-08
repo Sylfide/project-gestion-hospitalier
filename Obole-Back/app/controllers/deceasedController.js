@@ -88,6 +88,21 @@ const deceasedController={
         }
     },
 
+    oneDeceased: async (req, res) => {
+        try {
+
+            const deceasedId = req.params.id;
+
+            const oneDeceased = await dataMapper.getOneDeceased(deceasedId);
+
+            res.send(oneDeceased);
+
+        } catch(err){
+            console.trace(err);
+            res.status(500).send(err);
+        }
+    },
+
     addConservation: async (req, res) => {
         try {
             if (!req.body.date || !req.body.embalmer) {

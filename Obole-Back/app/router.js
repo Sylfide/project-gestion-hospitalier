@@ -40,7 +40,7 @@ router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased)
 router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
 router.get('/deceased/list/current', userAuthentified, deceasedController.allPresentDeceased);
 router.get('/deceased/list/history', userAuthentified, deceasedController.allDeceased);
-// router.get('/deceased/:id', userAuthentified, deceasedController);
+router.get('/deceased/:id', userAuthentified, deceasedController.oneDeceased);
 // router.patch('deceased/:id/update', userAuthentified, deceasedController);
 // router.post('/deceased/:id/conservation/add', userAuthentified, deceasedController);
 // router.patch('/deceased/:id/conservation/update', userAuthentified, deceasedController);

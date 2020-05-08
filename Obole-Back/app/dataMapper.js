@@ -222,6 +222,14 @@ const dataMapper = {
         return allDeceased.rows;
     },
 
+    getOneDeceased: async (deceasedId) => {
+
+        const oneDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
+
+        return oneDeceased.rows[0];
+
+    },
+
     addConservation: async (deceasedId, conservationInfo) => {
 
         const { date, embalmer } = conservationInfo;
