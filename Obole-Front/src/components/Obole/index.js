@@ -17,9 +17,6 @@ import Activity from 'src/components/Activity';
 import ListUser from 'src/components/ListUser';
 
 // Ant Design
-
-
-// Ant Design
 import { Layout } from 'antd';
 
 // ==> Styles
