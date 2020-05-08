@@ -19,24 +19,24 @@ const Activity = () => {
   return (
     <div id="activity">
       <div className="room">
-        <p className="name">chambre A</p>
+        <h3>Chambre Tinlinlin</h3>
         <div className="count">
-          <p className="free">5</p>
-          <p className="capacity">40</p>
+          <p>Capacité</p>
+          <p className="nbr">40</p>
+          <span />
+          <p>Libre</p>
+          <p className="nbr">5</p>
         </div>
       </div>
+
       <div className="room">
-        <p className="name">chambre B</p>
+        <h3>Chambre Truc</h3>
         <div className="count">
-          <p className="free">5</p>
-          <p className="capacity">40</p>
-        </div>
-      </div>
-      <div className="room">
-        <p className="name">chambre C</p>
-        <div className="count">
-          <p className="free">5</p>
-          <p className="capacity">40</p>
+          <p>Capacité</p>
+          <p className="nbr">30</p>
+          <span />
+          <p>Libre</p>
+          <p className="nbr">10</p>
         </div>
       </div>
 

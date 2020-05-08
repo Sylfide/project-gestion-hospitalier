@@ -2,6 +2,7 @@
 import React from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -17,18 +18,22 @@ const { Sider } = Layout;
 
 // ==> CSS in JS
 const Container = styled(Sider)`
+  background: #dfe6ed;
+
   & > *{
     display: grid;
     grid-template-rows: max-content 1fr max-content;
   }
   img {
-    height: 40px;
+    height: 70px;
     justify-self: center;
-    margin: 15px;
+    margin: 5em 0;
   }
   Button {
     justify-self: center;
-    margin: 15px;
+    margin-bottom: 10em;
+    background: #2c88d9;
+    border-radius: 5px;
   }
 `;
 
@@ -41,7 +46,9 @@ const Menu = () => {
     <Container theme="light">
       <img alt="logo" src={logo} />
       <Nav />
-      <Button type="primary">Profil</Button>
+      <Button type="primary">
+        <Link to="/profil">Profil</Link>
+      </Button>
     </Container>
   );
 };

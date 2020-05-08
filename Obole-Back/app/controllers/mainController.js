@@ -1,5 +1,8 @@
 
 const dataMapper = require('../dataMapper');
+const encBase64 = require('crypto-js/enc-base64');
+const SHA256 = require('crypto-js/sha256');
+
 const mainController = {
 
     homePage:(req,res)=>{
@@ -9,26 +12,48 @@ const mainController = {
     connection:async(req,res)=>{
         try{
          
-         
+            // console.log(req.fields);
+            console.log('C\'est le body', req.body);
            
-            const findUser=await dataMapper.connection(req.fields.email,req.fields.password)
-            
-        
-            if(findUser[0]){
-                const findUserInfo={
-                    email:findUser[0].email,
-                    role:findUser[0].role,
-                    firstname:findUser[0].firstname,
-                    lastname:findUser[0].lastname,
-                    token:findUser[0].token
-                }
+            const findUser=await dataMapper.connection(req.body.email);
 
-                console.log('user actually exsits')
-                res.send(findUserInfo)
+            // ici comparer le mdp reçu et le mdp de findUser
+            
+            console.log('mainController - postDm', findUser);
+            if(!findUser){
+
+                console.log('not defined')
+                res.status(401).json({message:'Cet utilisateur n\'existe pas'});
+                
             }
             else{
-                console.log('not defined')
-                res.status(401).json({message:'invalid username or password'});
+
+                // const findUserInfo={
+                //     email:findUser.email,
+                //     role:findUser.role,
+                //     firstname:findUser.firstname,
+                //     lastname:findUser.lastname,
+                //     token:findUser.token
+                // }
+
+                const salt = req.body.password.substring(0,3);
+                console.log(salt);
+                const hashedPassword=SHA256(req.body.password+salt).toString(encBase64);
+                console.log(hashedPassword);
+                console.log(findUser);
+
+                if(hashedPassword === findUser.password) {
+
+                    Reflect.deleteProperty(findUser, 'password')
+            
+                    console.log(findUser);
+                    res.status(200);
+                    res.send(findUser);
+                } else {
+                    res.status(401).json({message:'Erreur de mot de passe'});
+                }
+
+                
             }
            
 

@@ -35,7 +35,7 @@ const Container = styled.div`
 const validateMessages = {
   required: 'Champ requis',
   types: {
-    email: 'Cette adresse n\'est pas valide',
+    email: 'Adresse mail pas valide',
   },
 };
 
@@ -86,7 +86,7 @@ const LoginForm = () => {
         <Form.Item>
           <Row>
             <Col flex={1}>
-              <Button type="primary" htmlType="submit" className="login-form-button">
+              <Button type="primary" htmlType="submit">
                 Log in
               </Button>
             </Col>

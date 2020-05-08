@@ -9,11 +9,25 @@ const uid2 = require('uid2');
 const dataMapper = {
 
     getAllUsers: async () => {
-        
-        const allUsers = await db.query(`SELECT * FROM "user";`);
+        try{
+            const allUsers = await db.query(`SELECT * FROM "user";`);
         // console.log(allUsers.rows);
         return allUsers.rows;
+        }
+
+        catch(error){
+            res.json(error.message);
+        }
+        
     },
+
+    getAdmins:async()=>{
+        
+        const adminUsers=await db.query(`SELECT * FROM "user" WHERE role=$1`,['admin']);
+        return adminUsers.rows;
+    },
+
+    
 
     getOneUser: async (userId) => {
 
@@ -26,7 +40,7 @@ const dataMapper = {
 
         const { firstname, lastname, role, email, password } = userInfo;
 
-        const salt=uid2(12);
+        const salt=password.substring(0,3);
         const hashedPassword= SHA256(password+ salt).toString(encBase64);
 
         const existingUser = await db.query(`SELECT * FROM "user" WHERE lastname = $1 AND firstname = $2 AND email = $3;`, [lastname, firstname, email]);
@@ -75,16 +89,19 @@ const dataMapper = {
         return deletedUser.rows[0];
     },
 
-    connection:async(email,password)=>{
+    connection:async(email)=>{
 
       
+        // const salt=password.substring(0,3);
 
-        const salt=password.substring(0,3)
+        // console.log(email);
 
-        const hashedPassword=SHA256(password+salt).toString(encBase64);
-        const user=await db.query(`SELECT * FROM "user" WHERE email=$1 AND password=$2`,[email,hashedPassword]);
+        // const hashedPassword=SHA256(password+salt).toString(encBase64);
+        const findeduser = await db.query(`SELECT * FROM "user" WHERE "email" = $1;`, [email]);
 
-        return user.rows;
+        // console.log(findeduser.rows[0]);
+
+        return findeduser.rows[0];
        
         
     },
@@ -115,10 +132,25 @@ const dataMapper = {
         
     },
 
+    incrementRoomCapacity:async(roomId)=>{
+        const roomTargeted=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
+        const currentOccupation=roomTargeted.rows[0].occupation;
+        const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2 RETURNING name,occupation,capacity",[currentOccupation+1,roomId]);
+        return modifiedRoom.rows;
+    },
+
+    decrementRoomCapacity:async(roomId)=>{
+        const roomTargeted=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
+        const currentOccupation=roomTargeted.rows[0].occupation;
+
+        const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2",[currentOccupation-1,roomId]);
+        return modifiedRoom.rows;
+    },
+
     seeRoom:async(roomId)=>{
        const room= await db.query(`SELECT * FROM room WHERE id=$1`,[roomId]);
        
-       return room.rows;
+       return room.rows[0];
 
     },
 
@@ -133,12 +165,12 @@ const dataMapper = {
 
     enterDeceased:async (req)=>{
         try{
-            const objectKeys=Object.keys(req.fields);
-        const objectValues=Object.values(req.fields);
+        const objectKeys=Object.keys(req.body);
+        const objectValues=Object.values(req.body);
         const splitKeys=[...objectKeys].join(',');
         const splitValues=[...objectValues].join(',');
 
-        console.log(...objectValues);
+        //console.log(...objectValues);
 
         //console.log(splitKeys);
         //console.log(splitValues);
@@ -169,14 +201,19 @@ const dataMapper = {
 
        const parameterStr=[...parameterArr].join(',');
 
+       
+
         const string="INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"";
         //console.log(string);
         //console.log(splitValues);
         
         
         const insertDeceased =await db.query("INSERT INTO deceased ("+splitKeys+") VALUES ("+parameterStr+") RETURNING "+splitKeys+"",[...objectValues]);
+
+        //const getRoomInfo=await db.query("SELECT occupation FROM room WHERE id=$1",[getDeceased.rows[0].room_id]);
         //console.log(insertDeceased.rows);
-        return insertDeceased.rows;
+        
+        return insertDeceased.rows[0];
         }
 
         catch(error){
@@ -195,10 +232,90 @@ const dataMapper = {
         const momentDate=moment().format();
 
         const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
-    }
+    },
 
 
 
+    getAllEmbalmers: async () => {
+
+        const allEmbalmers = await db.query(`SELECT * FROM embalmer;`);
+
+        return allEmbalmers.rows;
+    },
+
+    getOneEmbalmer: async (embalmerId) => {
+
+        const oneEmbalmer = await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [embalmerId]);
+        return oneEmbalmer.rows[0];
+    },
+
+    addEmbalmer: async (embalmerInfo) => {
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = embalmerInfo;
+
+        const existingEmbalmer = await db.query(`SELECT * FROM embalmer WHERE lastname = $1 AND firstname = $2 AND email = $3 AND address = $4 AND zip_code = $5 AND city = $6;`, [lastname, firstname, email, address, zip_code, city]);
+
+        if (existingEmbalmer.rows[0]) {
+            return `Ce thanatopracteur existe déjà`
+        } else if (!tel) {
+
+            const addedEmbalmer = await db.query(`INSERT INTO embalmer (lastname, firstname, address, zip_code, city, email) VALUES
+                ($1, $2, $3, $4, $5, $6) RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, firstname, address, zip_code, city, email]);
+
+            return addedEmbalmer.rows[0];
+        } else {
+
+            const addedEmbalmer = await db.query(`INSERT INTO embalmer (lastname, firstname, address, zip_code, city, email, tel) VALUES
+                ($1, $2, $3, $4, $5, $6, $7) RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, firstname, address, zip_code, city, email, tel]);
+
+            return addedEmbalmer.rows[0];
+        }
+
+    },
+
+    updateEmbalmer: async (embalmerId, embalmerInfo) => {
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = embalmerInfo;
+
+        let updatedEmbalmer;
+
+        if (lastname) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET lastname = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [lastname, embalmerId]);
+        }
+
+        if (firstname) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET firstname = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [firstname, embalmerId]);
+        }
+
+        if (address) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET address = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [address, embalmerId]);
+        }
+
+        if (zip_code) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET zip_code = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [zip_code, embalmerId]);
+        }
+
+        if (city) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET city = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [city, embalmerId]);
+        }
+
+        if (email) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET email = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [email, embalmerId]);
+        }
+
+        if (tel) {
+            updatedEmbalmer = await db.query(`UPDATE embalmer SET tel = $1 WHERE id = $2 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [tel, embalmerId]);
+        }
+
+        return updatedEmbalmer.rows[0];
+    },
+
+    deleteEmbalmer: async (embalmerId) => {
+
+        const deletedEmbalmer = await db.query(`DELETE FROM embalmer WHERE id = $1 RETURNING lastname, firstname, address, zip_code, city, email, tel;`, [embalmerId]);
+
+        return deletedEmbalmer.rows[0];
+    },
 };
 
 module.exports = dataMapper;

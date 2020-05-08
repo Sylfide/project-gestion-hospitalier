@@ -2,19 +2,23 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Route } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // == Import Components
 import Menu from 'src/components/Menu';
+import TitleSection from 'src/components/TitleSection';
+import ContentNav from 'src/components/ContentNav';
+import FormMaker from 'src/components/FormMaker';
+import GrafForm from 'src/components/GrafForm';
+import DeceasedForm from 'src/components/DeceasedForm';
 import Activity from 'src/components/Activity';
 
 // Ant Design
 import { Layout } from 'antd';
 
 // == Styles
-// import './styles.scss';
-// import logo from './logo-obole.svg';
 
 const { Sider, Content } = Layout;
 
@@ -30,12 +34,29 @@ const Obole = () => {
 
   return (
     <Container>
-      <Menu />
-      <Content>Content</Content>
-      <Sider theme="light">
-        <Activity />
-      </Sider>
-    </Container>
+    <Menu />
+    <Content>
+      <TitleSection />
+      <ContentNav />
+      {/* <Form /> */}
+      <Route path="/chambres">
+        <FormMaker />
+      </Route>
+      <Route path="/graph">
+        <GrafForm />
+      </Route>
+      <Route path="/employes">
+        <FormMaker />
+      </Route>
+      <Route path="/defunts">
+        <DeceasedForm />
+      </Route>
+      <Route path="/thanato">
+        <FormMaker />
+      </Route>
+    </Content>
+    <Activity />
+  </Container>
   );
 };
 

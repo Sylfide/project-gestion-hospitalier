@@ -51,7 +51,7 @@ const dbConfig = {
         lastname:"admin",
         role:"admin",
         password:hashedPassword,
-        email:'admin@admin.com',
+        email:'mofofb@gmail.com',
         token:token
 
 
