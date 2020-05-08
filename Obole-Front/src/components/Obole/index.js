@@ -51,7 +51,7 @@ const Obole = () => {
           <GrafForm />
         </Route>
         <Route path="/employes">
-          <FormMaker />
+          <ListUser />
         </Route>
         <Route path="/defunts">
           <DeceasedForm />
