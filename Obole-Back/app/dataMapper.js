@@ -273,6 +273,23 @@ const dataMapper = {
 
     },
 
+    updateDeceased: async (deceasedId, deceasedInfo) => {
+
+        const deceased = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
+            if (valueInfo) {
+                deceased[keyInfo] = valueInfo;
+
+                await db.query("UPDATE deceased SET "+keyInfo+" = $1 WHERE id = $2;", [valueInfo, deceasedId]);
+            }
+        }
+
+        const updatedDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
+
+        return updatedDeceased.rows[0];
+    },
+
     addConservation: async (deceasedId, conservationInfo) => {
 
         const { date, embalmer } = conservationInfo;
