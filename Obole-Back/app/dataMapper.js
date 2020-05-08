@@ -97,6 +97,18 @@ const dataMapper = {
         const { firstname, lastname, email, password } = userInfo;
         let updateUser;
 
+        return updatedUser.rows[0];
+        }
+
+        catch(error){
+           console.log(error.message)
+        }
+        
+
+      /*
+        const { firstname, lastname, email, password } = userInfo;
+        let updateUser;
+
         for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
             if (valueInfo) {
                 user[keyInfo] = valueInfo;
