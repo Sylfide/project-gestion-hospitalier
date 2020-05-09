@@ -148,7 +148,6 @@ const dataMapper = {
 
     getRoomByName: async (roomName) => {
         const roomId = await db.query(`SELECT id FROM room WHERE "name" = $1;`, [roomName]);
-        // console.log(roomId.rows[0]);
         return roomId.rows[0];
     },
 
@@ -272,6 +271,15 @@ const dataMapper = {
         return oneDeceased.rows[0];
 
     },
+
+    getOneDeceasedWithoutId: async (deceasedInfo) => {
+
+        const { lastname, firstname, birth_date, deceased_date } = deceasedInfo;
+
+        const oneDeceased = await db.query(`SELECT * FROM deceased WHERE lastname = $1 AND firstname = $2 AND birth_date = $3 AND deceased_date = $4;`, [lastname, firstname, birth_date, deceased_date]);
+
+        return oneDeceased.rows[0];
+    }, 
 
     updateDeceased: async (deceasedId, deceasedInfo) => {
 
