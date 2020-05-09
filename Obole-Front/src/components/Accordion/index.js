@@ -51,8 +51,8 @@ const Accordion = (props) => {
   return (
     <Section accordion>
       <p>{props.header}</p>
-      <Panel header="New" key="1">
-        <FormMaker />
+      <Panel header="Nouveau" key="1">
+        {props.header === 'Employés' ? <FormMaker /> : null}
       </Panel>
       <Panel header="List" key="2">
         {props.header === 'Employés' ? <ListUser /> : null}
