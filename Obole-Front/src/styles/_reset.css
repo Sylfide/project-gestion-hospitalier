@@ -144,9 +144,9 @@ del,
 ins {
   text-decoration: none;
 }
-a {
+/* a {
   color: inherit;
-}
+} */
 
 label,
 button {
