@@ -28,7 +28,7 @@ const ListUser = () => {
     () => {
       axios({
         method: 'get',
-        url: 'http://localhost:3000/user/list',
+        url: 'http://localhost:3000/admin/user/list',
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
