@@ -145,7 +145,11 @@ const dataMapper = {
 
     },
 
-   
+    getRoomByName: async (roomName) => {
+        const roomId = await db.query(`SELECT id FROM room WHERE "name" = $1;`, [roomName]);
+
+        return roomId.rows[0];
+    },
 
     listRooms:async()=>{
         const rooms=await db.query(`SELECT * FROM room`);
@@ -157,7 +161,24 @@ const dataMapper = {
     enterDeceased:async (deceasedInfo)=>{
         try{
        
-            console.log(body);
+            // deceasedInfo contient : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room et roomId
+
+            const newDeceased = {};
+
+            for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
+                if (!valueInfo) {
+                    newDeceased[keyInfo] = null;
+                } else {
+                    newDeceased[keyInfo] = valueInfo;
+                }
+            }
+
+            const { lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, roomId } = newDeceased;
+
+            const addedDeceased = await db.query(`INSERT INTO deceased (lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, roomId]);
+
+            return addedDeceased;
+            
             
         }
 
@@ -195,6 +216,15 @@ const dataMapper = {
         return oneDeceased.rows[0];
 
     },
+
+    getOneDeceasedWithoutId: async (deceasedInfo) => {
+
+        const { lastname, firstname, birth_date, deceased_date } = deceasedInfo;
+
+        const oneDeceased = await db.query(`SELECT * FROM deceased WHERE lastname = $1 AND firstname = $2 AND birth_date = $3 AND deceased_date = $4;`, [lastname, firstname, birth_date, deceased_date]);
+
+        return oneDeceased.rows[0];
+    }, 
 
     updateDeceased: async (deceasedId, deceasedInfo) => {
 
