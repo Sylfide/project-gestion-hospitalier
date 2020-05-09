@@ -21,10 +21,9 @@ router.get('/', mainController.homePage);
 router.post('/connection',mainController.connection);
 
 // routes pour les admins / gestion des users
-router.get('/admin/user/list', adminAuthentified, userController.allUsers);
-router.post('/admin/user/new', adminAuthentified, userController.newUser);
-router.delete('/admin/user/:id/delete', adminAuthentified, userController.deleteOneUser);
-
+router.get('/user/list', adminAuthentified, userController.allUsers);
+router.post('/user/new', adminAuthentified, userController.newUser);
+router.delete('/user/:id/delete', adminAuthentified, userController.deleteOneUser);
 
 // routes profil
 router.get('/user/:id', userAuthentified, userController.oneUser);
