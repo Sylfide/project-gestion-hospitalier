@@ -298,6 +298,11 @@ const dataMapper = {
         return updatedDeceased.rows[0];
     },
 
+    updateDeceasedOnDeceasedRefId : async (deceasedId, deceasedRefId) => {
+
+        await db.query(`UPDATE deceased SET deceased_ref_id = $1 WHERE id = $2;`, [deceasedRefId, deceasedId]);
+    },
+
     addConservation: async (deceasedId, conservationInfo) => {
 
         const { date, embalmer } = conservationInfo;
@@ -330,6 +335,25 @@ const dataMapper = {
 
         return updatedConservation.rows[0];
 
+    },
+
+    addDeceasedRef: async (deceasedRefInfo) => {
+
+        const newDeceasedRef = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(deceasedRefInfo)) {
+            if (!valueInfo) {
+                newDeceasedRef[keyInfo] = null;
+            } else {
+                newDeceasedRef[keyInfo] = valueInfo;
+            }
+        }
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = newDeceasedRef;
+
+        const addedDeceasedRef = await db.query(`INSERT INTO deceased_ref (lastname, firstname, "address", zip_code, city, email, tel) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [lastname, firstname, address, zip_code, city, email, tel]);
+
+        return addedDeceasedRef.rows[0];
     },
 
     getAllEmbalmers: async () => {
