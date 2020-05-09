@@ -9,60 +9,64 @@ const deceasedController={
             const deceasedInfo = req.body.deceased;
 
                 // 1.2 isoler req.body.deceased.room
+            const roomName = req.body.deceased.room;
+            
                 // 1.3 appeler datamapper pour avoir l'id de la room d'après son nom
-                // 1.4 rajouter l'id à l'objet deceasedInfo 
+            const roomId = await dataMapper.getRoomByName(roomName);
+
+                // 1.4 rajouter l'id à l'objet deceasedInfo
+            deceasedInfo.roomId = roomId;
 
             const conservationInfo = req.body.conservation;
             const deceasedRefInfo = req.body.deceased_ref;
 
+            // 1bis vérifier que le défunt n'existe pas déjà 
+                // 1bis.1 faire la méthode datamapper avec un select sur le deceased
+                // 1bis.2 faire appel à la méthode en lui passant deceasedInfo
+            const existingDeceased = await dataMapper.getOneDeceasedWithoutId(deceasedInfo);
+                // 1bis.3 vérifier si le défunt existe déjà et si oui renvoyer un message
+            if (existingDeceased) {
+                return `Ce défunt est déjà enregistré`
+            }
+
             // 2. faire l'insertion du deceased
                 // 2.1 faire la méthode dans le datamapper en renvoyant le deceased
                 // 2.2 faire appel à cette méthode en lui passant deceasedInfo
+            const newDeceased = await dataMapper.enterDeceased(deceasedInfo);
 
             // 3. incrémenter la room occupation - voir ci-dessous méthode de Reuben
+            await dataMapper.incrementRoomCapacity(insertion.room_id);
 
             // 4. faire l'insertion du conservation s'il y en a un
                 // 4.1 faire la méthode datamapper 
                 // 4.2 appeler cette méthode en lui passant conservationInfo
+            const newConservation = await dataMapper.addConservation(newDeceased.id, conservationInfo);
 
             // 5. faire l'insertion du deceased_ref s'il y en a un
                 // 5.1 faire la méthode datamapper en renvoyant le deceased_ref
                 // 5.2 appeler cette méthode en lui passant deceasedRefInfo
                 // 5.3 faire un update sur deceased pour le champ deceased_ref_id
 
-            // 6. appeler la méthode getOneDeceased avec le nouvel id
+            // 6. envoyer l'email aux admins si on atteint la capacité max de la chambre - voir ci-dessous méthode de Reuben
 
-            // 7. envoyer l'email aux admins si on atteint la capacité max de la chambre - voir ci-dessous méthode de Reuben
+            // 7. renvoyer les infos nécessaires au front (redirection sur la route pour un défunt ou juste un message du style ok ?)
 
-            const insertion= await dataMapper.enterDeceased(req.body);
-
-           
+            
             //console.log(insertion);
             const admins=await dataMapper.getAdmins();
             // console.log(admins);
 
+            const room = await dataMapper.seeRoom(insertion.room_id);
+            // console.log(room);
+            // console.log(room.occupation);
+            // console.log(room.capacity);
+            if(room.occupation === room.capacity) {
+                console.log('yes');
+                sendMail(admins,room.name)
+            }
             
-            await dataMapper.incrementRoomCapacity(insertion.room_id);
+        } catch(error) {
 
-            const room=await dataMapper.seeRoom(insertion.room_id);
-            console.log(room);
-             console.log(room.occupation);
-             console.log(room.capacity);
-                if(room.occupation==room.capacity){
-                    console.log('yes');
-                    sendMail(admins,room.name)
-                }
-            
-
-          
-
-        
-            res.json(insertion);
-
-            
-            
-        }
-        catch(error){
             return error.message;
         }
        
