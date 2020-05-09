@@ -126,8 +126,8 @@ const dataMapper = {
     incrementRoomCapacity:async(roomId)=>{
         const roomTargeted=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
         const currentOccupation=roomTargeted.rows[0].occupation;
-        const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2 RETURNING name,occupation,capacity",[currentOccupation+1,roomId]);
-        return modifiedRoom.rows;
+        const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2 RETURNING *;",[currentOccupation+1,roomId]);
+        return modifiedRoom.rows[0];
     },
 
     decrementRoomCapacity:async(roomId)=>{
@@ -243,6 +243,11 @@ const dataMapper = {
         return updatedDeceased.rows[0];
     },
 
+    updateDeceasedOnDeceasedRefId : async (deceasedId, deceasedRefId) => {
+
+        await db.query(`UPDATE deceased SET deceased_ref_id = $1 WHERE id = $2;`, [deceasedRefId, deceasedId]);
+    },
+
     addConservation: async (deceasedId, conservationInfo) => {
 
         const { date, embalmer } = conservationInfo;
@@ -275,6 +280,25 @@ const dataMapper = {
 
         return updatedConservation.rows[0];
 
+    },
+
+    addDeceasedRef: async (deceasedRefInfo) => {
+
+        const newDeceasedRef = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(deceasedRefInfo)) {
+            if (!valueInfo) {
+                newDeceasedRef[keyInfo] = null;
+            } else {
+                newDeceasedRef[keyInfo] = valueInfo;
+            }
+        }
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = newDeceasedRef;
+
+        const addedDeceasedRef = await db.query(`INSERT INTO deceased_ref (lastname, firstname, "address", zip_code, city, email, tel) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [lastname, firstname, address, zip_code, city, email, tel]);
+
+        return addedDeceasedRef.rows[0];
     },
 
     getAllEmbalmers: async () => {
