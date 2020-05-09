@@ -125,6 +125,7 @@ const dataMapper = {
 
     incrementRoomCapacity:async(roomId)=>{
         const roomTargeted=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
+        
         const currentOccupation=roomTargeted.rows[0].occupation;
         const modifiedRoom=await db.query("UPDATE room set occupation=$1 WHERE id=$2 RETURNING *;",[currentOccupation+1,roomId]);
         return modifiedRoom.rows[0];
@@ -147,7 +148,7 @@ const dataMapper = {
 
     getRoomByName: async (roomName) => {
         const roomId = await db.query(`SELECT id FROM room WHERE "name" = $1;`, [roomName]);
-
+        // console.log(roomId.rows[0]);
         return roomId.rows[0];
     },
 
@@ -177,7 +178,7 @@ const dataMapper = {
 
             const addedDeceased = await db.query(`INSERT INTO deceased (lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, roomId]);
 
-            return addedDeceased;
+            return addedDeceased.rows[0];
             
             
         }
@@ -210,7 +211,7 @@ const dataMapper = {
     },
 
     getOneDeceased: async (deceasedId) => {
-
+        
         const oneDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
 
         return oneDeceased.rows[0];
