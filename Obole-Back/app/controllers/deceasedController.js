@@ -1,11 +1,11 @@
 const dataMapper = require('../dataMapper');
-const sendMail=require('../email/send-email');
-const deceasedController={
-    enterDeceased:async(req,res)=>{
+const sendMail= require('../email/send-email');
+const deceasedController = {
+
+    enterDeceased: async (req,res) => {
         try{
 
             // 1. décortiquer le req.body comprenant les 3 sous-objets en trois parties : deceasedInfo, conservationInfo et deceasedRefInfo
-
             const deceasedInfo = req.body.deceased;
 
                 // 1.2 isoler req.body.deceased.room
@@ -109,7 +109,8 @@ const deceasedController={
         }
        
     },
-    removeDeceased:async(req,res)=>{
+
+    removeDeceased: async (req,res) => {
         try{
             const getDeceased=await dataMapper.removeDeceased(req.params.id);
             
@@ -219,8 +220,6 @@ const deceasedController={
             res.status(500).send(err);
         }
     },
-}
+};
 
-
-
-module.exports=deceasedController;
+module.exports = deceasedController;
