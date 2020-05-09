@@ -14,7 +14,7 @@ import FormMaker from 'src/components/FormMaker';
 import GrafForm from 'src/components/GrafForm';
 import DeceasedForm from 'src/components/DeceasedForm';
 import Activity from 'src/components/Activity';
-import ListUser from 'src/components/ListUser';
+import Accordion from 'src/components/Accordion';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -39,19 +39,19 @@ const Obole = () => {
     <Container>
       <Menu />
       <Content>
-        <TitleSection />
-        <ContentNav />
+        {/* <TitleSection />
+        <ContentNav /> */}
         <Route path="/chambres">
-          {role === 'admin' ? <FormMaker /> : <Redirect to="/" />}
+          {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
         <Route path="/graphs">
           {role === 'admin' ? <GrafForm /> : <Redirect to="/" />}
         </Route>
         <Route path="/employes">
-          {role === 'admin' ? <ListUser /> : <Redirect to="/" />}
+          {role === 'admin' ? <Accordion header="Employés" /> : <Redirect to="/" />}
         </Route>
         <Route path="/defunts">
-          <DeceasedForm />
+          <Accordion header="Défunts" />
         </Route>
         <Route path="/thanatos">
           <FormMaker />
