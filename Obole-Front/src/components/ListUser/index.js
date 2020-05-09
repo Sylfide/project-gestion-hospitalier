@@ -34,6 +34,10 @@ const ListUser = () => {
     }
   }, [topMessage]);
 
+  const error = (msg) => {
+    message.error(msg);
+  };
+
   // Après le premier rendu du composant
   // UseEffect va déclencher une requête pour obtenir
   // la liste des utilisateurs
