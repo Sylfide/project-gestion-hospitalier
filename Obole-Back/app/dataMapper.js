@@ -304,17 +304,17 @@ const dataMapper = {
     },
 
     addConservation: async (deceasedId, conservationInfo) => {
-
+        
         const { date, embalmer } = conservationInfo;
 
         const embalmerToArray = embalmer.split(' ');
         const embalmerLastname = embalmerToArray[1];
         const embalmerFirstname = embalmerToArray[0];
 
-        const embalmerId = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
-
+        const getEmbalmer = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
+        const embalmerId = getEmbalmer.rows[0];
         const addedConservation = await db.query(`INSERT INTO conservation (date, deceased_id, embalmer_id) VALUES
-            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId]);
+            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId.id]);
 
         return addedConservation.rows[0];
     },
