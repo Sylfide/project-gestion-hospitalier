@@ -46,7 +46,7 @@ const Section = styled(Collapse)`
 // ==> Composant
 const Accordion = (props) => {
   // const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  // const opened = useSelector((state) => state.opened);
 
   return (
     <Section accordion>

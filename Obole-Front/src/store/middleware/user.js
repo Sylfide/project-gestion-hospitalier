@@ -1,6 +1,6 @@
 import axios from 'axios';
 // import Cookies from 'js-cookie';
-import { CREATE_USER, getUsers,  DELETE_USER } from 'src/store/actions';
+import { CREATE_USER, getUsers, DELETE_USER, infoMessage } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
   const { token } = JSON.parse(sessionStorage.getItem('user'));
@@ -15,10 +15,10 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          if (res.status === 200) {
-            console.log('res: ', res.data);
-            // store.dispatch(enterObole(res.data));
-          }
+          store.dispatch(getUsers(res.data));
+        })
+        .catch((res) => {
+          store.dispatch(infoMessage('Erreur lors de la création'));
         });
       return;
     }
@@ -31,6 +31,9 @@ export default (store) => (next) => (action) => {
       })
         .then((res) => {
           store.dispatch(getUsers(res.data));
+        })
+        .catch((res) => {
+          store.dispatch(infoMessage('Erreur lors de la suppression'));
         });
       return;
     }

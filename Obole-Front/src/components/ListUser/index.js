@@ -6,13 +6,13 @@ import { getUsers, deleteUser } from 'src/store/actions';
 import axios from 'axios';
 
 // ==> Components
+import { Table, Popconfirm, message } from 'antd';
 
 // ==> Styles
 
 // ==> Ant Design sub components
-import { Table, Popconfirm } from 'antd';
-
 const { Column } = Table;
+
 // ==> CSS in JS
 
 // ==> Composant
@@ -20,6 +20,10 @@ const ListUser = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const staffMembers = useSelector((state) => state.staffMembers);
+
+  const error = (msg) => {
+    message.error(msg);
+  };
 
   // Après le premier rendu du composant
   // UseEffect va déclencher une requête pour obtenir
@@ -32,9 +36,11 @@ const ListUser = () => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          if (res.status === 200) {
-            dispatch(getUsers(res.data));
-          }
+          dispatch(getUsers(res.data));
+        })
+        .catch((res) => {
+          error(res.response.statusText);
+          console.log(res.response);
         });
     },
     [],
