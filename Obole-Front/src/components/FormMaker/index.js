@@ -104,7 +104,14 @@ const FormMaker = () => {
           name="password"
           label="Mot de passe"
           rules={[
-            { required: true },
+            {
+              required: true,
+              message: 'Champ requis',
+            },
+            // {
+            //   min: 8,
+            //   message: '8 caractères minimum',
+            // },
           ]}
         >
           <Input
