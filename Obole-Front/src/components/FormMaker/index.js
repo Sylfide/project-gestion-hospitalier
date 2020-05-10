@@ -1,18 +1,23 @@
 // ==> Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
 import { creatUser } from 'src/store/actions';
 // import styled from 'styled-components';
 
 // ==> Components
-import TitleSection from 'src/components/TitleSection';
-import ContentNav from 'src/components/ContentNav';
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Row,
+  Col,
+  message,
+} from 'antd';
+
 // ==> Styles
 
 // ==> Ant Design sub components
-import { Form, Input, Button, Select, Row, Col } from 'antd';
-
 const { Option } = Select;
 
 // ==> CSS in JS
@@ -20,7 +25,19 @@ const { Option } = Select;
 // ==> Composant
 const FormMaker = () => {
   const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  const topMessage = useSelector((state) => state.infoMessage);
+
+  const clear = () => {
+    dispatch({ type: 'clear' });
+  };
+  const error = () => {
+    message.error(topMessage, 2, clear);
+  };
+  useEffect(() => {
+    if (topMessage !== '') {
+      error();
+    }
+  }, [topMessage]);
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -28,9 +45,6 @@ const FormMaker = () => {
   };
 
   return (
-    <div>
-      
-    
     <Form
       layout="vertical"
       size="large"
@@ -124,7 +138,6 @@ const FormMaker = () => {
         </Form.Item>
       </Col>
     </Form>
-    </div>
   );
 };
 

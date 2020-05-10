@@ -1,6 +1,8 @@
 import {
   ENTER_OBOLE,
+  LOGOUT,
   GET_USERS,
+  INFO_MESSAGE,
 } from './actions';
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
     token: '',
   },
   staffMembers: [],
+  infoMessage: '',
 };
 
 export default (state = initialState, action = {}) => {
@@ -29,10 +32,31 @@ export default (state = initialState, action = {}) => {
       };
     }
 
+    case LOGOUT: {
+      return {
+        ...state,
+        user: initialState.user,
+      };
+    }
+
     case GET_USERS: {
       return {
         ...state,
         staffMembers: action.values,
+      };
+    }
+
+    case INFO_MESSAGE: {
+      return {
+        ...state,
+        infoMessage: action.message,
+      };
+    }
+
+    case 'clear': {
+      return {
+        ...state,
+        infoMessage: '',
       };
     }
 
