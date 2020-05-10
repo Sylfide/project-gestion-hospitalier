@@ -49,7 +49,7 @@ const userController = {
             if (result === 'Cet utilisateur existe déjà') {
                 res.send(result);
             } else {
-                res.redirect('/admin/user/list');
+                res.redirect('/user/list');
             }
 
         } catch(err) {
