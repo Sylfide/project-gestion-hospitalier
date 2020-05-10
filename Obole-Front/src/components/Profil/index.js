@@ -1,7 +1,7 @@
 // ==> Import npm
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import { logout } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -36,9 +36,9 @@ const Container = styled.div`
 // ==> Composant
 const Profil = () => {
   const [edit, setEdit] = useState(true);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { id, firstname, lastname, email } = useSelector((state) => state.user);
-  // const history = useHistory();
+  const history = useHistory();
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -145,14 +145,15 @@ const Profil = () => {
           </Form.Item>
         </Col>
       </Form>
-      {/* <Button
+      <Button
         type="primary"
+        size="large"
         onClick={() => {
           dispatch(logout(history));
         }}
       >
-        Logout
-      </Button> */}
+        *Logout*
+      </Button>
     </Container>
   );
 };
