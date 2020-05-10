@@ -5,7 +5,15 @@ import { creatUser } from 'src/store/actions';
 // import styled from 'styled-components';
 
 // ==> Components
-import { Form, Input, Button, Select, Row, Col, message } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Row,
+  Col,
+  message,
+} from 'antd';
 
 // ==> Styles
 

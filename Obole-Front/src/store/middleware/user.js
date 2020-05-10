@@ -13,7 +13,7 @@ export default (store) => (next) => (action) => {
     case CREATE_USER: {
       axios({
         method: 'post',
-        url: 'http://localhost:3000/admin/user/new',
+        url: 'http://localhost:3000/user/new',
         data: action.values,
         headers: { authorization: `Bearer ${token}` },
       })
@@ -29,7 +29,7 @@ export default (store) => (next) => (action) => {
     case DELETE_USER: {
       axios({
         method: 'delete',
-        url: `http://localhost:3000/admin/user/${action.id}/delete`,
+        url: `http://localhost:3000/user/${action.id}/delete`,
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
