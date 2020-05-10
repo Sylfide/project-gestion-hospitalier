@@ -20,10 +20,19 @@ const ListUser = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const staffMembers = useSelector((state) => state.staffMembers);
+  const topMessage = useSelector((state) => state.infoMessage);
 
-  const error = (msg) => {
-    message.error(msg);
+  const clear = () => {
+    dispatch({ type: 'clear' });
   };
+  const error = () => {
+    message.error(topMessage, 2, clear);
+  };
+  useEffect(() => {
+    if (topMessage !== '') {
+      error();
+    }
+  }, [topMessage]);
 
   // Après le premier rendu du composant
   // UseEffect va déclencher une requête pour obtenir

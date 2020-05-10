@@ -19,8 +19,11 @@ const FormMaker = () => {
   const dispatch = useDispatch();
   const topMessage = useSelector((state) => state.infoMessage);
 
+  const clear = () => {
+    dispatch({ type: 'clear' });
+  };
   const error = () => {
-    message.error(topMessage, 2);
+    message.error(topMessage, 2, clear);
   };
   useEffect(() => {
     if (topMessage !== '') {
