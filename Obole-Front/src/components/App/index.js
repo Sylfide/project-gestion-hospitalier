@@ -24,7 +24,7 @@ const App = () => {
         <Route
           path="/"
           render={() => {
-            if (role === 'admin' || role === 'user') {
+            if (role !== '') {
               return <Obole />;
             }
             return <LoginForm />;
