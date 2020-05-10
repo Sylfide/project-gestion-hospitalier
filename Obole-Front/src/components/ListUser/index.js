@@ -34,18 +34,6 @@ const ListUser = () => {
     }
   }, [topMessage]);
 
-  const clear = () => {
-    dispatch({ type: 'clear' });
-  };
-  const error = () => {
-    message.error(topMessage, 2, clear);
-  };
-  useEffect(() => {
-    if (topMessage !== '') {
-      error();
-    }
-  }, [topMessage]);
-
   // Après le premier rendu du composant
   // UseEffect va déclencher une requête pour obtenir
   // la liste des utilisateurs
