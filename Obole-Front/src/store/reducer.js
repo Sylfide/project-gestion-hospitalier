@@ -7,6 +7,7 @@ import {
 
 const initialState = {
   user: {
+    id: '',
     role: '',
     firstname: '',
     lastname: '',
@@ -23,6 +24,7 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         user: {
+          id: action.values.id,
           role: action.values.role,
           firstname: action.values.firstname,
           lastname: action.values.lastname,

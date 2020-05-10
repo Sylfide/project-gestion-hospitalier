@@ -8,13 +8,10 @@ import styled from 'styled-components';
 
 // ==> Components
 import Menu from 'src/components/Menu';
-import TitleSection from 'src/components/TitleSection';
-import ContentNav from 'src/components/ContentNav';
-import FormMaker from 'src/components/FormMaker';
-import GrafForm from 'src/components/GrafForm';
-import DeceasedForm from 'src/components/DeceasedForm';
-import Activity from 'src/components/Activity';
 import Accordion from 'src/components/Accordion';
+import GrafForm from 'src/components/GrafForm';
+import Profil from 'src/components/Profil';
+import Activity from 'src/components/Activity';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -55,6 +52,9 @@ const Obole = () => {
         </Route>
         <Route path="/thanatos">
           <Accordion header="Thanatopracteurs" />
+        </Route>
+        <Route path="/profil">
+          <Profil />
         </Route>
       </Content>
       <Activity />
