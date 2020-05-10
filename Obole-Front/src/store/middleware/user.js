@@ -1,13 +1,16 @@
 import axios from 'axios';
-// import Cookies from 'js-cookie';
-import { CREATE_USER, getUsers, DELETE_USER, infoMessage } from 'src/store/actions';
+import {
+  CREATE_USER,
+  getUsers,
+  DELETE_USER,
+  infoMessage,
+  LOGOUT,
+} from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
   const { token } = JSON.parse(sessionStorage.getItem('user'));
-  // const token = sessionStorage.getItem('user.token');
   switch (action.type) {
     case CREATE_USER: {
-      // console.log(action.values);
       axios({
         method: 'post',
         url: 'http://localhost:3000/admin/user/new',
@@ -35,6 +38,13 @@ export default (store) => (next) => (action) => {
         .catch((res) => {
           store.dispatch(infoMessage('Erreur lors de la suppression'));
         });
+      return;
+    }
+
+    case LOGOUT: {
+      sessionStorage.removeItem('user');
+      action.history.push('/');
+      next(action);
       return;
     }
 

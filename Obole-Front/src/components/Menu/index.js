@@ -1,9 +1,9 @@
 // == Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import { } from 'src/store/actions';
+import { logout } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
@@ -39,15 +39,22 @@ const Container = styled(Sider)`
 
 // ==> Composant
 const Menu = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
+  const history = useHistory();
 
   return (
     <Container theme="light">
       <img alt="logo" src={logo} />
       <Nav />
-      <Button type="primary">
-        <Link to="/profil">Profil</Link>
+      <Button
+        type="primary"
+        onClick={() => {
+          dispatch(logout(history));
+        }}
+      >
+        *Logout*
+        {/* <Link to="/profil">Profil</Link> */}
       </Button>
     </Container>
   );

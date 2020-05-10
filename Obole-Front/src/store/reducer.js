@@ -1,5 +1,6 @@
 import {
   ENTER_OBOLE,
+  LOGOUT,
   GET_USERS,
   INFO_MESSAGE,
 } from './actions';
@@ -31,6 +32,13 @@ export default (state = initialState, action = {}) => {
       };
     }
 
+    case LOGOUT: {
+      return {
+        ...state,
+        user: initialState.user,
+      };
+    }
+
     case GET_USERS: {
       return {
         ...state,
@@ -42,6 +50,13 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         infoMessage: action.message,
+      };
+    }
+
+    case 'clear': {
+      return {
+        ...state,
+        infoMessage: '',
       };
     }
 
