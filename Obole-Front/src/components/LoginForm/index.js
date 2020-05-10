@@ -72,10 +72,7 @@ const LoginForm = () => {
           name="password"
           rules={[{ required: true }]}
         >
-          <Input
-            type="password"
-            placeholder="Mot de passe"
-          />
+          <Input.Password placeholder="Mot de passe" />
         </Form.Item>
         <Form.Item>
           <a className="login-form-forgot" href="">

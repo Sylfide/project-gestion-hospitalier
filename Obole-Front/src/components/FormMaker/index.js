@@ -114,9 +114,7 @@ const FormMaker = () => {
             // },
           ]}
         >
-          <Input
-            type="password"
-          />
+          <Input.Password />
         </Form.Item>
 
         <Form.Item
