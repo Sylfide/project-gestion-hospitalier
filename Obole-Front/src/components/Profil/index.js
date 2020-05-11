@@ -13,6 +13,7 @@ import {
   Row,
   Col,
   message,
+  Switch,
 } from 'antd';
 
 // ==> Styles
@@ -66,11 +67,11 @@ const Profil = () => {
       >
         <Col span={12} offset={6}>
           <Row id="edit" justify="end">
-            <Form.Item>
-              <Button type="primary" onClick={onEdit}>
-                Éditer
-              </Button>
-            </Form.Item>
+            <Switch
+              checkedChildren="Éditer"
+              unCheckedChildren="Éditer"
+              onChange={onEdit}
+            />
           </Row>
 
           <Form.Item
