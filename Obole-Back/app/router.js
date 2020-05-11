@@ -42,10 +42,6 @@ router.get('/deceased/list/current', userAuthentified, deceasedController.allPre
 router.get('/deceased/list/history', userAuthentified, deceasedController.allDeceased);
 router.get('/deceased/:id', userAuthentified, deceasedController.oneDeceased);
 // router.patch('deceased/:id/update', userAuthentified, deceasedController.updateDeceased);
-// router.post('/deceased/:id/conservation/add', userAuthentified, deceasedController);
-// router.patch('/deceased/:id/conservation/update', userAuthentified, deceasedController);
-// router.post('/deceased/:id/deceased_ref/add', userAuthentified, deceasedController);
-// router.patch('/deceased/:id/deceased_ref/update', userAuthentified, deceasedController);
 
 // routes pour les thanato
 router.get('/embalmer/list', userAuthentified, embalmerController.allEmbalmers);
