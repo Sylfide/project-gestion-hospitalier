@@ -188,11 +188,11 @@ const dataMapper = {
         
     },
     
-    removeDeceased:async(deceasedId)=>{
+    removeDeceased: async (deceasedId) => {
         
-        const momentDate=moment().format();
+        const momentDate = moment().format();
         
-        const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[momentDate,deceasedId])
+        const updateDeceased = await db.query(`UPDATE deceased SET exit_date = $1 WHERE id = $2`, [momentDate, deceasedId]);
     },
     
     getAllPresentDeceased: async () => {
@@ -291,16 +291,29 @@ const dataMapper = {
         const deceased = {};
 
         for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
-            if (valueInfo) {
+            if (!valueInfo) {
+                deceased[keyInfo] = null;
+            } else {
                 deceased[keyInfo] = valueInfo;
-
-                await db.query("UPDATE deceased SET "+keyInfo+" = $1 WHERE id = $2;", [valueInfo, deceasedId]);
             }
         }
 
-        const updatedDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
+        // console.log(deceased);
 
-        return updatedDeceased.rows[0];
+        const { lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id } = deceased;
+
+        if (deceased.exit_date === null) {
+
+            const updatedDeceased = await db.query(`UPDATE deceased SET lastname = $1, firstname = $2, birth_date = $3, deceased_date = $4, entry_date = $5, burial_permit_date = $6, provenance = $7, exit_date = $8, ritual = $9, room_id = $10 WHERE id = $11 RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id, deceasedId]);
+
+            return updatedDeceased.rows[0];
+
+        } else {
+
+            const updatedDeceased = await db.query(`UPDATE deceased SET lastname = $1, firstname = $2, birth_date = $3, deceased_date = $4, entry_date = $5, burial_permit_date = $6, provenance = $7, ritual = $8, room_id = $9 WHERE id = $10 RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, ritual, room_id, deceasedId]);
+
+            return updatedDeceased.rows[0];
+        }
     },
 
     updateDeceasedOnDeceasedRefId : async (deceasedId, deceasedRefId) => {

@@ -210,9 +210,20 @@ const deceasedController = {
             }
 
             // 3. faire l'update du deceased
-                // 3.1 faire la méthode dans datamapper en renvoyant le deceased
-                // 3.2 faire appel à la méthode en lui passant deceasedInfo (elle renvoie TOUTES les infos sur le défunt)
-            const updatedDeceased = await dataMapper.updateDeceased(deceasedId, deceasedInfo);
+            if (deceasedInfo.exit_date !== '') {
+                // 3.1 si le deceasedInfo.exit_date !== null
+                    // 3.1.1 appeler datamapper removeDeceased en lui passant deceasedId
+                await dataMapper.removeDeceased(deceasedId);
+                    // 3.1.1bis appeler datamapper pour décrémenter la chambre
+                await dataMapper.decrementRoomCapacity(deceasedInfo.room_id);
+                    // 3.1.2 appeler datamapper updateDeceased
+                await dataMapper.updateDeceased(deceasedId, deceasedInfo);
+            } else {
+                // 3.2 sinon 
+                    // 3.2.1 faire la méthode dans datamapper en renvoyant le deceased
+                    // 3.2.2 faire appel à la méthode en lui passant deceasedInfo (elle renvoie TOUTES les infos sur le défunt)
+                await dataMapper.updateDeceased(deceasedId, deceasedInfo);
+            }
 
             // 4. faire l'update du conservation s'il y a de nouvelles données
                 // d'un côté, j'ai conservationInfo (date, embalmer_id) et de l'autre j'ai currentDeceased qui contient conservation_id, conservation_date, embalmer_id, embalmer_lastame et embalmer_firstname
@@ -282,7 +293,7 @@ const deceasedController = {
 
             // 6. renvoyer les infos nécessaires au front 
                 // 6.1 appeler datamapper pour les détails d'un défunt en lui passant updatedDeceased.id
-            const updatedDeceasedAllInfos = await dataMapper.getOneDeceased(updatedDeceased.id);
+            const updatedDeceasedAllInfos = await dataMapper.getOneDeceased(deceasedId);
                 // 6.2 renvoyer les données
             res.send(updatedDeceasedAllInfos);
 
