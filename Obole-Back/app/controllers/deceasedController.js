@@ -282,7 +282,9 @@ const deceasedController = {
 
             // 6. renvoyer les infos nécessaires au front 
                 // 6.1 appeler datamapper pour les détails d'un défunt en lui passant updatedDeceased.id
-                // 6.2 renvoyer les données 
+            const updatedDeceasedAllInfos = await dataMapper.getOneDeceased(updatedDeceased.id);
+                // 6.2 renvoyer les données
+            res.send(updatedDeceasedAllInfos);
 
         } catch(err){
             console.trace(err);
