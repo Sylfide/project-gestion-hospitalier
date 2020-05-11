@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 // ==> Components
 import ListUser from 'src/components/ListUser';
-import FormMaker from 'src/components/FormMaker';
+import FormUser from 'src/components/FormUser';
 import { Collapse } from 'antd';
 
 // ==> Styles
@@ -52,7 +52,7 @@ const Accordion = (props) => {
     <Section accordion>
       <p>{props.header}</p>
       <Panel header="Nouveau" key="1">
-        {props.header === 'Employés' ? <FormMaker /> : null}
+        {props.header === 'Employés' ? <FormUser /> : null}
       </Panel>
       <Panel header="List" key="2">
         {props.header === 'Employés' ? <ListUser /> : null}

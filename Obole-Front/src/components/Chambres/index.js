@@ -6,7 +6,7 @@ import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
-import FormMaker from 'src/components/FormMaker';
+import FormUser from 'src/components/FormUser';
 // ==> Styles
 
 // ==> Ant Design sub components
@@ -19,7 +19,7 @@ const Chambres = () => {
   // const clickCount = useSelector((state) => state.counter);
 
   return (
-    <FormMaker />
+    <FormUser />
   );
 };
 

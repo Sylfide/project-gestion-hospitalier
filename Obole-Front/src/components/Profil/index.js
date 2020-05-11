@@ -52,7 +52,7 @@ const Profil = () => {
 
   return (
     <Container>
-      <p>Profil</p>
+      <p>Compte</p>
       <Form
         layout="vertical"
         size="large"

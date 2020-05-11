@@ -9,7 +9,6 @@ import styled from 'styled-components';
 // ==> Components
 import Menu from 'src/components/Menu';
 import Accordion from 'src/components/Accordion';
-import GrafForm from 'src/components/GrafForm';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
 
@@ -41,8 +40,8 @@ const Obole = () => {
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
-        <Route path="/graphs">
-          {role === 'admin' ? <GrafForm /> : <Redirect to="/" />}
+        <Route path="/graph">
+          {role === 'admin' ? <Accordion header="Graphiques" /> : <Redirect to="/" />}
         </Route>
         <Route path="/employes">
           {role === 'admin' ? <Accordion header="Employés" /> : <Redirect to="/" />}
