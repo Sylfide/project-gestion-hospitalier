@@ -4,12 +4,15 @@
 
 body {
   min-height: 100vh;
+  max-width: 1200px;
+  margin: 0 auto;
   display: grid;
   align-items: center;
   font-family: -apple-system, BlinkMacSystemFont,
     “Segoe UI”, “Roboto”, “Oxygen”, “Ubuntu”, “Cantarell”,
     “Fira Sans”, “Droid Sans”, “Helvetica Neue”,
     sans-serif;
+  background: linear-gradient(90deg, #DFE6ED 50%, #96C3EC 51%);
 }
 
 /* 
