@@ -8,6 +8,7 @@ import styled from 'styled-components';
 // ==> Components
 import ListUser from 'src/components/ListUser';
 import FormUser from 'src/components/FormUser';
+import FormRoom from 'src/components/FormRoom';
 import { Collapse } from 'antd';
 
 // ==> Styles
@@ -53,6 +54,7 @@ const Accordion = (props) => {
       <p>{props.header}</p>
       <Panel header="Nouveau" key="1">
         {props.header === 'Employés' ? <FormUser /> : null}
+        {props.header === 'Chambres' ? <FormRoom /> : null}
       </Panel>
       <Panel header="List" key="2">
         {props.header === 'Employés' ? <ListUser /> : null}
