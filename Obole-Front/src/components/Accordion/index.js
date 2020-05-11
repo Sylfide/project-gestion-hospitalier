@@ -6,9 +6,10 @@ import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
+import FormRoom from 'src/components/FormRoom';
 import ListUser from 'src/components/ListUser';
 import FormUser from 'src/components/FormUser';
-import FormRoom from 'src/components/FormRoom';
+import FormDeceased from 'src/components/FormDeceased';
 import FormEmbalmer from 'src/components/FormEmbalmer';
 import { Collapse } from 'antd';
 
@@ -54,8 +55,9 @@ const Accordion = (props) => {
     <Section accordion>
       <p>{props.header}</p>
       <Panel header="Nouveau" key="1">
-        {props.header === 'Employés' ? <FormUser /> : null}
         {props.header === 'Chambres' ? <FormRoom /> : null}
+        {props.header === 'Employés' ? <FormUser /> : null}
+        {props.header === 'Défunts' ? <FormDeceased /> : null}
         {props.header === 'Thanatopracteurs' ? <FormEmbalmer /> : null}
       </Panel>
       <Panel header="List" key="2">
