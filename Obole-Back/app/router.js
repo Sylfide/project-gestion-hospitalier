@@ -34,6 +34,7 @@ router.post('/room/new',adminAuthentified,roomController.addRoom);
 router.post('/room/modify/:id',adminAuthentified,roomController.modifyRoom);
 router.get('/room/list',adminAuthentified,roomController.listRooms);
 router.post('/room/details/:id',adminAuthentified,roomController.seeRoom);
+// router.delete('/room/delete/:id', adminAuthentified, roomController);
 
 //deceased routes
 router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased);
