@@ -84,21 +84,69 @@ const FormEmbalmer = () => {
         </Form.Item>
 
         <Form.Item
-          name="email"
-          label="Mail"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-            {
-              type: 'email',
-              message: 'Adresse mail pas valide',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        name="adress"
+        label="Adresse"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          }
+        ]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item>
+        <Row justify="space-around" gutter={32}>
+          <Col>
+            <Form.Item
+              name="cp"
+              label="Code Postal"
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+          <Col span={16}>
+            <Form.Item
+              name="ville"
+              label="Ville"
+            >
+               <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form.Item>
+
+      <Form.Item>
+        <Row justify="space-around" gutter={32}>
+          <Col>
+          <Form.Item
+              name="tel"
+              label="Téléphone"
+            >
+               <Input />
+            </Form.Item>
+          </Col>
+          <Col span={16}>
+          <Form.Item
+              name="email"
+              label="Mail"
+              rules={[
+                {
+                  required: true,
+                  message: 'Champ requis',
+                },
+                {
+                  type: 'email',
+                  message: 'Adresse mail pas valide',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form.Item>
 
         <Form.Item>
           <Row justify="center" gutter={32}>
