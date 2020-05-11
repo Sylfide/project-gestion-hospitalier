@@ -47,7 +47,7 @@ const userController = {
              console.log(result);
 
             if (result === 'Cet utilisateur existe déjà') {
-                res.send(result);
+                res.status(401).send(result);
             } else {
                 res.redirect('/user/list');
             }

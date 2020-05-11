@@ -40,7 +40,7 @@ const embalmerController = {
             // console.log(result);
 
             if (result === 'Ce thanatopracteur existe déjà') {
-                res.send(result);
+                res.status(401).send(result);
             } else {
                 res.redirect('/embalmer/list');
             }
