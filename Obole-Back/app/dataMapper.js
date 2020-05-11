@@ -280,7 +280,7 @@ const dataMapper = {
             }
         }
 
-        const updatedConservation = await db.query(`SELECT * FROM conservation WHERE deceaced_id = $1;`, [deceasedId]);
+        const updatedConservation = await db.query(`SELECT * FROM conservation WHERE deceased_id = $1;`, [deceasedId]);
 
         return updatedConservation.rows[0];
 
