@@ -23,7 +23,7 @@ const { Option } = Select;
 // ==> CSS in JS
 
 // ==> Composant
-const FormRoom = () => {
+const FormEmbalmer = () => {
   const dispatch = useDispatch();
   const topMessage = useSelector((state) => state.infoMessage);
 
@@ -50,7 +50,7 @@ const FormRoom = () => {
       size="large"
       form={form}
       initialValues={{
-        role: 'room',
+        role: 'embalmer',
       }}
       onFinish={(values) => {
         dispatch(creatUser(values));
@@ -58,8 +58,8 @@ const FormRoom = () => {
     >
       <Col span={12} offset={6}>
         <Form.Item
-          name="name"
-          label="Nom de la chambre"
+          name="lastname"
+          label="Nom"
           rules={[
             {
               required: true,
@@ -71,12 +71,29 @@ const FormRoom = () => {
         </Form.Item>
 
         <Form.Item
-          name="capacite"
-          label="Capacité de la chambre"
+          name="firstname"
+          label="Prénom"
           rules={[
             {
               required: true,
               message: 'Champ requis',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          name="email"
+          label="Mail"
+          rules={[
+            {
+              required: true,
+              message: 'Champ requis',
+            },
+            {
+              type: 'email',
+              message: 'Adresse mail pas valide',
             },
           ]}
         >
@@ -103,4 +120,4 @@ const FormRoom = () => {
 };
 
 // == Export
-export default FormRoom;
+export default FormEmbalmer;
