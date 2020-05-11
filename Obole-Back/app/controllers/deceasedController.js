@@ -176,10 +176,9 @@ const deceasedController = {
     updateDeceased: async (req, res) => {
         try {
 
-            const deceasedId = req.params.id;
-            const updatedDeceased = await dataMapper.updateDeceased(deceasedId, req.body);
+            // 1. décortiquer le req.body (contient 3 sou-objets : deceasedInfo, conservationInfo et deceasedRefInfo)
 
-            res.send(updatedDeceased);
+            // 
 
         } catch(err){
             console.trace(err);
