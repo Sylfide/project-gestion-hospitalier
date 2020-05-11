@@ -236,29 +236,49 @@ const deceasedController = {
                 await dataMapper.addConservation(updatedDeceased.id, conservationInfo);
             } else if (currentDeceased.conservation_id !== null && conservationInfoValues.length) {
                 // 4.2 sinon si currentDeceased.conservation_id !== null && conservationInfo contient des données : 
-                    // 4.2.1 faire la méthode datamapper updateConservation (prévoir des données null)
-                    // 4.2.2 appeler datamapper pour update le soin en lui passant le précédent objet créé et le currentDeceased.id
-            }
+                    // 4.2.1 faire la méthode datamapper updateConservation
+                    // 4.2.2 appeler datamapper pour update le soin en lui passant conservationInfo et le currentDeceased.id
+                await dataMapper.updateConservation(currentDeceased.id, conservationInfo);
+            } else if (currentDeceased.conservation_id !== null && !conservationInfoValues.length) {
                 // 4.3 sinon si currentDeceased.conservation_id !== null && conservationInfo ne contient pas de données :
                     // faire une méthode datamapper deleteConservation
                     // appeler cette méthode en lui passant currentDeceased.conservation_id
+                await dataMapper.deleteConservation(currentDeceased.conservation_id);
+            }
 
             // 5. faire l'update du deceased_ref s'il y a de nouvelles données 
-                // d'un côté, j'ai deceasedRefInfo (firstname, lastname, address, zip_code, city, email, tel) et de l'autre j'ai currentDeceased qui contient deceased_ref_id, deceased_ref_firstname, ...lastname, ...address, ...zip_code, ...city, ...email, ...tel
+                // d'un côté, j'ai deceasedRefInfo (ref_firstname, ref_lastname, address, zip_code, city, email, tel) et de l'autre j'ai currentDeceased qui contient deceased_ref_id, deceased_ref_firstname, ...lastname, ...address, ...zip_code, ...city, ...email, ...tel
                 // les cas possibles : 
                     // - pas de currentDeceased.deceased_ref_id (null) (donc il n'existe pas en bdd) et pas de deceasedRefInfo --> donc ne rien faire
                     // - pas de currentDeceased.deceased_ref_id (null) (donc il n'existe pas en bdd) et des nouvelles données dans deceasedRefInfo --> add
                     // - un currentDeceased.deceased_ref_id et pas de données dans deceasedRefInfo --> delete
                     // - un currentDeceased.deceased_ref_id et des nouvelles données dans deceasedRefInfo --> update
+
+                // d'abord, je contruis le tableau des éventuelles valeurs pour pouvoir conditionner dessus ensuite
+            let deceasedRefInfoValues = [];
+
+            for (let value of Object.values(deceasedRefInfo)) {
+                if (value) {
+                    deceasedRefInfoValues.push(value);
+                }
+            }
                 // 5.1 si currentDeceased.deceased_ref_id === null && deceasedRefInfo contient des données:
+            if (currentDeceased.deceased_ref_id === null && deceasedRefInfoValues.length) {
                     // appeler datamapper pour ajouter le deceased_ref en lui passant deceasedRefInfo (faire le traitement pour les valeurs obligatoires ?)
+                const newDeceasedRef = await dataMapper.addDeceasedRef(deceasedRefInfo);
                     // appeler datamapper pour update deceased sur le champ deceased_ref_id (updateDeceasedOnDeceasedRefId) en lui passant updatedDeceased.id et newDeceasedRef.id
+                await dataMapper.updateDeceasedOnDeceasedRefId(currentDeceased.id, newDeceasedRef.id);
+            } else if (currentDeceased.deceased_ref_id !== null && deceasedRefInfoValues.length) {
                 // 5.2 sinon si currentDeceased.deceased_ref_id !== null && deceasedRefInfo contient des données:
                     // faire la méthode datamapper updateDeceasedRef (prévoir des données null)
                     // appeler cette méthode en lui passant currentDeceased.deceased_ref_id et deceasedRefInfo
+                await dataMapper.updateDeceasedRef(currentDeceased.deceased_ref_id, deceasedRefInfo);
+            } else if (currentDeceased.deceased_ref_id !== null && !deceasedRefInfoValues.length) {
                 // 5.3 sinon si currentDeceased.deceased_ref_id !== null && deceasedRefInfo ne contient pas de données :
                     // faire une méthode datamapper deleteDeceasedRef
                     // appeler cette méthode en lui passant currentDeceased.deceased_ref_id
+                await dataMapper.deleteDeceasedRef(currentDeceased.deceased_ref_id);
+            }
 
             // 6. renvoyer les infos nécessaires au front 
                 // 6.1 appeler datamapper pour les détails d'un défunt en lui passant updatedDeceased.id

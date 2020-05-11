@@ -340,6 +340,12 @@ const dataMapper = {
 
     },
 
+    deleteConservation: async (conservationId) => {
+        const deletedConservation = await db.query(`DELETE * FROM conservation WHERE id = $1 RETURNING *;`, [conservationId]);
+
+        return deletedConservation.rows[0];
+    },
+
     addDeceasedRef: async (deceasedRefInfo) => {
 
         // deceasedRefInfo contient = ref_firstname, ref_lastname, address, zip_code, city, email, tel
@@ -366,6 +372,40 @@ const dataMapper = {
         const addedDeceasedRef = await db.query(`INSERT INTO deceased_ref (lastname, firstname, "address", zip_code, city, email, tel) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;`, [lastname, firstname, address, zip_code, city, email, tel]);
 
         return addedDeceasedRef.rows[0];
+    },
+
+    updateDeceasedRef: async (deceasedRefId, deceasedRefInfo) => {
+
+        // deceasedRefInfo contient = ref_firstname, ref_lastname, address, zip_code, city, email, tel (valeurs potentiellement null)
+        // donc, il faut rajouter deux propriétés firstname et lastname qui prendront les valeurs de ref_firstname et ref_lastname et supprimer ces deux dernières de l'objet
+
+        const newDeceasedRef = {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(deceasedRefInfo)) {
+            if (!valueInfo) {
+                newDeceasedRef[keyInfo] = null;
+            } else {
+                newDeceasedRef[keyInfo] = valueInfo;
+            }
+        }
+
+        newDeceasedRef.firstname = newDeceasedRef.ref_firstname;
+        newDeceasedRef.lastname = newDeceasedRef.ref_lastname;
+
+        delete newDeceasedRef.ref_firstname;
+        delete newDeceasedRef.ref_lastname;
+
+        const { lastname, firstname, address, zip_code, city, email, tel } = newDeceasedRef;
+
+        const updatedDeceasedRef = await db.query(`UPDATE deceased_ref SET lastname = $1, firstname = $2, address = $3, zip_code = $4, city = $5, email = $6, tel = $7 WHERE id = $8 RETURNING *;`, [lastname, firstname, address, zip_code, city, email, tel, deceasedRefId]);
+
+        return updatedDeceasedRef.rows[0];
+    },
+
+    deleteDeceasedRef: async (deceasedRefId) => {
+        const deletedDeceasedRef = await db.query(`DELETE FROM deceased_ref WHERE id = $1 RETURNING *;`, [deceasedRefId]);
+
+        return deletedDeceasedRef.rows[0];
     },
 
     getAllEmbalmers: async () => {
