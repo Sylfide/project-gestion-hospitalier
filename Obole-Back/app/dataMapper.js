@@ -228,6 +228,11 @@ const dataMapper = {
 
     updateDeceased: async (deceasedId, deceasedInfo) => {
 
+        // deceasedInfo contient : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room et room_id
+        // il me faut : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id
+
+        delete deceasedInfo.room;
+
         const deceased = {};
 
         for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
@@ -304,22 +309,20 @@ const dataMapper = {
     },
 
     addConservation: async (deceasedId, conservationInfo) => {
+
+        // conservationInfo contient : date, embalmer_id
         
-        const { date, embalmer } = conservationInfo;
+        const { date, embalmer_id } = conservationInfo;
 
-        const embalmerToArray = embalmer.split(' ');
-        const embalmerLastname = embalmerToArray[1];
-        const embalmerFirstname = embalmerToArray[0];
-
-        const getEmbalmer = await db.query(`SELECT id FROM embalmer WHERE lastname = $1 AND firstname = $2;`, [embalmerLastname, embalmerFirstname]);
-        const embalmerId = getEmbalmer.rows[0];
         const addedConservation = await db.query(`INSERT INTO conservation (date, deceased_id, embalmer_id) VALUES
-            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmerId.id]);
+            ($1, $2, $3) RETURNING id, date, deceased_id, embalmer_id;`, [date, deceasedId, embalmer_id]);
 
         return addedConservation.rows[0];
     },
 
     updateConservation: async (deceasedId, conservationInfo) => {
+
+        // conservationInfo contient : date, embalmer_id
 
         const conservation = {};
 
@@ -339,6 +342,9 @@ const dataMapper = {
 
     addDeceasedRef: async (deceasedRefInfo) => {
 
+        // deceasedRefInfo contient = ref_firstname, ref_lastname, address, zip_code, city, email, tel
+        // donc, il faut rajouter deux propriétés firstname et lastname qui prendront les valeurs de ref_firstname et ref_lastname et supprimer ces deux dernières de l'objet
+
         const newDeceasedRef = {};
 
         for (let [keyInfo, valueInfo] of Object.entries(deceasedRefInfo)) {
@@ -348,6 +354,12 @@ const dataMapper = {
                 newDeceasedRef[keyInfo] = valueInfo;
             }
         }
+
+        newDeceasedRef.firstname = newDeceasedRef.ref_firstname;
+        newDeceasedRef.lastname = newDeceasedRef.ref_lastname;
+
+        delete newDeceasedRef.ref_firstname;
+        delete newDeceasedRef.ref_lastname;
 
         const { lastname, firstname, address, zip_code, city, email, tel } = newDeceasedRef;
 
