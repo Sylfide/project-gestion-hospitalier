@@ -27,7 +27,7 @@ const deceasedController = {
             const existingDeceased = await dataMapper.getOneDeceasedWithoutId(deceasedInfo);
                 // 1bis.3 vérifier si le défunt existe déjà et si oui renvoyer un message
             if (existingDeceased) {
-                res.send(`Ce défunt est déjà enregistré`);
+                res.status(401).send(`Ce défunt est déjà enregistré`);
             } else {
                 // 2. faire l'insertion du deceased
                     // 2.1 faire la méthode dans le datamapper en renvoyant le deceased
@@ -176,9 +176,69 @@ const deceasedController = {
     updateDeceased: async (req, res) => {
         try {
 
-            // 1. décortiquer le req.body (contient 3 sou-objets : deceasedInfo, conservationInfo et deceasedRefInfo)
+            // 1. décortiquer le req.body (contient 3 sous-objets : deceasedInfo, conservationInfo et deceasedRefInfo)
+                // 1.1 isoler deceasedInfo
 
-            // 
+                // 1.2 isoler req.body.deceased.room
+                
+                // 1.3 appeler datamapper pour avoir l'id de la room d'après son nom
+
+                // 1.4 rajouter l'id à l'objet deceasedInfo
+
+                // 1.5 isoler conservationInfo et deceasedRefInfo
+                
+            // 2. vérifier si changement de chambre, si oui décrémenter l'ancienne et incrémenter la nouvelle et envoyer le mail sinon capacité max atteinte (sinon ne rien faire)
+                // 2.1 appeler datamapper pour voir le détail du deceased AVANT l'update
+                // 2.2 comparer deceasedInfo.roomId et currentDeceased.room_id et si différents -> 
+                    // 2.2.1 décrémenter l'ancienne room
+                        // 2.2.1.1 faire la méthode datamapper (se référer à la méthode actuelle incrementRoomCapacity)
+                        // 2.2.1.2 appeler la méthode en lui passant currentDeceased.room_id
+                    // 2.2.2 incrémenter la nouvelle : appeler datamapper incrementRoomCapacity en lui passant deceasedInfo.roomId
+                    // 2.2.3 si la capacité max de la nouvelle room est atteinte envoyer le mail aux admins (reprendre la méthode de Reuben)
+
+            // 3. faire l'update du deceased
+                // 3.1 faire la méthode dans datamapper en renvoyant le deceased
+                // 3.2 faire appel à la méthode en lui passant deceasedInfo
+
+            // 4. faire l'update du conservation s'il y a de nouvelles données
+                // d'un côté, j'ai conservationInfo (date, embalmer) et de l'autre j'ai currentDeceased qui contient conservation_id, conservation_date, embalmer_id, embalmer_lastame et embalmer_firstname
+                // plusieurs cas possibles : 
+                    // - pas de conservation dans currentDeceased (id = null) et pas de données dans conservationInfo --> le soin n'existe pas en bdd, donc ne rien faire 
+                    // - un conservation dans currentDeceased et pas de données dans conservationInfo --> delete
+                    // - pas de conservation dans currentDeceased et des nouvelles données dans conservationInfo --> add
+                    // - un conservation dans currentDeceased et des nouvelles données dans conservationInfo --> update
+                // 4.1 si currentDeceased.conservation_id === null && conservationInfo.date !== null, appeler datamapper pour ajouter le soin en lui passant updatedDeceased.id et conservationInfo
+                // 4.2 sinon si currentDeceased.conservation_id !== null && conservationInfo contient des données : 
+                    // 4.2.1 faire le traitement pour séparer le firstname et le lastname de embalmer de conservationInfo (voir datamapper addConservation)
+                    // 4.2.2 faire une méthode datamapper pour récupérer un embalmer avec son nom / prénom en revoyant uniquement l'id
+                    // 4.2.3 appeler cette méthode pour récup l'id embalmer
+                    // 4.2.4 faire un objet contenant : date (conservationInfo) et embalmer_id (récupéré précédemment)
+                    // 4.2.5 faire la méthode datamapper updateConservation (prévoir des données null)
+                    // 4.2.6 appeler datamapper pour update le soin en lui passant le précédent objet créé et le currentDeceased.id
+                // 4.3 sinon si currentDeceased.conservation_id !== null && conservationInfo ne contient pas de données :
+                    // faire une méthode datamapper deleteConservation
+                    // appeler cette méthode en lui passant currentDeceased.conservation_id
+
+            // 5. faire l'update du deceased_ref s'il y a de nouvelles données 
+                // d'un côté, j'ai deceasedRefInfo (firstname, lastname, address, zip_code, city, email, tel) et de l'autre j'ai currentDeceased qui contient deceased_ref_id, deceased_ref_firstname, ...lastname, ...address, ...zip_code, ...city, ...email, ...tel
+                // les cas possibles : 
+                    // - pas de currentDeceased.deceased_ref_id (null) (donc il n'existe pas en bdd) et pas de deceasedRefInfo --> donc ne rien faire
+                    // - pas de currentDeceased.deceased_ref_id (null) (donc il n'existe pas en bdd) et des nouvelles données dans deceasedRefInfo --> add
+                    // - un currentDeceased.deceased_ref_id et pas de données dans deceasedRefInfo --> delete
+                    // - un currentDeceased.deceased_ref_id et des nouvelles données dans deceasedRefInfo --> update
+                // 5.1 si currentDeceased.deceased_ref_id === null && deceasedRefInfo contient des données:
+                    // appeler datamapper pour ajouter le deceased_ref en lui passant deceasedRefInfo (faire le traitement pour les valeurs obligatoires ?)
+                    // appeler datamapper pour update deceased sur le champ deceased_ref_id (updateDeceasedOnDeceasedRefId) en lui passant updatedDeceased.id et newDeceasedRef.id
+                // 5.2 sinon si currentDeceased.deceased_ref_id !== null && deceasedRefInfo contient des données:
+                    // faire la méthode datamapper updateDeceasedRef (prévoir des données null)
+                    // appeler cette méthode en lui passant currentDeceased.deceased_ref_id et deceasedRefInfo
+                // 5.3 sinon si currentDeceased.deceased_ref_id !== null && deceasedRefInfo ne contient pas de données :
+                    // faire une méthode datamapper deleteDeceasedRef
+                    // appeler cette méthode en lui passant currentDeceased.deceased_ref_id
+
+            // 6. renvoyer les infos nécessaires au front 
+                // 6.1 appeler datamapper pour les détails d'un défunt en lui passant updatedDeceased.id
+                // 6.2 renvoyer les données 
 
         } catch(err){
             console.trace(err);
