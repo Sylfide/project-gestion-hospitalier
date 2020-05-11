@@ -53,7 +53,7 @@ const Obole = () => {
         <Route path="/thanatos">
           <Accordion header="Thanatopracteurs" />
         </Route>
-        <Route path="/profil">
+        <Route path="/compte">
           <Profil />
         </Route>
       </Content>

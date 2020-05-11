@@ -1,11 +1,11 @@
 // ==> Import npm
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { logout } from 'src/store/actions';
+// import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 // ==> Components
+import { EditOutlined } from '@ant-design/icons';
 import {
   Form,
   Input,
@@ -17,6 +17,11 @@ import {
 } from 'antd';
 
 // ==> Styles
+
+// ==> Ant Design sub components
+
+
+// ==> CSS in JS
 const Container = styled.div`
   p {
     border: 1px solid #1aae9f;
@@ -24,22 +29,18 @@ const Container = styled.div`
     padding: 10px;
     font-size: 2rem;
     font-weight: bold;
+    line-height: 1.5715;
   }
   #edit > * {
     margin: 24px 0 0;
   }
 `;
 
-// ==> Ant Design sub components
-
-// ==> CSS in JS
-
 // ==> Composant
 const Profil = () => {
   const [edit, setEdit] = useState(true);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { id, firstname, lastname, email } = useSelector((state) => state.user);
-  const history = useHistory();
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -68,8 +69,8 @@ const Profil = () => {
         <Col span={12} offset={6}>
           <Row id="edit" justify="end">
             <Switch
-              checkedChildren="Éditer"
-              unCheckedChildren="Éditer"
+              checkedChildren={<EditOutlined />}
+              unCheckedChildren={<EditOutlined />}
               onChange={onEdit}
             />
           </Row>
@@ -146,15 +147,6 @@ const Profil = () => {
           </Form.Item>
         </Col>
       </Form>
-      <Button
-        type="primary"
-        size="large"
-        onClick={() => {
-          dispatch(logout(history));
-        }}
-      >
-        *Logout*
-      </Button>
     </Container>
   );
 };

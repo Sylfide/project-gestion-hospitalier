@@ -37,6 +37,9 @@ const Nav = () => {
         <Menu.Item key="5">
           <Link to="/thanatos">Thanatopracteurs</Link>
         </Menu.Item>
+        <Menu.Item key="6">
+          <Link to="/compte">Compte</Link>
+        </Menu.Item>
       </NavMenu>
     );
   }
@@ -47,6 +50,9 @@ const Nav = () => {
       </Menu.Item>
       <Menu.Item key="2">
         <Link to="/thanatos">Thanatopracteurs</Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link to="/compte">Compte</Link>
       </Menu.Item>
     </NavMenu>
   );
