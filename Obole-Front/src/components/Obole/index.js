@@ -8,13 +8,9 @@ import styled from 'styled-components';
 
 // ==> Components
 import Menu from 'src/components/Menu';
-import TitleSection from 'src/components/TitleSection';
-import ContentNav from 'src/components/ContentNav';
-import FormMaker from 'src/components/FormMaker';
-import GrafForm from 'src/components/GrafForm';
-import DeceasedForm from 'src/components/DeceasedForm';
-import Activity from 'src/components/Activity';
 import Accordion from 'src/components/Accordion';
+import Profil from 'src/components/Profil';
+import Activity from 'src/components/Activity';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -44,8 +40,8 @@ const Obole = () => {
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
-        <Route path="/graphs">
-          {role === 'admin' ? <GrafForm /> : <Redirect to="/" />}
+        <Route path="/graph">
+          {role === 'admin' ? <Accordion header="Graphiques" /> : <Redirect to="/" />}
         </Route>
         <Route path="/employes">
           {role === 'admin' ? <Accordion header="Employés" /> : <Redirect to="/" />}
@@ -55,6 +51,9 @@ const Obole = () => {
         </Route>
         <Route path="/thanatos">
           <Accordion header="Thanatopracteurs" />
+        </Route>
+        <Route path="/compte">
+          <Profil />
         </Route>
       </Content>
       <Activity />

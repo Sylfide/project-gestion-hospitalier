@@ -23,7 +23,7 @@ const { Option } = Select;
 // ==> CSS in JS
 
 // ==> Composant
-const FormMaker = () => {
+const FormUser = () => {
   const dispatch = useDispatch();
   const topMessage = useSelector((state) => state.infoMessage);
 
@@ -114,9 +114,7 @@ const FormMaker = () => {
             // },
           ]}
         >
-          <Input
-            type="password"
-          />
+          <Input.Password />
         </Form.Item>
 
         <Form.Item
@@ -149,4 +147,4 @@ const FormMaker = () => {
 };
 
 // == Export
-export default FormMaker;
+export default FormUser;
