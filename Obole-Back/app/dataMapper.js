@@ -341,7 +341,7 @@ const dataMapper = {
     },
 
     deleteConservation: async (conservationId) => {
-        const deletedConservation = await db.query(`DELETE * FROM conservation WHERE id = $1 RETURNING *;`, [conservationId]);
+        const deletedConservation = await db.query(`DELETE FROM conservation WHERE id = $1 RETURNING *;`, [conservationId]);
 
         return deletedConservation.rows[0];
     },

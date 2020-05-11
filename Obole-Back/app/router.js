@@ -37,7 +37,7 @@ router.post('/room/details/:id',adminAuthentified,roomController.seeRoom);
 
 //deceased routes
 router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased);
-router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
+// router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
 router.get('/deceased/list/current', userAuthentified, deceasedController.allPresentDeceased);
 router.get('/deceased/list/history', userAuthentified, deceasedController.allDeceased);
 router.get('/deceased/:id', userAuthentified, deceasedController.oneDeceased);
