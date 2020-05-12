@@ -1,46 +1,58 @@
-// == Import npm
+// ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { } from 'src/store/actions';
-
-// Ant Design
+// ==> Components
 import { Menu } from 'antd';
 
-// == Styles
+// ==> Styles
 
-// Styles
+// ==> Ant Design sub components
+
+// ==> CSS in JS
 const NavMenu = styled(Menu)`
   background: #dfe6ed;
 `;
 
-// == Composant
 const Nav = () => {
-  const dispatch = useDispatch();
-  const admin = useSelector((state) => state.admin);
+  const role = useSelector((state) => state.user.role);
 
+  if (role === 'admin') {
+    return (
+      <NavMenu mode="inline">
+        <Menu.Item key="1">
+          <Link to="/chambres">Chambres</Link>
+        </Menu.Item>
+        <Menu.Item key="2">
+          <Link to="/graph">Graphiques</Link>
+        </Menu.Item>
+        <Menu.Item key="3">
+          <Link to="/employes">Employés</Link>
+        </Menu.Item>
+        <Menu.Item key="4">
+          <Link to="/defunts">Défunts</Link>
+        </Menu.Item>
+        <Menu.Item key="5">
+          <Link to="/thanatos">Thanatopracteurs</Link>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <Link to="/compte">Compte</Link>
+        </Menu.Item>
+      </NavMenu>
+    );
+  }
   return (
-    <NavMenu
-      mode="inline"
-      defaultSelectedKeys={['3']}
-    >
+    <NavMenu mode="inline">
       <Menu.Item key="1">
-        <Link to="">Chambres</Link>
+        <Link to="/defunts">Défunts</Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to="">Graphiques</Link>
+        <Link to="/thanatos">Thanatopracteurs</Link>
       </Menu.Item>
       <Menu.Item key="3">
-        <Link to="">Employés</Link>
-      </Menu.Item>
-      <Menu.Item key="4">
-        <Link to="">Défunts</Link>
-      </Menu.Item>
-      <Menu.Item key="5">
-        <Link to="/rooms">Thanatopracteurs</Link>
+        <Link to="/compte">Compte</Link>
       </Menu.Item>
     </NavMenu>
   );

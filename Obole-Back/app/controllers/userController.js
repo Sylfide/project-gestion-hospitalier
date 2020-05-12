@@ -47,9 +47,9 @@ const userController = {
              console.log(result);
 
             if (result === 'Cet utilisateur existe déjà') {
-                res.send(result);
+                res.status(401).send(result);
             } else {
-                res.redirect('/admin/user/list');
+                res.redirect('/user/list');
             }
 
         } catch(err) {
@@ -77,7 +77,8 @@ const userController = {
             const deletedUser = await dataMapper.deleteUser(userId);
 
             if (deletedUser) {
-                res.send(`Utilisateur supprimé`);
+                const userList = await dataMapper.getAllUsers();
+                res.send(userList);
             } else {
                 res.send(`Suppression échouée`);
             }

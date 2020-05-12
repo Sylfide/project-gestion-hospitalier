@@ -55,6 +55,25 @@ const roomController={
         catch(error){
             res.json(error.message)
         }
+    },
+
+    deleteRoom: async (req, res) => {
+        try {
+
+            const roomId = req.params.id;
+
+            const deletedRoom = await dataMapper.deleteOneRoom(roomId);
+
+            if (deletedRoom) {
+                res.send(`Chambre supprimée`);
+            } else {
+                res.send(`Suppression échouée`);
+            }
+
+        } catch(err){
+            console.trace(err);
+            res.status(500).send(err);
+        }
     }
 }
 

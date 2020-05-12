@@ -1,41 +1,60 @@
-// == Import npm
+// ==> Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+// import { useHistory } from 'react-router';
+import { Route, Redirect } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
-// == Import Components
+// ==> Components
 import Menu from 'src/components/Menu';
-import TitleSection from 'src/components/TitleSection';
-import ContentNav from 'src/components/ContentNav';
-import Form from 'src/components/Form';
+import Accordion from 'src/components/Accordion';
+import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
 
 // Ant Design
 import { Layout } from 'antd';
 
-// == Styles
+// ==> Styles
 
-const { Sider, Content } = Layout;
+// ==> Ant Design sub components
+const { Content } = Layout;
 
+// ==> CSS in JS
 const Container = styled(Layout)`
-  min-height: 100vh;
+  height: 100vh;
   text-align: center;
 `;
 
-// == Composant
+// ==> Composant
 const Obole = () => {
-  const dispatch = useDispatch();
-  const clickCount = useSelector((state) => state.counter);
+  // const dispatch = useDispatch();
+  const role = useSelector((state) => state.user.role);
 
   return (
     <Container>
       <Menu />
       <Content>
-        <TitleSection />
-        <ContentNav />
-        <Form />
+        {/* <TitleSection />
+        <ContentNav /> */}
+        <Route path="/chambres">
+          {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/graph">
+          {role === 'admin' ? <Accordion header="Graphiques" /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/employes">
+          {role === 'admin' ? <Accordion header="Employés" /> : <Redirect to="/" />}
+        </Route>
+        <Route path="/defunts">
+          <Accordion header="Défunts" />
+        </Route>
+        <Route path="/thanatos">
+          <Accordion header="Thanatopracteurs" />
+        </Route>
+        <Route path="/compte">
+          <Profil />
+        </Route>
       </Content>
       <Activity />
     </Container>
