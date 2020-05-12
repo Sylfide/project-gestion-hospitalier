@@ -82,7 +82,7 @@ const dataMapper = {
         if(updatedUser.rows[0].user_connected==false){
             await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
 
-            updatedUser=await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [userId]);
+            updatedUser=await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
         }
 
         return updatedUser.rows[0];
