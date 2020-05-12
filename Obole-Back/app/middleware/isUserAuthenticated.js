@@ -16,6 +16,7 @@ const isUserAuthenticated=async(req,res,next)=>{
     }
 
     else{
+        console.log(req.headers.authorization);
         res.status(400).json({message:'no token sent'})
     }
 }

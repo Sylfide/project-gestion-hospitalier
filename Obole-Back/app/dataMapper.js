@@ -547,6 +547,34 @@ const dataMapper = {
 
         return deletedEmbalmer.rows[0];
     },
+
+
+    embalmerMonthlySummary:async(embalmerId,month)=>{
+        try{
+            const currentYear=moment().format().substring(0,3);
+            const getConservations=await db.query(`SELECT conservation.date,embalmer.*,deceased.firstname AS deceased_firstname,deceased.lastname AS deceased_lastname,deceased.entry_date,deceased.deceased_date FROM conservation JOIN deceased ON conservation.deceased_id=deceased.id JOIN embalmer ON conservation.embalmer_id=embalmer.id WHERE embalmer.id=$1 AND date_part('month',"date")=$2`,[embalmerId,month]);
+            //console.log(getConservations.rows);
+            return getConservations.rows;
+        }
+        
+        catch(error){
+            console.log(error.message)
+        }
+       
+    },
+
+    deceasedFamilySummary:async(deceasedId)=>{
+        try{
+            const getDeceasedInformation=await db.query("SELECT deceased.exit_date-deceased.entry_date AS days,deceased.exit_date-deceased.burial_permit_date AS burial_days, deceased.firstname AS deceased_firstname,deceased.lastname AS deceased_lastname, deceased.birth_date AS deceased_bd,deceased.deceased_date AS deceased_dd, deceased.entry_date, deceased.exit_date, deceased.burial_permit_date AS permit_date, deceased_ref.* FROM deceased JOIN deceased_ref ON deceased.deceased_ref_id=deceased_ref.id WHERE deceased.id=$1",[deceasedId]);
+
+            //console.log(getDeceasedInformation.rows);
+
+            return getDeceasedInformation.rows[0];
+        }
+        catch(error){
+            console.log(error.message);
+        }
+    }
 };
 
 module.exports = dataMapper;
