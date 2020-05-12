@@ -1,41 +1,25 @@
 // ==> Import npm
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { creatUser } from 'src/store/actions';
-// import styled from 'styled-components';
+import { } from 'src/store/actions';
+import styled from 'styled-components';
 
 // ==> Components
-import {
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  message,
-} from 'antd';
+import { Form, Input, Button, Select, Row, Col } from 'antd';
 
 // ==> Styles
 
 // ==> Ant Design sub components
 
 // ==> CSS in JS
+const Container = styled(Form)`
+  margin: 24px 0;
+`;
 
 // ==> Composant
 const FormEmbalmer = () => {
   const dispatch = useDispatch();
-  const topMessage = useSelector((state) => state.infoMessage);
-
-  const clear = () => {
-    dispatch({ type: 'clear' });
-  };
-  const error = () => {
-    message.error(topMessage, 2, clear);
-  };
-  useEffect(() => {
-    if (topMessage !== '') {
-      error();
-    }
-  }, [topMessage]);
+  // const clickCount = useSelector((state) => state.counter);
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -43,125 +27,104 @@ const FormEmbalmer = () => {
   };
 
   return (
-    <Form
-      layout="vertical"
+    <Container
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      initialValues={{
-        role: 'embalmer',
-      }}
       onFinish={(values) => {
-        dispatch(creatUser(values));
+        console.log('values: ', values);
+        // dispatch(entry(subForm(values)));
       }}
     >
-      <Col span={12} offset={6}>
-        <Form.Item
-          name="lastname"
-          label="Nom"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
 
-        <Form.Item
-          name="firstname"
-          label="Prénom"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item
+        name="ref_lastname"
+        label="Nom"
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item
-          name="adress"
-          label="Adresse"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item
+        name="ref_firstname"
+        label="Prénom"
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item>
-          <Row justify="space-around" gutter={32}>
-            <Col>
-              <Form.Item
-                name="cp"
-                label="Code Postal"
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={16}>
-              <Form.Item
-                name="ville"
-                label="Ville"
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form.Item>
+      <Form.Item
+        name="address"
+        label="Adresse"
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item>
-          <Row justify="space-around" gutter={32}>
-            <Col>
-              <Form.Item
-                name="tel"
-                label="Téléphone"
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={16}>
-              <Form.Item
-                name="email"
-                label="Mail"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Champ requis',
-                  },
-                  {
-                    type: 'email',
-                    message: 'Adresse mail pas valide',
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        </Form.Item>
+      <Row>
+        <Col span={8} push={2}>
+          <Form.Item
+            labelCol={{ span: 12 }}
+            wrapperCol={{ span: 24 }}
+            name="zip_code"
+            label="Code postal"
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={10}>
+          <Form.Item
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 24 }}
+            name="city"
+            label="Ville"
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
 
-        <Form.Item>
-          <Row justify="center" gutter={32}>
-            <Col>
-              <Button type="primary" htmlType="submit">
-                Enregistrer
-              </Button>
-            </Col>
-            <Col>
-              <Button htmlType="button" onClick={onReset}>
-                Abandonner
-              </Button>
-            </Col>
-          </Row>
-        </Form.Item>
-      </Col>
-    </Form>
+      <Row>
+        <Col span={8} push={2}>
+          <Form.Item
+            labelCol={{ span: 12 }}
+            wrapperCol={{ span: 24 }}
+            name="tel"
+            label="Téléphone"
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={10}>
+          <Form.Item
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 24 }}
+            name="email"
+            label="Email"
+            rules={[
+              {
+                type: 'email',
+                message: 'Adresse mail non valide',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row justify="center" gutter={32}>
+        <Col>
+          <Button type="primary" htmlType="submit">
+            Enregistrer
+          </Button>
+        </Col>
+        <Col>
+          <Button htmlType="button" onClick={onReset}>
+            Abandonner
+          </Button>
+        </Col>
+      </Row>
+    </Container>
+
   );
 };
 
