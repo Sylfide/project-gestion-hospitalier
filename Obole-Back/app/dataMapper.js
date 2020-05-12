@@ -294,6 +294,11 @@ const dataMapper = {
 
     updateDeceased: async (deceasedId, deceasedInfo) => {
 
+        // deceasedInfo contient : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room et room_id
+        // il me faut : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id
+
+        delete deceasedInfo.room;
+
         const deceased = {};
 
         for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
