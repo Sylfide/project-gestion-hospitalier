@@ -96,8 +96,6 @@ const dataMapper = {
       /*
         const { firstname, lastname, email, password } = userInfo;
         let updateUser;
-<<<<<<< HEAD
-=======
 
         return updatedUser.rows[0];
         }
@@ -110,7 +108,6 @@ const dataMapper = {
       /*
         const { firstname, lastname, email, password } = userInfo;
         let updateUser;
->>>>>>> 2c309eaca48d4c893a60b79d5354f4603de6dc5c
 
         for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
             if (valueInfo) {
