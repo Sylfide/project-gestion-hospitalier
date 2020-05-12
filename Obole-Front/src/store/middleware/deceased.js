@@ -4,7 +4,8 @@ import {
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
-  const { token } = JSON.parse(sessionStorage.getItem('user'));
+  const user = JSON.parse(sessionStorage.getItem('user'));
+  const token = user ? user.token : null;
   switch (action.type) {
     case ENTRY: {
       console.log('Sending :', action.values);
