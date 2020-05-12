@@ -108,10 +108,10 @@ const FormUser = () => {
               required: true,
               message: 'Champ requis',
             },
-            // {
-            //   min: 8,
-            //   message: '8 caractères minimum',
-            // },
+            {
+              min: 8,
+              message: '8 caractères minimum',
+            },
           ]}
         >
           <Input.Password />

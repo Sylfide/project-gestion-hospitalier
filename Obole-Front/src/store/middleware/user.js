@@ -2,6 +2,8 @@ import axios from 'axios';
 import {
   CREATE_USER,
   getUsers,
+  UPDATE_USER,
+  enterObole,
   DELETE_USER,
   infoMessage,
   LOGOUT,
@@ -20,8 +22,27 @@ export default (store) => (next) => (action) => {
         .then((res) => {
           store.dispatch(getUsers(res.data));
         })
-        .catch((res) => {
+        .catch((error) => {
+          console.log('error: ', error);
           store.dispatch(infoMessage('Erreur lors de la création'));
+        });
+      return;
+    }
+
+    case UPDATE_USER: {
+      axios({
+        method: 'patch',
+        url: `http://localhost:3000/user/${action.id}`,
+        data: action.values,
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          sessionStorage.user = JSON.stringify(res.data);
+          store.dispatch(enterObole(res.data));
+        })
+        .catch((error) => {
+          // TODO: traitement d'erreur
+          console.log('error: ', error);
         });
       return;
     }
@@ -35,7 +56,8 @@ export default (store) => (next) => (action) => {
         .then((res) => {
           store.dispatch(getUsers(res.data));
         })
-        .catch((res) => {
+        .catch((error) => {
+          console.log('error: ', error);
           store.dispatch(infoMessage('Erreur lors de la suppression'));
         });
       return;
