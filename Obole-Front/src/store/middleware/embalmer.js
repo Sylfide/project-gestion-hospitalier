@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   CREATE_EMBALMER,
+  getEmbalmers,
   infoMessage,
 } from 'src/store/actions';
 
@@ -17,6 +18,7 @@ export default (store) => (next) => (action) => {
       })
         .then((res) => {
           // TODO: success message
+          store.dispatch(getEmbalmers(res.data));
         })
         .catch((error) => {
           console.log('error: ', error);

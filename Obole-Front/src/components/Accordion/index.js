@@ -7,10 +7,11 @@ import styled from 'styled-components';
 
 // ==> Components
 import FormRoom from 'src/components/FormRoom';
-import ListUser from 'src/components/ListUser';
 import FormUser from 'src/components/FormUser';
 import FormDeceased from 'src/components/FormDeceased';
 import FormEmbalmer from 'src/components/FormEmbalmer';
+import ListUser from 'src/components/ListUser';
+import ListEmbalmer from 'src/components/ListEmbalmer';
 import { Collapse } from 'antd';
 
 // ==> Styles
@@ -62,6 +63,7 @@ const Accordion = (props) => {
       </Panel>
       <Panel header="List" key="2">
         {props.header === 'Employés' ? <ListUser /> : null}
+        {props.header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
       </Panel>
       {props.header === 'Défunts'
         ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>
