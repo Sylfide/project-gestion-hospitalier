@@ -1,13 +1,13 @@
 // == Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
-import { Link } from 'react-router-dom';
-import { } from 'src/store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { logout } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
-import { Layout, Button } from 'antd';
+import { Layout, Button, Tooltip } from 'antd';
+import { PoweroffOutlined } from '@ant-design/icons';
 import Nav from 'src/components/Nav';
 
 // ==> Styles
@@ -15,6 +15,7 @@ import logo from 'src/assets/img/logo-obole.svg';
 
 // Ant Design sub components
 const { Sider } = Layout;
+
 
 // ==> CSS in JS
 const Container = styled(Sider)`
@@ -32,23 +33,30 @@ const Container = styled(Sider)`
   Button {
     justify-self: center;
     margin-bottom: 10em;
-    background: #2c88d9;
-    border-radius: 5px;
   }
 `;
 
 // ==> Composant
 const Menu = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
+  const history = useHistory();
 
   return (
     <Container theme="light">
       <img alt="logo" src={logo} />
       <Nav />
-      <Button type="primary">
-        <Link to="/profil">Profil</Link>
-      </Button>
+      <Tooltip text="Déconnexion">
+        <Button
+          type="primary"
+          shape="circle"
+          size="large"
+          icon={<PoweroffOutlined />}
+          onClick={() => {
+            dispatch(logout(history));
+          }}
+        />
+      </Tooltip>
     </Container>
   );
 };

@@ -1,31 +1,24 @@
-// == Import npm
+// ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-import { BrowserRouter as Router, Route, Link, NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { } from 'src/store/actions';
-
-// == Import Components
-// import FormMaker from 'src/components/FormMaker';
-// import DeceasedForm from 'src/components/DeceasedForm';
-import Chambres from 'src/components/Chambres';
-
-// Ant Design
+// ==> Components
 import { Menu } from 'antd';
 
-// == Styles
+// ==> Styles
 
-// Styles
+// ==> Ant Design sub components
+
+// ==> CSS in JS
 const NavMenu = styled(Menu)`
   background: #dfe6ed;
 `;
 
-// == Composant
 const Nav = () => {
   const role = useSelector((state) => state.user.role);
-​
+
   if (role === 'admin') {
     return (
       <NavMenu mode="inline">
@@ -42,7 +35,10 @@ const Nav = () => {
           <Link to="/defunts">Défunts</Link>
         </Menu.Item>
         <Menu.Item key="5">
-          <Link to="/thanato">Thanatopracteurs</Link>
+          <Link to="/thanatos">Thanatopracteurs</Link>
+        </Menu.Item>
+        <Menu.Item key="6">
+          <Link to="/compte">Compte</Link>
         </Menu.Item>
       </NavMenu>
     );
@@ -53,12 +49,14 @@ const Nav = () => {
         <Link to="/defunts">Défunts</Link>
       </Menu.Item>
       <Menu.Item key="2">
-        <Link to="/thanato">Thanatopracteurs</Link>
+        <Link to="/thanatos">Thanatopracteurs</Link>
+      </Menu.Item>
+      <Menu.Item key="3">
+        <Link to="/compte">Compte</Link>
       </Menu.Item>
     </NavMenu>
   );
 };
-
 
 // == Export
 export default Nav;

@@ -1,26 +1,43 @@
 // ==> Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
 import { creatUser } from 'src/store/actions';
 // import styled from 'styled-components';
 
 // ==> Components
-import TitleSection from 'src/components/TitleSection';
-import ContentNav from 'src/components/ContentNav';
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Row,
+  Col,
+  message,
+} from 'antd';
+
 // ==> Styles
 
 // ==> Ant Design sub components
-import { Form, Input, Button, Select, Row, Col } from 'antd';
-
 const { Option } = Select;
 
 // ==> CSS in JS
 
 // ==> Composant
-const FormMaker = () => {
+const FormRoom = () => {
   const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  const topMessage = useSelector((state) => state.infoMessage);
+
+  const clear = () => {
+    dispatch({ type: 'clear' });
+  };
+  const error = () => {
+    message.error(topMessage, 2, clear);
+  };
+  useEffect(() => {
+    if (topMessage !== '') {
+      error();
+    }
+  }, [topMessage]);
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -28,15 +45,12 @@ const FormMaker = () => {
   };
 
   return (
-    <div>
-      
-    
     <Form
       layout="vertical"
       size="large"
       form={form}
       initialValues={{
-        role: 'user',
+        role: 'room',
       }}
       onFinish={(values) => {
         dispatch(creatUser(values));
@@ -44,8 +58,8 @@ const FormMaker = () => {
     >
       <Col span={12} offset={6}>
         <Form.Item
-          name="lastname"
-          label="Nom"
+          name="name"
+          label="Nom de la chambre"
           rules={[
             {
               required: true,
@@ -57,8 +71,8 @@ const FormMaker = () => {
         </Form.Item>
 
         <Form.Item
-          name="firstname"
-          label="Prénom"
+          name="capacite"
+          label="Capacité de la chambre"
           rules={[
             {
               required: true,
@@ -67,45 +81,6 @@ const FormMaker = () => {
           ]}
         >
           <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="email"
-          label="Mail"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-            {
-              type: 'email',
-              message: 'Adresse mail pas valide',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          name="password"
-          label="Mot de passe"
-          rules={[
-            { required: true },
-          ]}
-        >
-          <Input
-            type="password"
-          />
-        </Form.Item>
-
-        <Form.Item
-          name="role"
-          label="Rôle de l'utilisateur"
-        >
-          <Select>
-            <Option value="user">Employé</Option>
-            <Option value="admin">Administrateur</Option>
-          </Select>
         </Form.Item>
 
         <Form.Item>
@@ -124,9 +99,8 @@ const FormMaker = () => {
         </Form.Item>
       </Col>
     </Form>
-    </div>
   );
 };
 
 // == Export
-export default FormMaker;
+export default FormRoom;
