@@ -58,7 +58,59 @@ const dataMapper = {
 
     updateUser: async (userId, userInfo) => {
 
-        const user = {};
+        try{
+            const user= {};
+
+        for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
+            if (valueInfo) {
+                user[keyInfo] = valueInfo;
+                if(keyInfo=='password'){
+                    const salt=valueInfo.substring(0,3);
+                    const hashedPassword = SHA256(valueInfo + salt).toString(encBase64);
+                    await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [hashedPassword, userId]);
+                }
+                else{
+                     await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [valueInfo, userId]);
+                }
+
+               
+            }
+        }
+
+        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
+
+        if(updatedUser.rows[0].user_connected==false){
+            await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
+
+            updatedUser=await db.query(`SELECT * FROM embalmer WHERE id = $1;`, [userId]);
+        }
+
+        return updatedUser.rows[0];
+        }
+
+        catch(error){
+           console.log(error.message)
+        }
+        
+
+      /*
+        const { firstname, lastname, email, password } = userInfo;
+        let updateUser;
+<<<<<<< HEAD
+=======
+
+        return updatedUser.rows[0];
+        }
+
+        catch(error){
+           console.log(error.message)
+        }
+        
+
+      /*
+        const { firstname, lastname, email, password } = userInfo;
+        let updateUser;
+>>>>>>> 2c309eaca48d4c893a60b79d5354f4603de6dc5c
 
         for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
             if (valueInfo) {
@@ -71,6 +123,16 @@ const dataMapper = {
         const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
 
         return updatedUser.rows[0];
+        if (password) {
+            const salt = password.substring(0, 3);
+            const hashedPassword = SHA256(password + salt).toString(encBase64);
+            updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
+        } 
+
+        console.log(updateUser);
+
+        return updateUser.rows[0];
+        */
     },
 
     deleteUser: async (userId) => {
@@ -500,6 +562,34 @@ const dataMapper = {
 
         return deletedEmbalmer.rows[0];
     },
+
+
+    embalmerMonthlySummary:async(embalmerId,month)=>{
+        try{
+            const currentYear=moment().format().substring(0,3);
+            const getConservations=await db.query(`SELECT conservation.date,embalmer.*,deceased.firstname AS deceased_firstname,deceased.lastname AS deceased_lastname,deceased.entry_date,deceased.deceased_date FROM conservation JOIN deceased ON conservation.deceased_id=deceased.id JOIN embalmer ON conservation.embalmer_id=embalmer.id WHERE embalmer.id=$1 AND date_part('month',"date")=$2`,[embalmerId,month]);
+            //console.log(getConservations.rows);
+            return getConservations.rows;
+        }
+        
+        catch(error){
+            console.log(error.message)
+        }
+       
+    },
+
+    deceasedFamilySummary:async(deceasedId)=>{
+        try{
+            const getDeceasedInformation=await db.query("SELECT deceased.exit_date-deceased.entry_date AS days,deceased.exit_date-deceased.burial_permit_date AS burial_days, deceased.firstname AS deceased_firstname,deceased.lastname AS deceased_lastname, deceased.birth_date AS deceased_bd,deceased.deceased_date AS deceased_dd, deceased.entry_date, deceased.exit_date, deceased.burial_permit_date AS permit_date, deceased_ref.* FROM deceased JOIN deceased_ref ON deceased.deceased_ref_id=deceased_ref.id WHERE deceased.id=$1",[deceasedId]);
+
+            //console.log(getDeceasedInformation.rows);
+
+            return getDeceasedInformation.rows[0];
+        }
+        catch(error){
+            console.log(error.message);
+        }
+    }
 };
 
 module.exports = dataMapper;

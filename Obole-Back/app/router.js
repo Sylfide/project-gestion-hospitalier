@@ -13,6 +13,7 @@ const userController = require('./controllers/userController');
 const roomController=require('./controllers/roomController');
 const deceasedController=require('./controllers/deceasedController')
 const embalmerController = require('./controllers/embalmerController');
+const conservationController=require('./controllers/conservationController');
 
 // les routes
 router.get('/', mainController.homePage);
@@ -50,6 +51,11 @@ router.get('/embalmer/:id', userAuthentified, embalmerController.oneEmbalmer);
 router.post('/embalmer/new', userAuthentified, embalmerController.newEmbalmer);
 router.patch('/embalmer/:id', userAuthentified, embalmerController.updateEmbalmer);
 router.delete('/embalmer/:id/delete', userAuthentified, embalmerController.deleteOneEmbalmer);
+
+//conservation routes 
+router.post('/embalmer_summary/create/:embalmerId',userAuthentified,conservationController.embalmerMonthlySummary);
+router.get('/summary/get/:embalmerId/:month',userAuthentified,conservationController.getMonthlySummary);
+router.get('/deceased_ref_summary/:deceasedId',userAuthentified,conservationController.createDeceasedFamilyRecap);
 
 // traitement 404
 router.use( (req, res) => {res.status(404).send('404')});
