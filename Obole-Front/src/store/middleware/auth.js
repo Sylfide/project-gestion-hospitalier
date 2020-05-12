@@ -11,10 +11,12 @@ export default (store) => (next) => (action) => {
         data: action.values,
       })
         .then((res) => {
-          if (res.status === 200) {
-            sessionStorage.user = JSON.stringify(res.data);
-            store.dispatch(enterObole(res.data));
-          }
+          sessionStorage.user = JSON.stringify(res.data);
+          store.dispatch(enterObole(res.data));
+        })
+        .catch((res) => {
+          // TODO: traîtement d'erreur
+          console.log(res);
         });
       return;
     }
