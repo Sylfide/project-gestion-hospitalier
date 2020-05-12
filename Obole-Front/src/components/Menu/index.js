@@ -6,7 +6,7 @@ import { logout } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
-import { Layout, Button, Tooltip } from 'antd';
+import { Layout, Button, Popconfirm } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
 import Nav from 'src/components/Nav';
 
@@ -46,17 +46,21 @@ const Menu = () => {
     <Container theme="light">
       <img alt="logo" src={logo} />
       <Nav />
-      <Tooltip text="Déconnexion">
+      <Popconfirm
+        title="Confirmez-vous la déconnexion ?"
+        okText="Oui"
+        cancelText="Non"
+        onConfirm={() => {
+          dispatch(logout(history));
+        }}
+      >
         <Button
           type="primary"
           shape="circle"
           size="large"
           icon={<PoweroffOutlined />}
-          onClick={() => {
-            dispatch(logout(history));
-          }}
         />
-      </Tooltip>
+      </Popconfirm>
     </Container>
   );
 };
