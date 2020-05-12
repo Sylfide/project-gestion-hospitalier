@@ -157,6 +157,12 @@ const dataMapper = {
         return rooms.rows
     },
 
+    deleteOneRoom: async (roomId) => {
+
+        const deletedRoom = await db.query(`DELETE FROM room WHERE id = $1 RETURNING *;`, [roomId]);
+
+        return deletedRoom.rows[0];
+    },
 
     enterDeceased:async (deceasedInfo)=>{
         try{
