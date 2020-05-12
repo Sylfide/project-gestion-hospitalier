@@ -19,6 +19,9 @@ const { Option } = Select;
 const Container = styled(Form)`
   margin: 24px 0;
 
+  .ant-select {
+    text-align: left;
+  }
   .ant-divider-horizontal.ant-divider-with-text-center {
     color: #e8833a;
   }
@@ -47,11 +50,11 @@ const FormDeceased = () => {
       onFinish={(values) => {
         const parsedValues = {
           ...values,
-          birth_date: values.birth_date.format('DD/MM/YYYY'),
-          deceased_date: values.deceased_date.format('DD/MM/YYYY'),
-          entry_date: values.entry_date.format('DD/MM/YYYY'),
-          burial_permit_date: values.burial_permit_date.format('DD/MM/YYYY'),
-          exit_date: values.exit_date.format('DD/MM/YYYY'),
+          birth_date: values.birthDate.format('DD/MM/YYYY'),
+          deceased_date: values.deceasedDate.format('DD/MM/YYYY'),
+          entry_date: values.entryDate.format('DD/MM/YYYY'),
+          burial_permit_date: values.burialPermitDate.format('DD/MM/YYYY'),
+          exit_date: values.exitDate.format('DD/MM/YYYY'),
           date: values.date.format('DD/MM/YYYY'),
         };
         console.log(subForm(parsedValues));
@@ -59,13 +62,12 @@ const FormDeceased = () => {
       }}
     >
       <Form.Item
-        wrapperCol={{ span: 6 }}
         name="room"
         label="Nom de la chambre"
       >
         <Select>
-          <Option value="room_1">Hogwarts</Option>
-          <Option value="room_2">Ilvermorny</Option>
+          <Option value="room_1">Room A</Option>
+          <Option value="room_2">Room B</Option>
         </Select>
       </Form.Item>
 
@@ -101,7 +103,7 @@ const FormDeceased = () => {
           <Form.Item
             labelCol={{ span: 12 }}
             wrapperCol={{ span: 24 }}
-            name="birth_date"
+            name="birthDate"
             label="Naissance"
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
@@ -111,7 +113,7 @@ const FormDeceased = () => {
           <Form.Item
             labelCol={{ span: 12 }}
             wrapperCol={{ span: 24 }}
-            name="deceased_date"
+            name="deceasedDate"
             label="Décès"
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
@@ -134,7 +136,7 @@ const FormDeceased = () => {
           <Form.Item
             labelCol={{ span: 12 }}
             wrapperCol={{ span: 24 }}
-            name="entry_date"
+            name="entryDate"
             label="Entrée"
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
@@ -147,7 +149,7 @@ const FormDeceased = () => {
           <Form.Item
             labelCol={{ span: 12 }}
             wrapperCol={{ span: 24 }}
-            name="burial_permit_date"
+            name="burialPermitDate"
             label="Permis d'inhumer"
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
@@ -157,7 +159,7 @@ const FormDeceased = () => {
           <Form.Item
             labelCol={{ span: 12 }}
             wrapperCol={{ span: 24 }}
-            name="exit_date"
+            name="exitDate"
             label="Sortie"
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
@@ -183,20 +185,16 @@ const FormDeceased = () => {
       </Form.Item>
 
       <Divider>Informations sur le soin</Divider>
+      <Form.Item
+        name="embalmer_id"
+        label="Thanatopracteur"
+      >
+        <Select>
+          <Option value="1">Morticia Addams</Option>
+          <Option value="2">Fétide Addams</Option>
+        </Select>
+      </Form.Item>
       <Row>
-        <Col span={8} push={2}>
-          <Form.Item
-            labelCol={{ span: 12 }}
-            wrapperCol={{ span: 24 }}
-            name="embalmer_id"
-            label="Thanatopracteur"
-          >
-            <Select>
-              <Option value="1">truc</Option>
-              <Option value="2">machin</Option>
-            </Select>
-          </Form.Item>
-        </Col>
         <Col span={8} push={2}>
           <Form.Item
             labelCol={{ span: 12 }}
