@@ -1,11 +1,11 @@
 import { applyMiddleware } from 'redux';
 
 import authMW from './auth';
-import routesMW from './routes';
 import userMW from './user';
+import deceasedMW from './deceased';
 
 export default applyMiddleware(
   authMW,
-  routesMW,
   userMW,
+  deceasedMW,
 );
