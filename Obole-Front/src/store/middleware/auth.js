@@ -14,9 +14,9 @@ export default (store) => (next) => (action) => {
           sessionStorage.user = JSON.stringify(res.data);
           store.dispatch(enterObole(res.data));
         })
-        .catch((res) => {
+        .catch((error) => {
           // TODO: traîtement d'erreur
-          console.log(res);
+          console.log(error);
         });
       return;
     }
