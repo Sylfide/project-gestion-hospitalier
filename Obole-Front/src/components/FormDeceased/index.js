@@ -48,16 +48,7 @@ const FormDeceased = () => {
       size="large"
       form={form}
       onFinish={(values) => {
-        const parsedValues = {
-          ...values,
-          birth_date: values.birthDate.format('DD/MM/YYYY'),
-          deceased_date: values.deceasedDate.format('DD/MM/YYYY'),
-          entry_date: values.entryDate.format('DD/MM/YYYY'),
-          burial_permit_date: values.burialPermitDate.format('DD/MM/YYYY'),
-          exit_date: values.exitDate.format('DD/MM/YYYY'),
-          date: values.date.format('DD/MM/YYYY'),
-        };
-        console.log(subForm(parsedValues));
+        console.log(subForm(values));
         // dispatch(creatUser(values));
       }}
     >
