@@ -5,7 +5,7 @@ import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
-import { Form, Input, Button, Select, Row, Col } from 'antd';
+import { Form, Input, Button, Row, Col } from 'antd';
 
 // ==> Styles
 
@@ -39,15 +39,27 @@ const FormEmbalmer = () => {
     >
 
       <Form.Item
-        name="ref_lastname"
+        name="lastname"
         label="Nom"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          },
+        ]}
       >
         <Input />
       </Form.Item>
 
       <Form.Item
-        name="ref_firstname"
+        name="firstname"
         label="Prénom"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          },
+        ]}
       >
         <Input />
       </Form.Item>
@@ -55,6 +67,12 @@ const FormEmbalmer = () => {
       <Form.Item
         name="address"
         label="Adresse"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          },
+        ]}
       >
         <Input />
       </Form.Item>
@@ -66,6 +84,12 @@ const FormEmbalmer = () => {
             wrapperCol={{ span: 24 }}
             name="zip_code"
             label="Code postal"
+            rules={[
+              {
+                required: true,
+                message: 'Champ requis',
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -76,6 +100,12 @@ const FormEmbalmer = () => {
             wrapperCol={{ span: 24 }}
             name="city"
             label="Ville"
+            rules={[
+              {
+                required: true,
+                message: 'Champ requis',
+              },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -103,6 +133,10 @@ const FormEmbalmer = () => {
               {
                 type: 'email',
                 message: 'Adresse mail non valide',
+              },
+              {
+                required: true,
+                message: 'Champ requis',
               },
             ]}
           >
