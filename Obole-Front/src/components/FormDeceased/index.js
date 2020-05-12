@@ -1,8 +1,7 @@
 // ==> Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
-import { } from 'src/store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { entry } from 'src/store/actions';
 import styled from 'styled-components';
 import fr from 'antd/es/date-picker/locale/fr_FR';
 import subForm from 'src/utils/subForm';
@@ -33,7 +32,7 @@ const Container = styled(Form)`
 
 // ==> Composant
 const FormDeceased = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
 
   const [form] = Form.useForm();
@@ -48,17 +47,23 @@ const FormDeceased = () => {
       size="large"
       form={form}
       onFinish={(values) => {
-        console.log(subForm(values));
-        // dispatch(creatUser(values));
+        // console.log('values: ', values);
+        dispatch(entry(subForm(values)));
       }}
     >
       <Form.Item
         name="room"
         label="Nom de la chambre"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          },
+        ]}
       >
         <Select>
-          <Option value="room_1">Room A</Option>
-          <Option value="room_2">Room B</Option>
+          <Option value="first">first</Option>
+          <Option value="second">second</Option>
         </Select>
       </Form.Item>
 
@@ -96,6 +101,12 @@ const FormDeceased = () => {
             wrapperCol={{ span: 24 }}
             name="birthDate"
             label="Naissance"
+            rules={[
+              {
+                required: true,
+                message: 'Champ requis',
+              },
+            ]}
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
           </Form.Item>
@@ -106,6 +117,12 @@ const FormDeceased = () => {
             wrapperCol={{ span: 24 }}
             name="deceasedDate"
             label="Décès"
+            rules={[
+              {
+                required: true,
+                message: 'Champ requis',
+              },
+            ]}
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
           </Form.Item>
@@ -129,6 +146,12 @@ const FormDeceased = () => {
             wrapperCol={{ span: 24 }}
             name="entryDate"
             label="Entrée"
+            rules={[
+              {
+                required: true,
+                message: 'Champ requis',
+              },
+            ]}
           >
             <DatePicker placeholder="date" locale={fr} format="DD/MM/YYYY" />
           </Form.Item>
@@ -162,16 +185,10 @@ const FormDeceased = () => {
         wrapperCol={{ span: 4 }}
         name="ritual"
         label="Rite religieux"
-        rules={[
-          {
-            required: true,
-            message: 'Champ requis',
-          },
-        ]}
       >
         <Radio.Group>
-          <Radio value="oui">Oui</Radio>
-          <Radio value="non">Non</Radio>
+          <Radio value="true">Oui</Radio>
+          <Radio value="false">Non</Radio>
         </Radio.Group>
       </Form.Item>
 
