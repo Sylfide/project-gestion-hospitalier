@@ -1,7 +1,7 @@
 // ==> Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { } from 'src/store/actions';
+import { creatEmbalmer } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
@@ -33,8 +33,7 @@ const FormEmbalmer = () => {
       size="large"
       form={form}
       onFinish={(values) => {
-        console.log('values: ', values);
-        // dispatch(entry(subForm(values)));
+        dispatch(creatEmbalmer(values));
       }}
     >
 
