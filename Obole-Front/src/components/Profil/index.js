@@ -1,7 +1,7 @@
 // ==> Import npm
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
+import { updateUser } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
@@ -39,7 +39,7 @@ const Container = styled.div`
 // ==> Composant
 const Profil = () => {
   const [edit, setEdit] = useState(true);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { id, firstname, lastname, email } = useSelector((state) => state.user);
 
   const [form] = Form.useForm();
@@ -61,9 +61,10 @@ const Profil = () => {
           lastname,
           firstname,
           email,
+          password: null,
         }}
         onFinish={(values) => {
-          console.log(`id : ${id}, values : `, values);
+          dispatch(updateUser(id, values));
         }}
       >
         <Col span={12} offset={6}>
@@ -120,11 +121,11 @@ const Profil = () => {
 
           <Form.Item
             name="password"
-            label="Mot de passe actuel"
+            label="Nouveau mot de passe"
             rules={[
               {
-                required: true,
-                message: 'Champ requis',
+                min: 8,
+                message: '8 caractères minimum',
               },
             ]}
           >

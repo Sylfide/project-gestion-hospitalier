@@ -2,6 +2,8 @@ import {
   ENTER_OBOLE,
   LOGOUT,
   GET_USERS,
+  GET_EMBALMERS,
+  GET_ROOMS,
   INFO_MESSAGE,
 } from './actions';
 
@@ -15,6 +17,8 @@ const initialState = {
     token: '',
   },
   staffMembers: [],
+  embalmers: [],
+  rooms: [],
   infoMessage: '',
 };
 
@@ -45,6 +49,20 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         staffMembers: action.values,
+      };
+    }
+
+    case GET_EMBALMERS: {
+      return {
+        ...state,
+        embalmers: action.values,
+      };
+    }
+
+    case GET_ROOMS: {
+      return {
+        ...state,
+        rooms: action.values,
       };
     }
 
