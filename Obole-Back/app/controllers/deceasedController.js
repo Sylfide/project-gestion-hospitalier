@@ -112,7 +112,7 @@ const deceasedController = {
 
     removeDeceased: async (req,res) => {
         try{
-            const getDeceased=await dataMapper.removeDeceased(req.params.id);
+            const getDeceased=await dataMapper.removeDeceased(req.params.id,req.body.exit_date);
             
             
             if(getDeceased){
@@ -210,7 +210,8 @@ const deceasedController = {
             }
 
             // 3. faire l'update du deceased
-            if (deceasedInfo.exit_date !== '') {
+            if (deceasedInfo.exit_date !== '') { 
+                
                 // 3.1 si le deceasedInfo.exit_date !== null
                     // 3.1.1 appeler datamapper removeDeceased en lui passant deceasedId
                 await dataMapper.removeDeceased(deceasedId);
