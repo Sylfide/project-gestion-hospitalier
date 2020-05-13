@@ -213,7 +213,7 @@ const dataMapper = {
     listRooms:async()=>{
         const rooms=await db.query(`SELECT * FROM room`);
         
-        return rooms.rows
+        return rooms.rows;
     },
 
     deleteOneRoom: async (roomId) => {
