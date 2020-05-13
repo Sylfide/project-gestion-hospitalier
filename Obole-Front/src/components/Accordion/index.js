@@ -6,10 +6,13 @@ import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
-import ListUser from 'src/components/ListUser';
-import FormUser from 'src/components/FormUser';
 import FormRoom from 'src/components/FormRoom';
+import FormUser from 'src/components/FormUser';
+import FormDeceased from 'src/components/FormDeceased';
 import FormEmbalmer from 'src/components/FormEmbalmer';
+import ListRoom from 'src/components/ListRoom';
+import ListUser from 'src/components/ListUser';
+import ListEmbalmer from 'src/components/ListEmbalmer';
 import { Collapse } from 'antd';
 
 // ==> Styles
@@ -54,12 +57,15 @@ const Accordion = (props) => {
     <Section accordion>
       <p>{props.header}</p>
       <Panel header="Nouveau" key="1">
-        {props.header === 'Employés' ? <FormUser /> : null}
         {props.header === 'Chambres' ? <FormRoom /> : null}
+        {props.header === 'Employés' ? <FormUser /> : null}
+        {props.header === 'Défunts' ? <FormDeceased /> : null}
         {props.header === 'Thanatopracteurs' ? <FormEmbalmer /> : null}
       </Panel>
       <Panel header="List" key="2">
+        {props.header === 'Chambres' ? <ListRoom /> : null}
         {props.header === 'Employés' ? <ListUser /> : null}
+        {props.header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
       </Panel>
       {props.header === 'Défunts'
         ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>

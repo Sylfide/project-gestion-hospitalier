@@ -1,25 +1,16 @@
 // ==> Import npm
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
+import { updateUser } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
 import { EditOutlined } from '@ant-design/icons';
-import {
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  message,
-  Switch,
-} from 'antd';
+import { Form, Input, Button, Row, Col, Switch } from 'antd';
 
 // ==> Styles
 
 // ==> Ant Design sub components
-
 
 // ==> CSS in JS
 const Container = styled.div`
@@ -32,14 +23,14 @@ const Container = styled.div`
     line-height: 1.5715;
   }
   #edit > * {
-    margin: 24px 0 0;
+    margin: 24px 0;
   }
 `;
 
 // ==> Composant
 const Profil = () => {
   const [edit, setEdit] = useState(true);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { id, firstname, lastname, email } = useSelector((state) => state.user);
 
   const [form] = Form.useForm();
@@ -53,101 +44,101 @@ const Profil = () => {
   return (
     <Container>
       <p>Compte</p>
+
       <Form
-        layout="vertical"
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 12 }}
         size="large"
         form={form}
         initialValues={{
           lastname,
           firstname,
           email,
+          password: null,
         }}
         onFinish={(values) => {
-          console.log(`id : ${id}, values : `, values);
+          dispatch(updateUser(id, values));
         }}
       >
-        <Col span={12} offset={6}>
-          <Row id="edit" justify="end">
-            <Switch
-              checkedChildren={<EditOutlined />}
-              unCheckedChildren={<EditOutlined />}
-              onChange={onEdit}
-            />
-          </Row>
+        <Row id="edit" justify="center">
+          <Switch
+            checkedChildren={<EditOutlined />}
+            unCheckedChildren={<EditOutlined />}
+            onChange={onEdit}
+          />
+        </Row>
 
-          <Form.Item
-            name="lastname"
-            label="Nom"
-            rules={[
-              {
-                required: true,
-                message: 'Champ requis',
-              },
-            ]}
-          >
-            <Input disabled={edit} />
-          </Form.Item>
+        <Form.Item
+          name="lastname"
+          label="Nom"
+          rules={[
+            {
+              required: true,
+              message: 'Champ requis',
+            },
+          ]}
+        >
+          <Input disabled={edit} />
+        </Form.Item>
 
-          <Form.Item
-            name="firstname"
-            label="Prénom"
-            rules={[
-              {
-                required: true,
-                message: 'Champ requis',
-              },
-            ]}
-          >
-            <Input disabled={edit} />
-          </Form.Item>
+        <Form.Item
+          name="firstname"
+          label="Prénom"
+          rules={[
+            {
+              required: true,
+              message: 'Champ requis',
+            },
+          ]}
+        >
+          <Input disabled={edit} />
+        </Form.Item>
 
-          <Form.Item
-            name="email"
-            label="Mail"
-            rules={[
-              {
-                required: true,
-                message: 'Champ requis',
-              },
-              {
-                type: 'email',
-                message: 'Adresse mail pas valide',
-              },
-            ]}
-          >
-            <Input disabled={edit} />
-          </Form.Item>
+        <Form.Item
+          name="email"
+          label="Mail"
+          rules={[
+            {
+              required: true,
+              message: 'Champ requis',
+            },
+            {
+              type: 'email',
+              message: 'Adresse mail pas valide',
+            },
+          ]}
+        >
+          <Input disabled={edit} />
+        </Form.Item>
 
-          <Form.Item
-            name="password"
-            label="Mot de passe actuel"
-            rules={[
-              {
-                required: true,
-                message: 'Champ requis',
-              },
-            ]}
-          >
-            <Input.Password disabled={edit} />
-          </Form.Item>
+        <Form.Item
+          name="password"
+          label="Nouveau mot de passe"
+          rules={[
+            {
+              min: 8,
+              message: '8 caractères minimum',
+            },
+          ]}
+        >
+          <Input.Password disabled={edit} />
+        </Form.Item>
 
-          <Form.Item>
-            <Row justify="center" gutter={32}>
-              <Col>
-                <Button type="primary" htmlType="submit" disabled={edit}>
-                  Enregistrer
-                </Button>
-              </Col>
-              <Col>
-                <Button htmlType="button" onClick={onReset} disabled={edit}>
-                  Abandonner
-                </Button>
-              </Col>
-            </Row>
-          </Form.Item>
-        </Col>
+        <Row justify="center" gutter={32}>
+          <Col>
+            <Button type="primary" htmlType="submit">
+              Enregistrer
+            </Button>
+          </Col>
+          <Col>
+            <Button htmlType="button" onClick={onReset}>
+              Abandonner
+            </Button>
+          </Col>
+        </Row>
       </Form>
     </Container>
+
   );
 };
 

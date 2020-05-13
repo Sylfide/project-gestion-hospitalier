@@ -82,7 +82,7 @@ const dataMapper = {
         if(updatedUser.rows[0].user_connected==false){
             await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
 
-            updatedUser=await db.query(`SELECT * FROM user WHERE id = $1;`, [userId]);
+            updatedUser=await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
         }
 
         return updatedUser.rows[0];
@@ -96,8 +96,6 @@ const dataMapper = {
       /*
         const { firstname, lastname, email, password } = userInfo;
         let updateUser;
-<<<<<<< HEAD
-=======
 
         return updatedUser.rows[0];
         }
@@ -110,7 +108,6 @@ const dataMapper = {
       /*
         const { firstname, lastname, email, password } = userInfo;
         let updateUser;
->>>>>>> 2c309eaca48d4c893a60b79d5354f4603de6dc5c
 
         for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
             if (valueInfo) {
@@ -216,7 +213,7 @@ const dataMapper = {
     listRooms:async()=>{
         const rooms=await db.query(`SELECT * FROM room`);
         
-        return rooms.rows
+        return rooms.rows;
     },
 
     deleteOneRoom: async (roomId) => {

@@ -4,7 +4,10 @@ const roomController={
     addRoom:async(req,res)=>{
         try{
            const newRoom= await dataMapper.addRoom(req.body.name,req.body.capacity);
-            res.json(newRoom);
+            
+           const roomList = await dataMapper.listRooms();
+
+           res.send(roomList);
         
     }
     catch(error){
