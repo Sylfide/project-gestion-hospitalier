@@ -36,32 +36,13 @@ const Activity = () => {
       });
   }, [token]);
 
-  // const rooms = [
-  //   {
-  //     id: 0,
-  //     name: 'Chambre tinlinlin',
-  //     capacity: 50,
-  //     free: 5,
-  //   },
-  //   {
-  //     id: 1,
-  //     name: 'Chambre truc',
-  //     capacity: 30,
-  //     free: 10,
-  //   },
-  // ]
-  // const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
-
-  // <Option key={room.id} value={room.name}>{room.name}</Option>
-
   const roomsList = rooms.map((room) => {
     return (
       <div className="room" key={room.id}>
         <h3>{room.name}</h3>
         <div className="count">
           <p>Libre</p>
-          <p className="nbr">{room.occupation}</p>
+          <p className="nbr">{room.capacity - room.occupation}</p>
           <span />
           <p>Capacité</p>
           <p className="nbr">{room.capacity}</p>
