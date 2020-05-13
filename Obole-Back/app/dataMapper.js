@@ -587,7 +587,35 @@ const dataMapper = {
         catch(error){
             console.log(error.message);
         }
-    }
+    },
+
+    getOccupationStat: async () => {
+
+        try {
+
+            const stats = await db.query(`
+                SELECT deceased.id AS deceased_id,
+                    deceased.entry_date,
+                    deceased.exit_date,
+                    room.id AS room_id,
+                    room.name,
+                    room.capacity,
+                    room.occupation
+                FROM deceased
+                JOIN room ON deceased.room_id = room.id
+                ORDER BY room_id;`);
+
+            // console.log(stats.rows);
+
+            return stats.rows;
+
+        } catch(err) {
+
+            console.trace(err);
+            res.status(500).send(err);
+        }
+
+    },
 };
 
 module.exports = dataMapper;
