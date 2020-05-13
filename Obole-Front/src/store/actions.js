@@ -2,20 +2,36 @@
 export const LOGIN = 'actions/LOGIN';
 export const LOGOUT = 'actions/LOGOUT';
 export const ENTER_OBOLE = 'actions/ENTER_OBOLE';
-export const CREATE_USER = 'actions/CREATE_USE';
+
+export const CREATE_USER = 'actions/CREATE_USER';
 export const GET_USERS = 'actions/GET_USERS';
-export const UPDATE_USER = 'actions/UPDATE_USERS';
+export const UPDATE_USER = 'actions/UPDATE_USER';
 export const DELETE_USER = 'actions/DELETE_USER';
-export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
+
+export const CREATE_EMBALMER = 'actions/CREATE_EMBALMER';
+export const GET_EMBALMERS = 'actions/GET_EMBALMERS';
+export const UPDATE_EMBALMER = 'actions/UPDATE_EMBALMER';
+export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
+
 export const ENTRY = 'actions/ENTRY';
+
+export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
 
 // ==> Action creators
 export const login = (values) => ({ type: LOGIN, values });
 export const logout = (history) => ({ type: LOGOUT, history });
 export const enterObole = (values) => ({ type: ENTER_OBOLE, values });
+
 export const creatUser = (values) => ({ type: CREATE_USER, values });
 export const getUsers = (values) => ({ type: GET_USERS, values });
 export const updateUser = (id, values) => ({ type: UPDATE_USER, id, values });
 export const deleteUser = (id) => ({ type: DELETE_USER, id });
-export const infoMessage = (message) => ({ type: INFO_MESSAGE, message });
+
+export const creatEmbalmer = (values) => ({ type: CREATE_EMBALMER, values });
+export const getEmbalmers = (values) => ({ type: GET_EMBALMERS, values });
+export const updateEmbalmer = (id, values) => ({ type: UPDATE_EMBALMER, id, values });
+export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
+
 export const entry = (values) => ({ type: ENTRY, values });
+
+export const infoMessage = (message) => ({ type: INFO_MESSAGE, message });
