@@ -60,11 +60,11 @@ const Activity = () => {
       <div className="room" key={room.id}>
         <h3>{room.name}</h3>
         <div className="count">
-          <p>Capacité</p>
-          <p className="nbr">{room.capacity}</p>
-          <span />
           <p>Libre</p>
           <p className="nbr">{room.occupation}</p>
+          <span />
+          <p>Capacité</p>
+          <p className="nbr">{room.capacity}</p>
         </div>
       </div>
     );
