@@ -19,6 +19,7 @@ export const UPDATE_EMBALMER = 'actions/UPDATE_EMBALMER';
 // export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
 
 export const ENTRY = 'actions/ENTRY';
+export const GET_DECEASED = 'actions/GET_DECEASED';
 
 export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
 
@@ -43,5 +44,6 @@ export const updateEmbalmer = (id, values) => ({ type: UPDATE_EMBALMER, id, valu
 // export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
 
 export const entry = (values) => ({ type: ENTRY, values });
+export const getDeceased = (values) => ({ type: GET_DECEASED, values });
 
 export const infoMessage = (message) => ({ type: INFO_MESSAGE, message });
