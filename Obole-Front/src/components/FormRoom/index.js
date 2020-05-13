@@ -1,7 +1,7 @@
 // ==> Import npm
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { } from 'src/store/actions';
+import { creatRoom } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
@@ -17,7 +17,7 @@ const Container = styled(Form)`
 `;
 
 // ==> Composant
-const FormEmbalmer = () => {
+const FormRoom = () => {
   const dispatch = useDispatch();
   // const clickCount = useSelector((state) => state.counter);
 
@@ -33,8 +33,7 @@ const FormEmbalmer = () => {
       size="large"
       form={form}
       onFinish={(values) => {
-        console.log('values: ', values);
-        // dispatch(creatEmbalmer(values));
+        dispatch(creatRoom(values));
       }}
     >
 
@@ -82,4 +81,4 @@ const FormEmbalmer = () => {
 };
 
 // == Export
-export default FormEmbalmer;
+export default FormRoom;
