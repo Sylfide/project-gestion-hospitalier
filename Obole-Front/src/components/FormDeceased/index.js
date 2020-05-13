@@ -1,8 +1,9 @@
 // ==> Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { entry } from 'src/store/actions';
+import { entry, getRooms, getEmbalmers } from 'src/store/actions';
 import styled from 'styled-components';
+import axios from 'axios';
 import fr from 'antd/es/date-picker/locale/fr_FR';
 import subForm from 'src/utils/subForm';
 
@@ -33,7 +34,56 @@ const Container = styled(Form)`
 // ==> Composant
 const FormDeceased = () => {
   const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  const token = useSelector((state) => state.user.token);
+  const embalmers = useSelector((state) => state.embalmers);
+  const rooms = useSelector((state) => state.rooms);
+
+  // Récupérer la liste des chambres
+  useEffect(
+    () => {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/room/list',
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          dispatch(getRooms(res.data));
+        })
+        .catch((error) => {
+          // TODO: error
+          console.log('error: ', error);
+        });
+    },
+    [],
+  );
+
+  // Liste des chambres (JSX)
+  const roomsList = rooms.map((room) => {
+    return <Option key={room.id} value={room.name}>{room.name}</Option>;
+  });
+
+  // Récupérer la liste des thanatopracteurs
+  useEffect(
+    () => {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/embalmer/list',
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          dispatch(getEmbalmers(res.data));
+        })
+        .catch((error) => {
+          // TODO: error
+          console.log('error: ', error);
+        });
+    },
+    [],
+  );
+  // Liste des thanatopracteurs (JSX)
+  const embalmersList = embalmers.map((embalmer) => {
+    return <Option key={embalmer.id} value={embalmer.id}>{`${embalmer.firstname} ${embalmer.lastname}`}</Option>;
+  });
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -47,7 +97,6 @@ const FormDeceased = () => {
       size="large"
       form={form}
       onFinish={(values) => {
-        // console.log('values: ', values);
         dispatch(entry(subForm(values)));
       }}
     >
@@ -62,8 +111,7 @@ const FormDeceased = () => {
         ]}
       >
         <Select>
-          <Option value="first">first</Option>
-          <Option value="second">second</Option>
+          {roomsList}
         </Select>
       </Form.Item>
 
@@ -198,8 +246,7 @@ const FormDeceased = () => {
         label="Thanatopracteur"
       >
         <Select>
-          <Option value="1">Morticia Addams</Option>
-          <Option value="2">Fétide Addams</Option>
+          {embalmersList}
         </Select>
       </Form.Item>
       <Row>
