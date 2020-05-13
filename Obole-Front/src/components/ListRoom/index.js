@@ -1,7 +1,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getEmbalmers } from 'src/store/actions';
+import { getRooms } from 'src/store/actions';
 // import styled from 'styled-components';
 import axios from 'axios';
 
@@ -16,20 +16,20 @@ const { Column } = Table;
 // ==> CSS in JS
 
 // ==> Composant
-const ListEmbalmer = () => {
+const ListRoom = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
-  const embalmers = useSelector((state) => state.embalmers);
+  const rooms = useSelector((state) => state.rooms);
 
   useEffect(
     () => {
       axios({
         method: 'get',
-        url: 'http://localhost:3000/embalmer/list',
+        url: 'http://localhost:3000/room/list',
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          dispatch(getEmbalmers(res.data));
+          dispatch(getRooms(res.data));
         })
         .catch((error) => {
           // TODO: error
@@ -39,16 +39,11 @@ const ListEmbalmer = () => {
     [],
   );
 
-  const data = embalmers.map((embalmer) => {
+  const data = rooms.map((room) => {
     const rObj = {
-      key: embalmer.id,
-      firstname: embalmer.firstname,
-      lastname: embalmer.lastname,
-      // address: embalmer.address,
-      // zip_code: embalmer.zip_code,
-      // city: embalmer.city,
-      // tel: embalmer.tel ? embalmer.tel : null,
-      // email: embalmer.email,
+      key: room.id,
+      name: room.name,
+      capacity: room.capacity,
     };
     return rObj;
   });
@@ -58,11 +53,12 @@ const ListEmbalmer = () => {
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
     >
-      <Column title="Prénom" dataIndex="firstname" key="firstname" />
-      <Column title="Nom" dataIndex="lastname" key="lastname" />
+      <Column title="Nom" dataIndex="name" key="name" />
+      <Column title="Capacité" dataIndex="capacity" key="capacity" />
+
     </Table>
   );
 };
 
 // == Export
-export default ListEmbalmer;
+export default ListRoom;
