@@ -1,12 +1,12 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable arrow-body-style */
+/* eslint-disable semi */
+/* eslint-disable import/no-unresolved */
 // == Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
 import axios from 'axios';
 import { getRooms } from 'src/store/actions';
-
-// import { } from 'src/store/actions';
 
 // Styles
 import './styles.scss';
