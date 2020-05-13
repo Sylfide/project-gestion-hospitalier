@@ -1,43 +1,25 @@
 // ==> Import npm
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { creatUser } from 'src/store/actions';
-// import styled from 'styled-components';
+import { } from 'src/store/actions';
+import styled from 'styled-components';
 
 // ==> Components
-import {
-  Form,
-  Input,
-  Button,
-  Select,
-  Row,
-  Col,
-  message,
-} from 'antd';
+import { Form, Input, InputNumber, Button, Row, Col } from 'antd';
 
 // ==> Styles
 
 // ==> Ant Design sub components
-const { Option } = Select;
 
 // ==> CSS in JS
+const Container = styled(Form)`
+  margin: 24px 0;
+`;
 
 // ==> Composant
-const FormRoom = () => {
+const FormEmbalmer = () => {
   const dispatch = useDispatch();
-  const topMessage = useSelector((state) => state.infoMessage);
-
-  const clear = () => {
-    dispatch({ type: 'clear' });
-  };
-  const error = () => {
-    message.error(topMessage, 2, clear);
-  };
-  useEffect(() => {
-    if (topMessage !== '') {
-      error();
-    }
-  }, [topMessage]);
+  // const clickCount = useSelector((state) => state.counter);
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -45,62 +27,59 @@ const FormRoom = () => {
   };
 
   return (
-    <Form
-      layout="vertical"
+    <Container
+      labelCol={{ span: 6 }}
+      wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      initialValues={{
-        role: 'room',
-      }}
       onFinish={(values) => {
-        dispatch(creatUser(values));
+        console.log('values: ', values);
+        // dispatch(creatEmbalmer(values));
       }}
     >
-      <Col span={12} offset={6}>
-        <Form.Item
-          name="name"
-          label="Nom de la chambre"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
 
-        <Form.Item
-          name="capacite"
-          label="Capacité de la chambre"
-          rules={[
-            {
-              required: true,
-              message: 'Champ requis',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+      <Form.Item
+        name="name"
+        label="Nom"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
 
-        <Form.Item>
-          <Row justify="center" gutter={32}>
-            <Col>
-              <Button type="primary" htmlType="submit">
-                Enregistrer
-              </Button>
-            </Col>
-            <Col>
-              <Button htmlType="button" onClick={onReset}>
-                Abandonner
-              </Button>
-            </Col>
-          </Row>
-        </Form.Item>
-      </Col>
-    </Form>
+      <Form.Item
+        name="capacity"
+        label="Capacité"
+        rules={[
+          {
+            required: true,
+            message: 'Champ requis',
+          },
+        ]}
+      >
+        <InputNumber min={0} />
+      </Form.Item>
+
+      <Row justify="center" gutter={32}>
+        <Col>
+          <Button type="primary" htmlType="submit">
+            Enregistrer
+          </Button>
+        </Col>
+        <Col>
+          <Button htmlType="button" onClick={onReset}>
+            Abandonner
+          </Button>
+        </Col>
+      </Row>
+    </Container>
+
   );
 };
 
 // == Export
-export default FormRoom;
+export default FormEmbalmer;
