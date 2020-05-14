@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import {
   ENTER_OBOLE,
   LOGOUT,

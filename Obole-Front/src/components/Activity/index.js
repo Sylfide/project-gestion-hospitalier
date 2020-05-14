@@ -1,45 +1,59 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable arrow-body-style */
+/* eslint-disable semi */
+/* eslint-disable import/no-unresolved */
 // == Import npm
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
-
-import { } from 'src/store/actions';
+import axios from 'axios';
+import { getRooms } from 'src/store/actions';
 
 // Styles
 import './styles.scss';
 
 // == Import
 
-
 // == Composant
 const Activity = () => {
   const dispatch = useDispatch();
-  const clickCount = useSelector((state) => state.counter);
+  const token = useSelector((state) => state.user.token);
+  const rooms = useSelector((state) => state.rooms);
+
+  useEffect(() => {
+    // console.log('je suis chargé')
+    axios({
+      method: 'get',
+      url: 'http://localhost:3000/room/list',
+      headers: { authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        dispatch(getRooms(res.data));
+        // console.log('data received', res.data)
+      })
+      .catch((error) => {
+        // TODO: error
+        // console.log('error: ', error);
+      });
+  }, [token]);
+
+  const roomsList = rooms.map((room) => {
+    return (
+      <div className="room" key={room.id}>
+        <h3>{room.name}</h3>
+        <div className="count">
+          <p>Libre</p>
+          <p className="nbr">{room.capacity - room.occupation}</p>
+          <span />
+          <p>Capacité</p>
+          <p className="nbr">{room.capacity}</p>
+        </div>
+      </div>
+    );
+  })
 
   return (
     <div id="activity">
-      <div className="room">
-        <h3>Chambre Tinlinlin</h3>
-        <div className="count">
-          <p>Capacité</p>
-          <p className="nbr">40</p>
-          <span />
-          <p>Libre</p>
-          <p className="nbr">5</p>
-        </div>
-      </div>
-
-      <div className="room">
-        <h3>Chambre Truc</h3>
-        <div className="count">
-          <p>Capacité</p>
-          <p className="nbr">30</p>
-          <span />
-          <p>Libre</p>
-          <p className="nbr">10</p>
-        </div>
-      </div>
-
+      {roomsList}
     </div>
   );
 };
