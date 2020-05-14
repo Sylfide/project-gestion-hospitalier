@@ -1,7 +1,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDeceased } from 'src/store/actions';
+import { getDeceased, getRooms } from 'src/store/actions';
 // import styled from 'styled-components';
 import axios from 'axios';
 import moment from 'moment';
@@ -23,7 +23,34 @@ const ListDeceased = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const deceasedList = useSelector((state) => state.deceased);
+  const rooms = useSelector((state) => state.rooms);
 
+  // Récupérer la liste des chambres
+  useEffect(
+    () => {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/room/list',
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          dispatch(getRooms(res.data));
+          console.log('Liste des chambres : ', res.data);
+        })
+        .catch((error) => {
+          // TODO: error
+          console.log('error: ', error);
+        });
+    },
+    [],
+  );
+  // Récupérer le nom d'une chambre par son id
+  const getRoomName = (roomId) => {
+    const roomInfo = rooms.find((room) => room.id === roomId);
+    return roomInfo.name;
+  };
+
+  // Récupérer la liste des défunts présents
   useEffect(
     () => {
       axios({
@@ -50,6 +77,7 @@ const ListDeceased = () => {
       lastname: deceased.lastname,
       birthDate: deceased.birth_date,
       entryDate: deceased.entry_date,
+      roomName: getRoomName(deceased.room_id),
     };
     return rObj;
   });
@@ -85,6 +113,12 @@ const ListDeceased = () => {
         dataIndex="entryDate"
         key="entryDate"
         render={(text) => moment(text).format('DD/MM/YYYY')}
+      />
+      <Column
+        title="Chambre"
+        dataIndex="roomName"
+        key="roomName"
+        sorter={(a, b) => a.roomName.localeCompare(b.roomName)}
       />
 
     </Table>
