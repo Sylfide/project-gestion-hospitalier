@@ -29,7 +29,7 @@ const Activity = () => {
     })
       .then((res) => {
         dispatch(getRooms(res.data));
-        console.log('data received', res.data)
+        // console.log('data received', res.data)
       })
       .catch((error) => {
         // TODO: error

@@ -35,7 +35,7 @@ const ListDeceased = () => {
       })
         .then((res) => {
           dispatch(getRooms(res.data));
-          console.log('Liste des chambres : ', res.data);
+          // console.log('Liste des chambres : ', res.data);
         })
         .catch((error) => {
           // TODO: error
