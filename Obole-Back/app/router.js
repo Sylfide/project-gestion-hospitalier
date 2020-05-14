@@ -32,14 +32,14 @@ router.patch('/user/:id', userAuthentified, userController.updateUser);
 
 //routes pour les rooms 
 router.post('/room/new',adminAuthentified,roomController.addRoom);
-router.post('/room/modify/:id',adminAuthentified,roomController.modifyRoom);
+router.patch('/room/modify/:id',adminAuthentified,roomController.modifyRoom);
 router.get('/room/list',adminAuthentified,roomController.listRooms);
 router.get('/room/details/:id',adminAuthentified,roomController.seeRoom);
 router.delete('/room/delete/:id', adminAuthentified, roomController.deleteRoom);
 
 //deceased routes
 router.post('/deceased/entry',userAuthentified,deceasedController.enterDeceased);
- router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
+router.post('/deceased/remove/:id',userAuthentified,deceasedController.removeDeceased);
 router.get('/deceased/list/current', userAuthentified, deceasedController.allPresentDeceased);
 router.get('/deceased/list/history', userAuthentified, deceasedController.allDeceased);
 router.get('/deceased/:id', userAuthentified, deceasedController.oneDeceased);
