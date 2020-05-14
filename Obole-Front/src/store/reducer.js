@@ -5,6 +5,7 @@ import {
   GET_USERS,
   GET_EMBALMERS,
   GET_ROOMS,
+  GET_DECEASED,
   INFO_MESSAGE,
 } from './actions';
 
@@ -20,6 +21,7 @@ const initialState = {
   staffMembers: [],
   embalmers: [],
   rooms: [],
+  deceased: [],
   infoMessage: '',
 };
 
@@ -64,6 +66,13 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         rooms: action.values,
+      };
+    }
+
+    case GET_DECEASED: {
+      return {
+        ...state,
+        deceased: action.values,
       };
     }
 
