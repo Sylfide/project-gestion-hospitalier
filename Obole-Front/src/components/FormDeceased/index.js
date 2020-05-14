@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable linebreak-style */
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -347,7 +345,7 @@ const FormDeceased = () => {
 
       <Row justify="center" gutter={32}>
         <Col>
-          <Button type="primary" htmlType="submit" onClick={onClick}>
+          <Button type="primary" htmlType="submit">
             Enregistrer
           </Button>
         </Col>

@@ -1,5 +1,3 @@
-/* eslint-disable import/no-unresolved */
-/* eslint-disable linebreak-style */
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
