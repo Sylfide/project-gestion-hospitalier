@@ -5,13 +5,13 @@ import { getDeceased } from 'src/store/actions';
 // import styled from 'styled-components';
 import axios from 'axios';
 import moment from 'moment';
-import Highlighter from 'react-highlight-words';
+// import Highlighter from 'react-highlight-words';
 
 // ==> Components
 import { Table } from 'antd';
 
 // ==> Styles
-import { SearchOutlined } from '@ant-design/icons';
+// import { SearchOutlined } from '@ant-design/icons';
 
 // ==> Ant Design sub components
 const { Column } = Table;
