@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable camelcase */
 export default (values) => {
   const birth_date = values.birthDate ? values.birthDate.format('DD/MM/YYYY') : null;

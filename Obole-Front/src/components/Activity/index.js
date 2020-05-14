@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable linebreak-style */
 /* eslint-disable arrow-body-style */
 /* eslint-disable semi */
@@ -28,13 +29,13 @@ const Activity = () => {
     })
       .then((res) => {
         dispatch(getRooms(res.data));
-        // console.log('data received', res.data)
+        console.log('data received', res.data)
       })
       .catch((error) => {
         // TODO: error
-        // console.log('error: ', error);
+        console.log('error: ', error);
       });
-  }, [token]);
+  }, []);
 
   const roomsList = rooms.map((room) => {
     return (
