@@ -1,6 +1,6 @@
 // ==> Import npm
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -16,7 +16,7 @@ import { Form, Input, Button, Row, Col } from 'antd';
 // ==> Composant
 const ResetForm = () => {
   const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  const userId = useSelector((state) => state.user.id);
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -30,28 +30,10 @@ const ResetForm = () => {
       name="normal_login"
       className="login-form"
       onFinish={(values) => {
-        dispatch(updateUser(id, values));
+        dispatch(updateUser(userId, values));
       }}
     >
-      <Form.Item>
-        Première connexion<br />
-        Définissez un nouveau mot de passe
-      </Form.Item>
-      {/* <Form.Item
-        name="email"
-        rules={[
-          {
-            required: true,
-            message: 'Champ requis',
-          },
-          {
-            type: 'email',
-            message: 'Adresse mail non valide',
-          },
-        ]}
-      >
-        <Input placeholder="email" />
-      </Form.Item> */}
+
       <Form.Item
         name="password"
         rules={[
@@ -62,6 +44,34 @@ const ResetForm = () => {
         ]}
       >
         <Input.Password placeholder="Mot de passe" />
+      </Form.Item>
+
+      <Form.Item
+        name="confirm"
+        dependencies={['password']}
+        hasFeedback
+        rules={[
+          {
+            required: true,
+            message: 'Confirmez le mot de passe',
+          },
+          ({ getFieldValue }) => ({
+            validator(rule, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+
+              return Promise.reject('Pas de correspondance');
+            },
+          }),
+        ]}
+      >
+        <Input.Password placeholder="Confirmez le mot de passe" />
+      </Form.Item>
+
+      <Form.Item>
+        Première connexion<br />
+        Définissez un nouveau mot de passe
       </Form.Item>
 
       <Form.Item>

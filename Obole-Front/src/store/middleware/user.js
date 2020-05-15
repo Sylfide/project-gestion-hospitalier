@@ -39,6 +39,7 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          console.log('update : ', res.data);
           sessionStorage.user = JSON.stringify(res.data);
           store.dispatch(enterObole(res.data));
         })
