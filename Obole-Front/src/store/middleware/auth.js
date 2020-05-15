@@ -11,8 +11,13 @@ export default (store) => (next) => (action) => {
         data: action.values,
       })
         .then((res) => {
-          sessionStorage.user = JSON.stringify(res.data);
-          store.dispatch(enterObole(res.data));
+          if (res.data.user_connected) {
+            sessionStorage.user = JSON.stringify(res.data);
+            store.dispatch(enterObole(res.data));
+          }
+          else {
+            store.dispatch({ type: 'RESET' });
+          }
         })
         .catch((error) => {
           // TODO: traîtement d'erreur

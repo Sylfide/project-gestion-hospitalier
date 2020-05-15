@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 // ==> Components
 import { Form, Input, Button, Row, Col } from 'antd';
+import ResetForm from 'src/components/ResetForm';
 
 // ==> Styles
 import logo from 'src/assets/img/logo-obole.svg';
@@ -42,7 +43,7 @@ const validateMessages = {
 // ==> Composant
 const LoginForm = () => {
   const dispatch = useDispatch();
-  // const clickCount = useSelector((state) => state.counter);
+  const reset = useSelector((state) => state.reset);
 
   const [form] = Form.useForm();
   const onReset = () => {
@@ -52,49 +53,51 @@ const LoginForm = () => {
   return (
     <Container>
       <img alt="logo" src={logo} />
-      <Form
-        form={form}
-        size="large"
-        name="normal_login"
-        className="login-form"
-        validateMessages={validateMessages}
-        onFinish={(values) => {
-          dispatch(login(values));
-        }}
-      >
-        <Form.Item
-          name="email"
-          rules={[{ required: true, type: 'email' }]}
+      {reset ? <ResetForm /> : (
+        <Form
+          form={form}
+          size="large"
+          name="normal_login"
+          className="login-form"
+          validateMessages={validateMessages}
+          onFinish={(values) => {
+            dispatch(login(values));
+          }}
         >
-          <Input placeholder="email" />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[{ required: true }]}
-        >
-          <Input.Password placeholder="Mot de passe" />
-        </Form.Item>
-        <Form.Item>
-          <a className="login-form-forgot" href="">
-            Mot de passe oublié ?
-          </a>
-        </Form.Item>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, type: 'email' }]}
+          >
+            <Input placeholder="email" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            rules={[{ required: true }]}
+          >
+            <Input.Password placeholder="Mot de passe" />
+          </Form.Item>
+          <Form.Item>
+            <a className="login-form-forgot" href="">
+              Mot de passe oublié ?
+            </a>
+          </Form.Item>
 
-        <Form.Item>
-          <Row>
-            <Col flex={1}>
-              <Button type="primary" htmlType="submit">
-                Log in
-              </Button>
-            </Col>
-            <Col flex={1}>
-              <Button htmlType="button" onClick={onReset}>
-                Reset
-              </Button>
-            </Col>
-          </Row>
-        </Form.Item>
-      </Form>
+          <Form.Item>
+            <Row>
+              <Col flex={1}>
+                <Button type="primary" htmlType="submit">
+                  Log in
+                </Button>
+              </Col>
+              <Col flex={1}>
+                <Button htmlType="button" onClick={onReset}>
+                  Reset
+                </Button>
+              </Col>
+            </Row>
+          </Form.Item>
+        </Form>
+      )}
     </Container>
   );
 };
