@@ -77,7 +77,7 @@ const dataMapper = {
             }
         }
 
-        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
+        let updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
 
         if(updatedUser.rows[0].user_connected==false){
             await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
