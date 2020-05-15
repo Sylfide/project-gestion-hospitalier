@@ -103,12 +103,26 @@ const deceasedController = {
                         // 7.2 renvoyer les données
                 // console.log(newDeceasedAllInfos);
 
-                newDeceasedAllInfos.birth_date = moment(newDeceasedAllInfos.birth_date).format("DD/MM/YYYY");
-                newDeceasedAllInfos.deceased_date = moment(newDeceasedAllInfos.deceased_date).format("DD/MM/YYYY");
-                newDeceasedAllInfos.entry_date = moment(newDeceasedAllInfos.entry_date).format("DD/MM/YYYY");
-                newDeceasedAllInfos.exit_date = moment(newDeceasedAllInfos.exit_date).format("DD/MM/YYYY");
-                newDeceasedAllInfos.burial_permit_date = moment(newDeceasedAllInfos.burial_permit_date).format("DD/MM/YYYY");
-                newDeceasedAllInfos.conservation_date = moment(newDeceasedAllInfos.conservation_date).format("DD/MM/YYYY");
+                // construction d'un objet pour isoler les dates 
+                const dates = {
+                    birth_date: newDeceasedAllInfos.birth_date, 
+                    deceased_date: newDeceasedAllInfos.deceased_date, 
+                    entry_date: newDeceasedAllInfos.entry_date, 
+                    exit_date: newDeceasedAllInfos.exit_date, 
+                    burial_permit_date: newDeceasedAllInfos.burial_permit_date, 
+                    conservation_date: newDeceasedAllInfos.conservation_date
+                };
+    
+                // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+                for (let date in dates) {
+                    if (dates[date] !== null) {
+                        // console.log(dates[date]);
+                        dates[date] = moment(dates[date]).format("DD/MM/YYYY");
+                        // console.log('dates : ' + dates[date]);
+                        // console.log('oneDeceased : ' + oneDeceased[date]);
+                        newDeceasedAllInfos[date] = dates[date];
+                    } 
+                }
 
                 res.send(newDeceasedAllInfos);
             }
@@ -333,6 +347,28 @@ const deceasedController = {
             // 6. renvoyer les infos nécessaires au front 
                 // 6.1 appeler datamapper pour les détails d'un défunt en lui passant updatedDeceased.id
             const updatedDeceasedAllInfos = await dataMapper.getOneDeceased(deceasedId);
+
+            // construction d'un objet pour isoler les dates 
+            const dates = {
+                birth_date: updatedDeceasedAllInfos.birth_date, 
+                deceased_date: updatedDeceasedAllInfos.deceased_date, 
+                entry_date: updatedDeceasedAllInfos.entry_date, 
+                exit_date: updatedDeceasedAllInfos.exit_date, 
+                burial_permit_date: updatedDeceasedAllInfos.burial_permit_date, 
+                conservation_date: updatedDeceasedAllInfos.conservation_date
+            };
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in dates) {
+                if (dates[date] !== null) {
+                    // console.log(dates[date]);
+                    dates[date] = moment(dates[date]).format("DD/MM/YYYY");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    updatedDeceasedAllInfos[date] = dates[date];
+                } 
+            }
+
                 // 6.2 renvoyer les données
             res.send(updatedDeceasedAllInfos);
 
