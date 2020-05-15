@@ -10,6 +10,7 @@ import {
 } from './actions';
 
 const initialState = {
+  reset: false,
   user: {
     id: '',
     role: '',
@@ -38,6 +39,13 @@ export default (state = initialState, action = {}) => {
           email: action.values.email,
           token: action.values.token,
         },
+      };
+    }
+
+    case 'RESET': {
+      return {
+        ...state,
+        reset: true,
       };
     }
 
