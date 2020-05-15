@@ -1,5 +1,7 @@
 const dataMapper = require('../dataMapper');
 const sendMail= require('../email/send-email');
+const moment = require('moment');
+
 const deceasedController = {
 
     enterDeceased: async (req,res) => {
@@ -100,6 +102,14 @@ const deceasedController = {
                 const newDeceasedAllInfos = await dataMapper.getOneDeceased(newDeceased.id);
                         // 7.2 renvoyer les données
                 // console.log(newDeceasedAllInfos);
+
+                newDeceasedAllInfos.birth_date = moment(newDeceasedAllInfos.birth_date).format("DD/MM/YYYY");
+                newDeceasedAllInfos.deceased_date = moment(newDeceasedAllInfos.deceased_date).format("DD/MM/YYYY");
+                newDeceasedAllInfos.entry_date = moment(newDeceasedAllInfos.entry_date).format("DD/MM/YYYY");
+                newDeceasedAllInfos.exit_date = moment(newDeceasedAllInfos.exit_date).format("DD/MM/YYYY");
+                newDeceasedAllInfos.burial_permit_date = moment(newDeceasedAllInfos.burial_permit_date).format("DD/MM/YYYY");
+                newDeceasedAllInfos.conservation_date = moment(newDeceasedAllInfos.conservation_date).format("DD/MM/YYYY");
+
                 res.send(newDeceasedAllInfos);
             }
             
