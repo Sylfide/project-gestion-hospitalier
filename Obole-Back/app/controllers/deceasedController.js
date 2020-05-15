@@ -9,6 +9,28 @@ const deceasedController = {
 
             // 1. décortiquer le req.body comprenant les 3 sous-objets en trois parties : deceasedInfo, conservationInfo et deceasedRefInfo
             const deceasedInfo = req.body.deceased;
+            // console.log(deceasedInfo);
+
+            const deceasedDates = {
+                birth_date: deceasedInfo.birth_date, 
+                deceased_date: deceasedInfo.deceased_date, 
+                entry_date: deceasedInfo.entry_date, 
+                exit_date: deceasedInfo.exit_date, 
+                burial_permit_date: deceasedInfo.burial_permit_date
+            };
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in deceasedDates) {
+                if (deceasedDates[date] !== '') {
+                    // console.log(dates[date]);
+                    deceasedDates[date] = moment(deceasedDates[date], "DD/MM/YYYY").format("YYYY-MM-DD");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    deceasedInfo[date] = deceasedDates[date];
+                } 
+            }
+
+            // console.log(deceasedInfo);
 
                 // 1.2 isoler req.body.deceased.room
             const roomName = req.body.deceased.room;
@@ -21,6 +43,13 @@ const deceasedController = {
             deceasedInfo.roomId = roomId.id;
 
             const conservationInfo = req.body.conservation;
+            // console.log(conservationInfo);
+            if(conservationInfo.date !== '') {
+                // console.log(conservationInfo.date);
+                conservationInfo.date = moment(conservationInfo.date, "DD/MM/YYYY").format("YYYY-MM-DD");
+            }
+            // console.log(conservationInfo);
+
             const deceasedRefInfo = req.body.deceased_ref;
 
             // 1bis vérifier que le défunt n'existe pas déjà 
@@ -117,7 +146,7 @@ const deceasedController = {
                 for (let date in dates) {
                     if (dates[date] !== null) {
                         // console.log(dates[date]);
-                        dates[date] = moment(dates[date]).format("DD/MM/YYYY");
+                        dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
                         // console.log('dates : ' + dates[date]);
                         // console.log('oneDeceased : ' + oneDeceased[date]);
                         newDeceasedAllInfos[date] = dates[date];
@@ -207,7 +236,7 @@ const deceasedController = {
             for (let date in dates) {
                 if (dates[date] !== null) {
                     // console.log(dates[date]);
-                    dates[date] = moment(dates[date]).format("DD/MM/YYYY");
+                    dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
                     // console.log('dates : ' + dates[date]);
                     // console.log('oneDeceased : ' + oneDeceased[date]);
                     oneDeceased[date] = dates[date];
@@ -231,6 +260,26 @@ const deceasedController = {
             // 1. décortiquer le req.body (contient 3 sous-objets : deceasedInfo, conservationInfo et deceasedRefInfo)
                 // 1.1 isoler deceasedInfo
             const deceasedInfo = req.body.deceased;
+
+            const deceasedDates = {
+                birth_date: deceasedInfo.birth_date, 
+                deceased_date: deceasedInfo.deceased_date, 
+                entry_date: deceasedInfo.entry_date, 
+                exit_date: deceasedInfo.exit_date, 
+                burial_permit_date: deceasedInfo.burial_permit_date
+            };
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in deceasedDates) {
+                if (deceasedDates[date] !== '') {
+                    // console.log(dates[date]);
+                    deceasedDates[date] = moment(deceasedDates[date], "DD/MM/YYYY").format("YYYY-MM-DD");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    deceasedInfo[date] = deceasedDates[date];
+                } 
+            }
+
                 // 1.2 isoler req.body.deceased.room
             const roomName = req.body.deceased.room;
                 // 1.3 appeler datamapper pour avoir l'id de la room d'après son nom
@@ -239,6 +288,12 @@ const deceasedController = {
             deceasedInfo.room_id = roomId.id;
                 // 1.5 isoler conservationInfo et deceasedRefInfo
             const conservationInfo = req.body.conservation;
+
+            if(conservationInfo.date !== '') {
+                // console.log(conservationInfo.date);
+                conservationInfo.date = moment(conservationInfo.date, "DD/MM/YYYY").format("YYYY-MM-DD");
+            }
+
             const deceasedRefInfo = req.body.deceased_ref;
 
             // 2. vérifier si changement de chambre, si oui décrémenter l'ancienne et incrémenter la nouvelle et envoyer le mail sinon capacité max atteinte (sinon ne rien faire)
@@ -362,7 +417,7 @@ const deceasedController = {
             for (let date in dates) {
                 if (dates[date] !== null) {
                     // console.log(dates[date]);
-                    dates[date] = moment(dates[date]).format("DD/MM/YYYY");
+                    dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
                     // console.log('dates : ' + dates[date]);
                     // console.log('oneDeceased : ' + oneDeceased[date]);
                     updatedDeceasedAllInfos[date] = dates[date];
