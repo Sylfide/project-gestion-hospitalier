@@ -49,7 +49,7 @@ export default (state = initialState, action = {}) => {
         reset: true,
         user: {
           id: action.values.id,
-          role: action.values.role,
+          role: '',
           firstname: action.values.firstname,
           lastname: action.values.lastname,
           email: action.values.email,
@@ -59,11 +59,7 @@ export default (state = initialState, action = {}) => {
     }
 
     case LOGOUT: {
-      return {
-        ...state,
-        reset: initialState.reset,
-        user: initialState.user,
-      };
+      return initialState;
     }
 
     case GET_USERS: {
