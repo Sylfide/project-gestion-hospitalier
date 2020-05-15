@@ -92,44 +92,6 @@ const dataMapper = {
            console.trace(error);
         }
         
-
-      /*
-        const { firstname, lastname, email, password } = userInfo;
-        let updateUser;
-
-        return updatedUser.rows[0];
-        }
-
-        catch(error){
-           console.log(error.message)
-        }
-        
-
-      /*
-        const { firstname, lastname, email, password } = userInfo;
-        let updateUser;
-
-        for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
-            if (valueInfo) {
-                user[keyInfo] = valueInfo;
-
-                await db.query(`UPDATE "user" SET `+keyInfo+` = $1 WHERE id = $2;`, [valueInfo, userId]);
-            }
-        }
-
-        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
-
-        return updatedUser.rows[0];
-        if (password) {
-            const salt = password.substring(0, 3);
-            const hashedPassword = SHA256(password + salt).toString(encBase64);
-            updateUser = await db.query(`UPDATE "user" SET password = $1 WHERE id = $2 RETURNING firstname, lastname, role, email, password, token;`, [hashedPassword, userId]);
-        } 
-
-        console.log(updateUser);
-
-        return updateUser.rows[0];
-        */
     },
 
     deleteUser: async (userId) => {
