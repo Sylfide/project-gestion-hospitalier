@@ -11,11 +11,13 @@ export default (store) => (next) => (action) => {
         data: action.values,
       })
         .then((res) => {
-          sessionStorage.user = JSON.stringify(res.data);
           if (res.data.user_connected) {
+            sessionStorage.user = JSON.stringify(res.data);
             store.dispatch(enterObole(res.data));
           }
           else {
+            Reflect.deleteProperty(res.data, 'role');
+            sessionStorage.user = JSON.stringify(res.data);
             store.dispatch({ type: 'RESET', values: res.data });
           }
         })

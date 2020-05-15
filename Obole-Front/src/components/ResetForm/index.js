@@ -30,6 +30,7 @@ const ResetForm = () => {
       name="normal_login"
       className="login-form"
       onFinish={(values) => {
+        Reflect.deleteProperty(values, 'confirm');
         dispatch(updateUser(userId, values));
       }}
     >
