@@ -175,6 +175,34 @@ const deceasedController = {
 
             const oneDeceased = await dataMapper.getOneDeceased(deceasedId);
 
+            // console.log(oneDeceased);
+
+            // construction d'un objet pour isoler les dates 
+            const dates = {
+                birth_date: oneDeceased.birth_date, 
+                deceased_date: oneDeceased.deceased_date, 
+                entry_date: oneDeceased.entry_date, 
+                exit_date: oneDeceased.exit_date, 
+                burial_permit_date: oneDeceased.burial_permit_date, 
+                conservation_date: oneDeceased.conservation_date
+            };
+
+            // console.log(dates);
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in dates) {
+                if (dates[date] !== null) {
+                    // console.log(dates[date]);
+                    dates[date] = moment(dates[date]).format("DD/MM/YYYY");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    oneDeceased[date] = dates[date];
+                } 
+            }
+
+            // console.log(dates);
+            // console.log(oneDeceased);
+
             res.send(oneDeceased);
 
         } catch(err){
