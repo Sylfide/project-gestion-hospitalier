@@ -16,7 +16,7 @@ export const DELETE_USER = 'actions/DELETE_USER';
 export const CREATE_EMBALMER = 'actions/CREATE_EMBALMER';
 export const GET_EMBALMERS = 'actions/GET_EMBALMERS';
 export const UPDATE_EMBALMER = 'actions/UPDATE_EMBALMER';
-// export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
+export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
 
 export const ENTRY = 'actions/ENTRY';
 export const GET_DECEASED = 'actions/GET_DECEASED';
@@ -41,9 +41,9 @@ export const deleteUser = (id) => ({ type: DELETE_USER, id });
 export const creatEmbalmer = (values) => ({ type: CREATE_EMBALMER, values });
 export const getEmbalmers = (values) => ({ type: GET_EMBALMERS, values });
 export const updateEmbalmer = (id, values) => ({ type: UPDATE_EMBALMER, id, values });
-// export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
+export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
 
 export const entry = (values) => ({ type: ENTRY, values });
 export const getDeceased = (values) => ({ type: GET_DECEASED, values });
 
-export const infoMessage = (message) => ({ type: INFO_MESSAGE, message });
+export const infoMessage = (code, text) => ({ type: INFO_MESSAGE, code, text });

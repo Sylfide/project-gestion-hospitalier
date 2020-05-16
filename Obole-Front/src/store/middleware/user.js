@@ -57,11 +57,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(infoMessage('success', 'Utilisateur supprimé'));
           store.dispatch(getUsers(res.data));
         })
         .catch((error) => {
-          console.log('error: ', error);
-          store.dispatch(infoMessage('Erreur lors de la suppression'));
+          store.dispatch(infoMessage('error', 'Erreur lors de la suppression'));
+          console.log(error);
         });
       return;
     }
