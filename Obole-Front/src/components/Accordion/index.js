@@ -1,8 +1,6 @@
 // ==> Import npm
 import React from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
-import { } from 'src/store/actions';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 // ==> Components
@@ -50,31 +48,34 @@ const Section = styled(Collapse)`
 `;
 
 // ==> Composant
-const Accordion = (props) => {
-  // const dispatch = useDispatch();
-  // const opened = useSelector((state) => state.opened);
+const Accordion = ({ header }) => (
+  <Section
+    accordion
+    destroyInactivePanel
+  >
+    <p>{header}</p>
+    <Panel header="Nouveau" key="1">
+      {header === 'Chambres' ? <FormRoom /> : null}
+      {header === 'Employés' ? <FormUser /> : null}
+      {header === 'Défunts' ? <FormDeceased /> : null}
+      {header === 'Thanatopracteurs' ? <FormEmbalmer /> : null}
+    </Panel>
+    <Panel header="List" key="2">
+      {header === 'Chambres' ? <ListRoom /> : null}
+      {header === 'Employés' ? <ListUser /> : null}
+      {header === 'Défunts' ? <ListDeceased /> : null}
+      {header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
+    </Panel>
+    {header === 'Défunts'
+      ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>
+      : null }
+  </Section>
+);
 
-  return (
-    <Section accordion>
-      <p>{props.header}</p>
-      <Panel header="Nouveau" key="1">
-        {props.header === 'Chambres' ? <FormRoom /> : null}
-        {props.header === 'Employés' ? <FormUser /> : null}
-        {props.header === 'Défunts' ? <FormDeceased /> : null}
-        {props.header === 'Thanatopracteurs' ? <FormEmbalmer /> : null}
-      </Panel>
-      <Panel header="List" key="2">
-        {props.header === 'Chambres' ? <ListRoom /> : null}
-        {props.header === 'Employés' ? <ListUser /> : null}
-        {props.header === 'Défunts' ? <ListDeceased /> : null}
-        {props.header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
-      </Panel>
-      {props.header === 'Défunts'
-        ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>
-        : null }
-    </Section>
-  );
+// ==> Prop validation
+Accordion.propTypes = {
+  header: PropTypes.string.isRequired,
 };
 
-// == Export
+// ==> Export
 export default Accordion;

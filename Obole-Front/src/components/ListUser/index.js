@@ -22,10 +22,12 @@ const ListUser = () => {
   const staffMembers = useSelector((state) => state.staffMembers);
   const infoMessage = useSelector((state) => state.infoMessage);
 
+  // ==> Message d'info (en haut de la fenêtre) suite a une requête
   const clear = () => {
     dispatch({ type: 'clear' });
   };
   const showMessage = (code, text) => {
+    // (text du message, durée d'affichage, callback)
     message[code](text, 2, clear);
   };
   useEffect(() => {

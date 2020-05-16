@@ -21,13 +21,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          // TODO: success message
+          store.dispatch(infoMessage('success', 'Nouvel utilisateur enregistré'));
           store.dispatch(getUsers(res.data));
         })
         .catch((error) => {
-          // TODO: error message
-          console.log('error: ', error);
-          store.dispatch(infoMessage('Erreur lors de la création'));
+          store.dispatch(infoMessage('error', 'Erreur lors de la création'));
+          console.log(error);
         });
       return;
     }
