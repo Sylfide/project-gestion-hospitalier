@@ -20,19 +20,6 @@ const ListUser = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const staffMembers = useSelector((state) => state.staffMembers);
-  const topMessage = useSelector((state) => state.infoMessage);
-
-  const clear = () => {
-    dispatch({ type: 'clear' });
-  };
-  const error = () => {
-    message.error(topMessage, 2, clear);
-  };
-  useEffect(() => {
-    if (topMessage !== '') {
-      error();
-    }
-  }, [topMessage]);
 
   // Récupérer la liste des utilisateurs
   useEffect(
@@ -45,9 +32,8 @@ const ListUser = () => {
         .then((res) => {
           dispatch(getUsers(res.data));
         })
-        .catch((res) => {
-          error(res.response.statusText);
-          console.log(res.response);
+        .catch((error) => {
+          console.log(error);
         });
     },
     [],
