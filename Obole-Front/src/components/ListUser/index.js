@@ -34,9 +34,7 @@ const ListUser = () => {
     }
   }, [topMessage]);
 
-  // Après le premier rendu du composant
-  // UseEffect va déclencher une requête pour obtenir
-  // la liste des utilisateurs
+  // Récupérer la liste des utilisateurs
   useEffect(
     () => {
       axios({
@@ -71,11 +69,6 @@ const ListUser = () => {
 
   return (
     <Table
-      // onRow={(record, rowIndex) => {
-      //   return {
-      //     onClick: event => {console.log(record.key);},
-      //   };
-      // }}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
     >
