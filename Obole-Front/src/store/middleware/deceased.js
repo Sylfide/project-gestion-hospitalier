@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {
   ENTRY,
+  addDeceased,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -8,7 +9,6 @@ export default (store) => (next) => (action) => {
   const token = user ? user.token : null;
   switch (action.type) {
     case ENTRY: {
-      console.log('Sending :', action.values);
       axios({
         method: 'post',
         url: 'http://localhost:3000/deceased/entry',
@@ -16,7 +16,7 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          console.log('Nouvelle entrée', res.data);
+          store.dispatch(addDeceased(res.data));
         })
         .catch((error) => {
           console.log(error);

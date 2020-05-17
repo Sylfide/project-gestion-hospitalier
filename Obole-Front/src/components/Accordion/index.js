@@ -1,7 +1,10 @@
 // ==> Import npm
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDeceased, getEmbalmers } from 'src/store/actions';
+import axios from 'axios';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 // ==> Components
 import FormRoom from 'src/components/FormRoom';
@@ -48,34 +51,76 @@ const Section = styled(Collapse)`
 `;
 
 // ==> Composant
-const Accordion = ({ header }) => (
-  <Section
-    accordion
-    destroyInactivePanel
-  >
-    <p>{header}</p>
-    <Panel header="Nouveau" key="1">
-      {header === 'Chambres' ? <FormRoom /> : null}
-      {header === 'Employés' ? <FormUser /> : null}
-      {header === 'Défunts' ? <FormDeceased /> : null}
-      {header === 'Thanatopracteurs' ? <FormEmbalmer /> : null}
-    </Panel>
-    <Panel header="List" key="2">
-      {header === 'Chambres' ? <ListRoom /> : null}
-      {header === 'Employés' ? <ListUser /> : null}
-      {header === 'Défunts' ? <ListDeceased /> : null}
-      {header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
-    </Panel>
-    {header === 'Défunts'
-      ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>
-      : null }
-  </Section>
-);
+const Accordion = ({ header }) => {
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token);
+  const deceased = useSelector((state) => state.user.deceased);
+  const embalmers = useSelector((state) => state.user.embalmers);
 
-// ==> Prop validation
+  // Récupérer la liste des défunts
+  useEffect(
+    () => {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/deceased/list/current',
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          dispatch(getDeceased(res.data));
+        })
+        .catch((error) => {
+          // TODO: error
+          console.log('error: ', error);
+        });
+    },
+    [deceased],
+  );
+
+  // Récupérer la liste des thanatos
+  useEffect(
+    () => {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/embalmer/list',
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          dispatch(getEmbalmers(res.data));
+        })
+        .catch((error) => {
+          // TODO: error
+          console.log('error: ', error);
+        });
+    },
+    [embalmers],
+  );
+
+  return (
+    <Section accordion>
+      <p>{header}</p>
+      <Panel header="Nouveau" key="1">
+        {header === 'Chambres' ? <FormRoom /> : null}
+        {header === 'Employés' ? <FormUser /> : null}
+        {header === 'Défunts' ? <FormDeceased /> : null}
+        {header === 'Thanatopracteurs' ? <FormEmbalmer /> : null}
+      </Panel>
+      <Panel header="List" key="2">
+        {header === 'Chambres' ? <ListRoom /> : null}
+        {header === 'Employés' ? <ListUser /> : null}
+        {header === 'Défunts' ? <ListDeceased /> : null}
+        {header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
+      </Panel>
+      {header === 'Défunts'
+        ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>
+        : null }
+    </Section>
+  );
+};
+
+// ==> Props validation
 Accordion.propTypes = {
   header: PropTypes.string.isRequired,
 };
 
-// ==> Export
+// == Export
 export default Accordion;
