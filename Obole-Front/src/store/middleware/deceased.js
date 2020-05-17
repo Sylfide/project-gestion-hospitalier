@@ -16,6 +16,7 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          // TODO: success message
           store.dispatch(addDeceased(res.data));
         })
         .catch((error) => {
