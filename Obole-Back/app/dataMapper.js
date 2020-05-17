@@ -158,8 +158,8 @@ const dataMapper = {
 
     addRoom:async(name,capacity)=>{
 
-        console.log(name);
-        console.log(capacity);
+        // console.log(name);
+        // console.log(capacity);
         const insert=await db.query("INSERT INTO room (name,capacity) VALUES ($1,$2) RETURNING name,capacity",[name,capacity]);
         
         return insert.rows[0];
@@ -177,7 +177,7 @@ const dataMapper = {
         }
 
         const modifiedRoom=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
-        console.log(modifiedRoom.rows[0]);
+        // console.log(modifiedRoom.rows[0]);
         return modifiedRoom.rows[0];
         
     },

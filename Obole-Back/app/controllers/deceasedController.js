@@ -9,7 +9,7 @@ const deceasedController = {
 
             // 1. décortiquer le req.body comprenant les 3 sous-objets en trois parties : deceasedInfo, conservationInfo et deceasedRefInfo
             const deceasedInfo = req.body.deceased;
-            // console.log(deceasedInfo);
+            // console.log('infos avant traitement : ', deceasedInfo);
 
             const deceasedDates = {
                 birth_date: deceasedInfo.birth_date, 
@@ -21,7 +21,7 @@ const deceasedController = {
 
             // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
             for (let date in deceasedDates) {
-                if (deceasedDates[date] !== '') {
+                if (deceasedDates[date] !== null) {
                     // console.log(dates[date]);
                     deceasedDates[date] = moment(deceasedDates[date], "DD/MM/YYYY").format("YYYY-MM-DD");
                     // console.log('dates : ' + dates[date]);
@@ -30,7 +30,7 @@ const deceasedController = {
                 } 
             }
 
-            // console.log(deceasedInfo);
+            // console.log('infos après traitement : ', deceasedInfo);
 
                 // 1.2 isoler req.body.deceased.room
             const roomName = req.body.deceased.room;
@@ -43,8 +43,8 @@ const deceasedController = {
             deceasedInfo.roomId = roomId.id;
 
             const conservationInfo = req.body.conservation;
-            // console.log(conservationInfo);
-            if(conservationInfo.date !== '') {
+            console.log('infos conservation avant traitement : ', conservationInfo);
+            if(conservationInfo.date !== null) {
                 // console.log(conservationInfo.date);
                 conservationInfo.date = moment(conservationInfo.date, "DD/MM/YYYY").format("YYYY-MM-DD");
             }
@@ -121,7 +121,7 @@ const deceasedController = {
                 // console.log(room.occupation);
                 // console.log(room.capacity);
                 if(room.occupation === room.capacity) {
-                    console.log('yes');
+                    // console.log('yes');
                     sendMail(admins,room.name)
                 }
 
@@ -170,7 +170,7 @@ const deceasedController = {
             
             if(getDeceased){
                 await dataMapper.decrementRoomCapacity(getDeceased[0]);
-                 console.log(getDeceased[1]);
+                // console.log(getDeceased[1]);
                 res.json(getDeceased[1]);
             }
 
@@ -271,7 +271,7 @@ const deceasedController = {
 
             // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
             for (let date in deceasedDates) {
-                if (deceasedDates[date] !== '') {
+                if (deceasedDates[date] !== null) {
                     // console.log(dates[date]);
                     deceasedDates[date] = moment(deceasedDates[date], "DD/MM/YYYY").format("YYYY-MM-DD");
                     // console.log('dates : ' + dates[date]);
@@ -289,7 +289,7 @@ const deceasedController = {
                 // 1.5 isoler conservationInfo et deceasedRefInfo
             const conservationInfo = req.body.conservation;
 
-            if(conservationInfo.date !== '') {
+            if(conservationInfo.date !== null) {
                 // console.log(conservationInfo.date);
                 conservationInfo.date = moment(conservationInfo.date, "DD/MM/YYYY").format("YYYY-MM-DD");
             }
@@ -311,13 +311,13 @@ const deceasedController = {
                     const admins = await dataMapper.getAdmins();
                     const room = await dataMapper.seeRoom(roomInsertion.id);
                     if (room.occupation === room.capacity) {
-                        console.log('yes');
+                        // console.log('yes');
                         sendMail(admins, room.name);
                     }
             }
 
             // 3. faire l'update du deceased
-            if (deceasedInfo.exit_date !== '') { 
+            if (deceasedInfo.exit_date !== null) { 
                 
                 // 3.1 si le deceasedInfo.exit_date !== null
                     // 3.1.1 appeler datamapper removeDeceased en lui passant deceasedId

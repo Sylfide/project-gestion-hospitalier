@@ -3,10 +3,10 @@ const db=require('../db_connection.js')
     if(req.headers.authorization){
        
         const userToken=req.headers.authorization.replace("Bearer ","");
-        console.log(userToken);
+        // console.log(userToken);
        
         const findUser=await db.query(`SELECT * FROM "user" WHERE token=$1`,[userToken]);
-        console.log(findUser.rows);
+        // console.log(findUser.rows);
         
         if(findUser.rows[0]){ 
             if(findUser.rows[0].role!='admin'){

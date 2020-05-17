@@ -20,7 +20,7 @@ const roomController={
     modifyRoom:async(req,res)=>{
         try{
             const modifiedRoom=await dataMapper.modifyRoom(req.body.name,req.body.capacity,req.params.id);
-            console.log(req.body);
+            // console.log(req.body);
             res.json(modifiedRoom);
             //res.json({message:'room sucessfully updated'});
         }
@@ -33,7 +33,7 @@ const roomController={
     seeRoom:async(req,res)=>{
         try{
             const room=await dataMapper.seeRoom(req.params.id);
-            console.log(room);
+            // console.log(room);
             if(room){
                 res.json(room);
             }
