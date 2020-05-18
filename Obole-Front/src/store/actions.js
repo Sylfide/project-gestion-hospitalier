@@ -45,7 +45,7 @@ export const updateEmbalmer = (id, values) => ({ type: UPDATE_EMBALMER, id, valu
 export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
 
 export const entry = (values) => ({ type: ENTRY, values });
-export const addDeceased = (values) => ({ type: ADD_DECEASED, values });
+export const addDeceased = (values, rooms) => ({ type: ADD_DECEASED, values, rooms });
 export const getDeceased = (values) => ({ type: GET_DECEASED, values });
 
 export const infoMessage = (code, text) => ({ type: INFO_MESSAGE, code, text });

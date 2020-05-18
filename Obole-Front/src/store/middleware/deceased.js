@@ -16,10 +16,14 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          // TODO: success message
-          store.dispatch(addDeceased(res.data));
+        // TODO: success message
+          const { rooms } = store.getState();
+          const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
+          rooms[index].occupation++;
+          store.dispatch(addDeceased(res.data, rooms));
         })
         .catch((error) => {
+          // TODO: error message
           console.log(error);
         });
       return;
