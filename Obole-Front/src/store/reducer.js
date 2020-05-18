@@ -22,7 +22,10 @@ const initialState = {
   embalmers: [],
   rooms: [],
   deceased: [],
-  infoMessage: '',
+  infoMessage: {
+    code: '',
+    text: '',
+  },
 };
 
 export default (state = initialState, action = {}) => {
@@ -79,14 +82,17 @@ export default (state = initialState, action = {}) => {
     case INFO_MESSAGE: {
       return {
         ...state,
-        infoMessage: action.message,
+        infoMessage: {
+          code: action.code,
+          text: action.text,
+        },
       };
     }
 
     case 'clear': {
       return {
         ...state,
-        infoMessage: '',
+        infoMessage: initialState.infoMessage,
       };
     }
 

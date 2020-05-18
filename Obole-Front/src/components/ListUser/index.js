@@ -20,19 +20,21 @@ const ListUser = () => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const staffMembers = useSelector((state) => state.staffMembers);
-  const topMessage = useSelector((state) => state.infoMessage);
+  const infoMessage = useSelector((state) => state.infoMessage);
 
+  // ==> Message d'info (en haut de la fenêtre) suite a une requête
   const clear = () => {
     dispatch({ type: 'clear' });
   };
-  const error = () => {
-    message.error(topMessage, 2, clear);
+  const showMessage = (code, text) => {
+    // (text du message, durée d'affichage, callback)
+    message[code](text, 2, clear);
   };
   useEffect(() => {
-    if (topMessage !== '') {
-      error();
+    if (infoMessage.code !== '') {
+      showMessage(infoMessage.code, infoMessage.text);
     }
-  }, [topMessage]);
+  }, [infoMessage]);
 
   // Après le premier rendu du composant
   // UseEffect va déclencher une requête pour obtenir
@@ -47,9 +49,9 @@ const ListUser = () => {
         .then((res) => {
           dispatch(getUsers(res.data));
         })
-        .catch((res) => {
-          error(res.response.statusText);
-          console.log(res.response);
+        .catch((error) => {
+          showMessage('error', error.message);
+          console.log(error);
         });
     },
     [],

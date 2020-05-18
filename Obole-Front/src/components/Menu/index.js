@@ -48,6 +48,7 @@ const Menu = () => {
       <Nav />
       <Popconfirm
         title="Confirmez-vous la déconnexion ?"
+        placement="right"
         okText="Oui"
         cancelText="Non"
         onConfirm={() => {
