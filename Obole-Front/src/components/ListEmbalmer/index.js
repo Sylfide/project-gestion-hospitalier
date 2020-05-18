@@ -1,9 +1,6 @@
 // ==> Import npm
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getEmbalmers } from 'src/store/actions';
-// import styled from 'styled-components';
-import axios from 'axios';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
 // ==> Components
 import { Table } from 'antd';
@@ -17,28 +14,7 @@ const { Column } = Table;
 
 // ==> Composant
 const ListEmbalmer = () => {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.user.token);
   const embalmers = useSelector((state) => state.embalmers);
-
-  useEffect(
-    () => {
-      axios({
-        method: 'get',
-        url: 'http://localhost:3000/embalmer/list',
-        headers: { authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          dispatch(getEmbalmers(res.data));
-        })
-        .catch((error) => {
-          // TODO: error
-          console.log('error: ', error);
-        });
-    },
-    [],
-  );
-
   const data = embalmers.map((embalmer) => {
     const rObj = {
       key: embalmer.id,

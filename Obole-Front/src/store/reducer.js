@@ -6,6 +6,7 @@ import {
   GET_EMBALMERS,
   GET_ROOMS,
   GET_DECEASED,
+  ADD_DECEASED,
   INFO_MESSAGE,
 } from './actions';
 
@@ -90,6 +91,16 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         deceased: action.values,
+      };
+    }
+
+    case ADD_DECEASED: {
+      return {
+        ...state,
+        deceased: [
+          ...state.deceased,
+          action.values,
+        ],
       };
     }
 
