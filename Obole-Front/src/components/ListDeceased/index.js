@@ -1,9 +1,6 @@
 // ==> Import npm
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { getDeceased, getRooms } from 'src/store/actions';
-// import styled from 'styled-components';
-// import axios from 'axios';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import moment from 'moment';
 // import Highlighter from 'react-highlight-words';
 
@@ -20,55 +17,14 @@ const { Column } = Table;
 
 // ==> Composant
 const ListDeceased = () => {
-  // const dispatch = useDispatch();
-  // const token = useSelector((state) => state.user.token);
   const deceasedList = useSelector((state) => state.deceased);
   const rooms = useSelector((state) => state.rooms);
 
-  // Récupérer la liste des chambres
-  // useEffect(
-  //   () => {
-  //     axios({
-  //       method: 'get',
-  //       url: 'http://localhost:3000/room/list',
-  //       headers: { authorization: `Bearer ${token}` },
-  //     })
-  //       .then((res) => {
-  //         dispatch(getRooms(res.data));
-  //         // console.log('Liste des chambres : ', res.data);
-  //       })
-  //       .catch((error) => {
-  //         // TODO: error
-  //         console.log('error: ', error);
-  //       });
-  //   },
-  //   [],
-  // );
   // Récupérer le nom d'une chambre par son id
   const getRoomName = (roomId) => {
     const roomInfo = rooms.find((room) => room.id === roomId);
     return roomInfo.name;
   };
-
-  // Récupérer la liste des défunts présents
-  // useEffect(
-  //   () => {
-  //     axios({
-  //       method: 'get',
-  //       url: 'http://localhost:3000/deceased/list/current',
-  //       headers: { authorization: `Bearer ${token}` },
-  //     })
-  //       .then((res) => {
-  //         // console.log('Liste défunts : ', res.data);
-  //         dispatch(getDeceased(res.data));
-  //       })
-  //       .catch((error) => {
-  //         // TODO: error
-  //         console.log('error: ', error);
-  //       });
-  //   },
-  //   [],
-  // );
 
   const data = deceasedList.map((deceased) => {
     const rObj = {

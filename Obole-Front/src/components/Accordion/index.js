@@ -96,7 +96,10 @@ const Accordion = ({ header }) => {
   );
 
   return (
-    <Section accordion>
+    <Section
+      accordion
+      destroyInactivePanel
+    >
       <p>{header}</p>
       <Panel header="Nouveau" key="1">
         {header === 'Chambres' ? <FormRoom /> : null}
@@ -122,5 +125,5 @@ Accordion.propTypes = {
   header: PropTypes.string.isRequired,
 };
 
-// == Export
+// ==> Export
 export default Accordion;
