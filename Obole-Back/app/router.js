@@ -33,7 +33,7 @@ router.patch('/user/:id', userAuthentified, userController.updateUser);
 //routes pour les rooms 
 router.post('/room/new',adminAuthentified,roomController.addRoom);
 router.patch('/room/modify/:id',adminAuthentified,roomController.modifyRoom);
-router.get('/room/list',adminAuthentified,roomController.listRooms);
+router.get('/room/list',userAuthentified,roomController.listRooms);
 router.get('/room/details/:id',adminAuthentified,roomController.seeRoom);
 router.delete('/room/delete/:id', adminAuthentified, roomController.deleteRoom);
 
