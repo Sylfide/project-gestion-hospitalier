@@ -59,7 +59,10 @@ router.get('/summary/get/:embalmerId/:month',userAuthentified,conservationContro
 router.get('/deceased_ref_summary/:deceasedId',userAuthentified,conservationController.createDeceasedFamilyRecap);
 
 // route test stats 
-router.get('/stats', statController.occupationStat);
+router.get('/stats/monthly/total', adminAuthentified, statController.monthlyOccupation);
+router.get('/stats/monthly/roomDetails', adminAuthentified, statController.monthlyRoomDetailsOccupation);
+router.get('/stats/weekly/total', adminAuthentified, statController.weeklyOccupation);
+router.get('/stats/weekly/roomDetails', adminAuthentified, statController.weeklyRoomDetailsOccupation);
 
 // traitement 404
 router.use( (req, res) => {res.status(404).send('404')});

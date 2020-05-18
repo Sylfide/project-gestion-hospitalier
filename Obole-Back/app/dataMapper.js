@@ -490,25 +490,13 @@ const dataMapper = {
         }
     },
 
-    getOccupationStat: async () => {
+    getMonthlyOccupation: async () => {
 
         try {
 
-            const stats = await db.query(`
-                SELECT deceased.id AS deceased_id,
-                    deceased.entry_date,
-                    deceased.exit_date,
-                    room.id AS room_id,
-                    room.name,
-                    room.capacity,
-                    room.occupation
-                FROM deceased
-                JOIN room ON deceased.room_id = room.id
-                ORDER BY room_id;`);
+            const monthlyStats = await db.query(`SELECT * FROM month_occupation;`);
 
-            // console.log(stats.rows);
-
-            return stats.rows;
+            return monthlyStats.rows;
 
         } catch(err) {
 
@@ -517,6 +505,53 @@ const dataMapper = {
         }
 
     },
+
+    getMonthlyRoomDetailsOccupation: async () => {
+
+        try {
+
+            const monthlyRoomStats = await db.query(`SELECT * FROM month_occupation_per_room;`);
+
+            return monthlyRoomStats.rows;
+
+        } catch(err) {
+            console.trace(err);
+            res.status(500).send(err);
+        }
+
+    },
+
+    getWeeklyOccupation: async () => {
+
+        try {
+
+            const weeklyStats = await db.query(`SELECT * FROM weekly_occupation;`);
+
+            return weeklyStats.rows;
+
+        } catch(err) {
+            console.trace(err);
+            res.status(500).send(err);
+        }
+
+    },
+
+    getWeeklyRoomDetailsOccupation: async () => {
+
+        try {
+
+            const weeklyRoomStats = await db.query(`SELECT * FROM weekly_occupation_per_room;`);
+
+            // console.log(weeklyRoomStats.rows);
+
+            return weeklyRoomStats.rows;
+
+        } catch(err) {
+            console.trace(err);
+            res.status(500).send(err);
+        }
+
+    }
 };
 
 module.exports = dataMapper;
