@@ -97,6 +97,7 @@ export default (state = initialState, action = {}) => {
     case ADD_DECEASED: {
       return {
         ...state,
+        rooms: [...action.rooms],
         deceased: [
           ...state.deceased,
           action.values,
