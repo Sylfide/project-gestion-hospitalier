@@ -1,5 +1,7 @@
 const dataMapper = require('../dataMapper');
 const sendMail= require('../email/send-email');
+const moment = require('moment');
+
 const deceasedController = {
 
     enterDeceased: async (req,res) => {
@@ -7,6 +9,28 @@ const deceasedController = {
 
             // 1. décortiquer le req.body comprenant les 3 sous-objets en trois parties : deceasedInfo, conservationInfo et deceasedRefInfo
             const deceasedInfo = req.body.deceased;
+            // console.log('infos avant traitement : ', deceasedInfo);
+
+            const deceasedDates = {
+                birth_date: deceasedInfo.birth_date, 
+                deceased_date: deceasedInfo.deceased_date, 
+                entry_date: deceasedInfo.entry_date, 
+                exit_date: deceasedInfo.exit_date, 
+                burial_permit_date: deceasedInfo.burial_permit_date
+            };
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in deceasedDates) {
+                if (deceasedDates[date] !== null) {
+                    // console.log(dates[date]);
+                    deceasedDates[date] = moment(deceasedDates[date], "DD/MM/YYYY").format("YYYY-MM-DD");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    deceasedInfo[date] = deceasedDates[date];
+                } 
+            }
+
+            // console.log('infos après traitement : ', deceasedInfo);
 
                 // 1.2 isoler req.body.deceased.room
             const roomName = req.body.deceased.room;
@@ -19,6 +43,13 @@ const deceasedController = {
             deceasedInfo.roomId = roomId.id;
 
             const conservationInfo = req.body.conservation;
+            console.log('infos conservation avant traitement : ', conservationInfo);
+            if(conservationInfo.date !== null) {
+                // console.log(conservationInfo.date);
+                conservationInfo.date = moment(conservationInfo.date, "DD/MM/YYYY").format("YYYY-MM-DD");
+            }
+            // console.log(conservationInfo);
+
             const deceasedRefInfo = req.body.deceased_ref;
 
             // 1bis vérifier que le défunt n'existe pas déjà 
@@ -90,7 +121,7 @@ const deceasedController = {
                 // console.log(room.occupation);
                 // console.log(room.capacity);
                 if(room.occupation === room.capacity) {
-                    console.log('yes');
+                    // console.log('yes');
                     sendMail(admins,room.name)
                 }
 
@@ -100,6 +131,28 @@ const deceasedController = {
                 const newDeceasedAllInfos = await dataMapper.getOneDeceased(newDeceased.id);
                         // 7.2 renvoyer les données
                 // console.log(newDeceasedAllInfos);
+
+                // construction d'un objet pour isoler les dates 
+                const dates = {
+                    birth_date: newDeceasedAllInfos.birth_date, 
+                    deceased_date: newDeceasedAllInfos.deceased_date, 
+                    entry_date: newDeceasedAllInfos.entry_date, 
+                    exit_date: newDeceasedAllInfos.exit_date, 
+                    burial_permit_date: newDeceasedAllInfos.burial_permit_date, 
+                    conservation_date: newDeceasedAllInfos.conservation_date
+                };
+    
+                // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+                for (let date in dates) {
+                    if (dates[date] !== null) {
+                        // console.log(dates[date]);
+                        dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
+                        // console.log('dates : ' + dates[date]);
+                        // console.log('oneDeceased : ' + oneDeceased[date]);
+                        newDeceasedAllInfos[date] = dates[date];
+                    } 
+                }
+
                 res.send(newDeceasedAllInfos);
             }
             
@@ -117,7 +170,7 @@ const deceasedController = {
             
             if(getDeceased){
                 await dataMapper.decrementRoomCapacity(getDeceased[0]);
-                 console.log(getDeceased[1]);
+                // console.log(getDeceased[1]);
                 res.json(getDeceased[1]);
             }
 
@@ -165,6 +218,34 @@ const deceasedController = {
 
             const oneDeceased = await dataMapper.getOneDeceased(deceasedId);
 
+            // console.log(oneDeceased);
+
+            // construction d'un objet pour isoler les dates 
+            const dates = {
+                birth_date: oneDeceased.birth_date, 
+                deceased_date: oneDeceased.deceased_date, 
+                entry_date: oneDeceased.entry_date, 
+                exit_date: oneDeceased.exit_date, 
+                burial_permit_date: oneDeceased.burial_permit_date, 
+                conservation_date: oneDeceased.conservation_date
+            };
+
+            // console.log(dates);
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in dates) {
+                if (dates[date] !== null) {
+                    // console.log(dates[date]);
+                    dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    oneDeceased[date] = dates[date];
+                } 
+            }
+
+            // console.log(dates);
+            // console.log(oneDeceased);
+
             res.send(oneDeceased);
 
         } catch(err){
@@ -179,6 +260,26 @@ const deceasedController = {
             // 1. décortiquer le req.body (contient 3 sous-objets : deceasedInfo, conservationInfo et deceasedRefInfo)
                 // 1.1 isoler deceasedInfo
             const deceasedInfo = req.body.deceased;
+
+            const deceasedDates = {
+                birth_date: deceasedInfo.birth_date, 
+                deceased_date: deceasedInfo.deceased_date, 
+                entry_date: deceasedInfo.entry_date, 
+                exit_date: deceasedInfo.exit_date, 
+                burial_permit_date: deceasedInfo.burial_permit_date
+            };
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in deceasedDates) {
+                if (deceasedDates[date] !== null) {
+                    // console.log(dates[date]);
+                    deceasedDates[date] = moment(deceasedDates[date], "DD/MM/YYYY").format("YYYY-MM-DD");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    deceasedInfo[date] = deceasedDates[date];
+                } 
+            }
+
                 // 1.2 isoler req.body.deceased.room
             const roomName = req.body.deceased.room;
                 // 1.3 appeler datamapper pour avoir l'id de la room d'après son nom
@@ -187,6 +288,12 @@ const deceasedController = {
             deceasedInfo.room_id = roomId.id;
                 // 1.5 isoler conservationInfo et deceasedRefInfo
             const conservationInfo = req.body.conservation;
+
+            if(conservationInfo.date !== null) {
+                // console.log(conservationInfo.date);
+                conservationInfo.date = moment(conservationInfo.date, "DD/MM/YYYY").format("YYYY-MM-DD");
+            }
+
             const deceasedRefInfo = req.body.deceased_ref;
 
             // 2. vérifier si changement de chambre, si oui décrémenter l'ancienne et incrémenter la nouvelle et envoyer le mail sinon capacité max atteinte (sinon ne rien faire)
@@ -204,13 +311,13 @@ const deceasedController = {
                     const admins = await dataMapper.getAdmins();
                     const room = await dataMapper.seeRoom(roomInsertion.id);
                     if (room.occupation === room.capacity) {
-                        console.log('yes');
+                        // console.log('yes');
                         sendMail(admins, room.name);
                     }
             }
 
             // 3. faire l'update du deceased
-            if (deceasedInfo.exit_date !== '') { 
+            if (deceasedInfo.exit_date !== null) { 
                 
                 // 3.1 si le deceasedInfo.exit_date !== null
                     // 3.1.1 appeler datamapper removeDeceased en lui passant deceasedId
@@ -295,6 +402,28 @@ const deceasedController = {
             // 6. renvoyer les infos nécessaires au front 
                 // 6.1 appeler datamapper pour les détails d'un défunt en lui passant updatedDeceased.id
             const updatedDeceasedAllInfos = await dataMapper.getOneDeceased(deceasedId);
+
+            // construction d'un objet pour isoler les dates 
+            const dates = {
+                birth_date: updatedDeceasedAllInfos.birth_date, 
+                deceased_date: updatedDeceasedAllInfos.deceased_date, 
+                entry_date: updatedDeceasedAllInfos.entry_date, 
+                exit_date: updatedDeceasedAllInfos.exit_date, 
+                burial_permit_date: updatedDeceasedAllInfos.burial_permit_date, 
+                conservation_date: updatedDeceasedAllInfos.conservation_date
+            };
+
+            // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
+            for (let date in dates) {
+                if (dates[date] !== null) {
+                    // console.log(dates[date]);
+                    dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
+                    // console.log('dates : ' + dates[date]);
+                    // console.log('oneDeceased : ' + oneDeceased[date]);
+                    updatedDeceasedAllInfos[date] = dates[date];
+                } 
+            }
+
                 // 6.2 renvoyer les données
             res.send(updatedDeceasedAllInfos);
 

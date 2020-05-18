@@ -5,12 +5,12 @@
   const mailgun=require('mailgun-js')({apiKey:apiKey,domain:domain});
 
 const sendRoomCapacityAlert=(adminList,roomName)=>{
-    console.log(domain);
-    console.log(apiKey);
+    // console.log(domain);
+    // console.log(apiKey);
     //console.log('hello world');
     for(let i=0;i<adminList.length;i++){
-        console.log('hello world');
-        console.log('admin email=====>'+adminList[i].email);
+        // console.log('hello world');
+        // console.log('admin email=====>'+adminList[i].email);
         const data={
             from: "Mailgun Sandbox <postmaster@" + domain + ">",
             subject:'room capacity reached',

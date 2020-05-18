@@ -31,7 +31,7 @@ const embalmerController = {
 
     newEmbalmer: async (req, res) => {
         try {
-            console.log(req.body);
+            // console.log(req.body);
             if (!req.body.firstname || !req.body.lastname || !req.body.address || !req.body.zip_code || !req.body.city || !req.body.email) {
                 return res.send('Veuillez remplir tous les champs obligatoires');
             }

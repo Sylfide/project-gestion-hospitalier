@@ -52,7 +52,7 @@ router.post('/embalmer/new', userAuthentified, embalmerController.newEmbalmer);
 router.patch('/embalmer/:id', userAuthentified, embalmerController.updateEmbalmer);
 router.delete('/embalmer/:id/delete', userAuthentified, embalmerController.deleteOneEmbalmer);
 
-//conservation routes 
+//conservation routes --> pour les états de situation
 router.post('/embalmer_summary/create/:embalmerId',userAuthentified,conservationController.embalmerMonthlySummary);
 router.get('/summary/get/:embalmerId/:month',userAuthentified,conservationController.getMonthlySummary);
 router.get('/deceased_ref_summary/:deceasedId',userAuthentified,conservationController.createDeceasedFamilyRecap);

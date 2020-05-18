@@ -61,35 +61,35 @@ const dataMapper = {
         try{
             const user= {};
 
-        for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
-            if (valueInfo) {
-                user[keyInfo] = valueInfo;
-                if(keyInfo=='password'){
-                    const salt=valueInfo.substring(0,3);
-                    const hashedPassword = SHA256(valueInfo + salt).toString(encBase64);
-                    await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [hashedPassword, userId]);
-                }
-                else{
-                     await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [valueInfo, userId]);
-                }
+            for (let [keyInfo, valueInfo] of Object.entries(userInfo)) {
+                if (valueInfo) {
+                    user[keyInfo] = valueInfo;
+                    if(keyInfo=='password'){
+                        const salt=valueInfo.substring(0,3);
+                        const hashedPassword = SHA256(valueInfo + salt).toString(encBase64);
+                        await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2 RETURNING *;`, [hashedPassword, userId]);
+                    }
+                    else{
+                        await db.query(`UPDATE "user" SET ${keyInfo} = $1 WHERE id = $2`, [valueInfo, userId]);
+                    }
 
-               
+                
+                }
             }
-        }
 
-        const updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
+            let updatedUser = await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
 
-        if(updatedUser.rows[0].user_connected==false){
-            await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
+            if(updatedUser.rows[0].user_connected==false){
+                await db.query('UPDATE "user" SET user_connected=$1 WHERE id=$2',[true,userId])
 
-            updatedUser=await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
-        }
+                updatedUser=await db.query(`SELECT * FROM "user" WHERE id = $1;`, [userId]);
+            }
 
-        return updatedUser.rows[0];
+            return updatedUser.rows[0];
         }
 
         catch(error){
-           console.log(error.message)
+           console.trace(error);
         }
         
 
@@ -158,8 +158,8 @@ const dataMapper = {
 
     addRoom:async(name,capacity)=>{
 
-        console.log(name);
-        console.log(capacity);
+        // console.log(name);
+        // console.log(capacity);
         const insert=await db.query("INSERT INTO room (name,capacity) VALUES ($1,$2) RETURNING name,capacity",[name,capacity]);
         
         return insert.rows[0];
@@ -177,7 +177,7 @@ const dataMapper = {
         }
 
         const modifiedRoom=await db.query("SELECT * FROM room WHERE id=$1",[roomId]);
-        console.log(modifiedRoom.rows[0]);
+        // console.log(modifiedRoom.rows[0]);
         return modifiedRoom.rows[0];
         
     },
@@ -227,7 +227,7 @@ const dataMapper = {
         try{
        
             // deceasedInfo contient : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room et roomId
-
+            const entryDate = moment().format();
             const newDeceased = {};
 
             for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
@@ -238,9 +238,9 @@ const dataMapper = {
                 }
             }
 
-            const { lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, roomId } = newDeceased;
+            const { lastname, firstname, birth_date, deceased_date, burial_permit_date, provenance, exit_date, ritual, roomId } = newDeceased;
 
-            const addedDeceased = await db.query(`INSERT INTO deceased (lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, roomId]);
+            const addedDeceased = await db.query(`INSERT INTO deceased (lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entryDate, burial_permit_date, provenance, exit_date, ritual, roomId]);
 
             return addedDeceased.rows[0];
             
@@ -289,68 +289,7 @@ const dataMapper = {
         const oneDeceased = await db.query(`SELECT * FROM deceased WHERE lastname = $1 AND firstname = $2 AND birth_date = $3 AND deceased_date = $4;`, [lastname, firstname, birth_date, deceased_date]);
 
         return oneDeceased.rows[0];
-    }, 
-
-    updateDeceased: async (deceasedId, deceasedInfo) => {
-
-        // deceasedInfo contient : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room et room_id
-        // il me faut : lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id
-
-        delete deceasedInfo.room;
-
-        const deceased = {};
-
-        for (let [keyInfo, valueInfo] of Object.entries(deceasedInfo)) {
-            if (valueInfo) {
-                deceased[keyInfo] = valueInfo;
-
-                await db.query("UPDATE deceased SET "+keyInfo+" = $1 WHERE id = $2;", [valueInfo, deceasedId]);
-            }
-        }
-
-        const updatedDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
-
-        return updatedDeceased.rows[0];
     },
-    
-    removeDeceased:async(deceasedId,exitDate)=>{
-        
-        //const momentDate=moment().format();
-        
-        
-        const updateDeceased=await db.query(`UPDATE deceased SET exit_date=$1 WHERE id=$2`,[exitDate,deceasedId])
-    },
-    
-    getAllPresentDeceased: async () => {
-
-        const allPresentDeceased = await db.query(`SELECT * FROM deceased WHERE exit_date IS NULL;`);
-
-        return allPresentDeceased.rows;
-    },
-
-    getAllDeceased: async () => {
-
-        const allDeceased = await db.query(`SELECT * FROM deceased;`);
-
-        return allDeceased.rows;
-    },
-
-    getOneDeceased: async (deceasedId) => {
-
-        const oneDeceased = await db.query(`SELECT * FROM deceased_infos WHERE id = $1;`, [deceasedId]);
-
-        return oneDeceased.rows[0];
-
-    },
-
-    getOneDeceasedWithoutId: async (deceasedInfo) => {
-
-        const { lastname, firstname, birth_date, deceased_date } = deceasedInfo;
-
-        const oneDeceased = await db.query(`SELECT * FROM deceased WHERE lastname = $1 AND firstname = $2 AND birth_date = $3 AND deceased_date = $4;`, [lastname, firstname, birth_date, deceased_date]);
-
-        return oneDeceased.rows[0];
-    }, 
 
     updateDeceased: async (deceasedId, deceasedInfo) => {
 
@@ -373,7 +312,7 @@ const dataMapper = {
 
         const { lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id } = deceased;
 
-        if (deceased.exit_date === null) {
+        if (deceased.exit_date !== null) {
 
             const updatedDeceased = await db.query(`UPDATE deceased SET lastname = $1, firstname = $2, birth_date = $3, deceased_date = $4, entry_date = $5, burial_permit_date = $6, provenance = $7, exit_date = $8, ritual = $9, room_id = $10 WHERE id = $11 RETURNING *;`, [lastname, firstname, birth_date, deceased_date, entry_date, burial_permit_date, provenance, exit_date, ritual, room_id, deceasedId]);
 

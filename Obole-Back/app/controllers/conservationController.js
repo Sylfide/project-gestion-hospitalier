@@ -41,7 +41,7 @@ const conservationController={
 
     getMonthlySummary:async(req,res)=>{
         const monthlySummary=await dataMapper.embalmerMonthlySummary(req.params.embalmerId,req.params.month);
-        console.log(monthlySummary);
+        // console.log(monthlySummary);
         const embalmerFirstName=monthlySummary[0].embalmer_firstname;
         const currentYear=moment().format().substring(0,4);
          res.sendFile("/var/www/html/obole_new/project-gestion-hospitalier/Obole-Back/"+embalmerFirstName+currentYear+req.params.month+".pdf");
