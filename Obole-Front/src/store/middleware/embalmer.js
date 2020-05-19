@@ -18,7 +18,7 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          store.dispatch(infoMessage('success', 'Nouveaux Thanatopracteur enregistré'));
+          store.dispatch(infoMessage('success', 'Nouveau thanatopracteur enregistré'));
           store.dispatch(getEmbalmers(res.data));
         })
         .catch((error) => {

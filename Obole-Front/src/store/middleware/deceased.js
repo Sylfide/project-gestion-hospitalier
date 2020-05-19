@@ -21,7 +21,7 @@ export default (store) => (next) => (action) => {
           const { rooms } = store.getState();
           const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
           rooms[index].occupation++;
-          store.dispatch(infoMessage('success', 'Nouveaux défunt enregistré'));
+          store.dispatch(infoMessage('success', 'Nouveau défunt enregistré'));
           store.dispatch(addDeceased(res.data, rooms));
         })
         .catch((error) => {

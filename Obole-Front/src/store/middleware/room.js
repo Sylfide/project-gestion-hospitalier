@@ -20,7 +20,7 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          store.dispatch(infoMessage('success', 'Nouvelle chambre enregistré'));
+          store.dispatch(infoMessage('success', 'Nouvelle chambre enregistrée'));
           store.dispatch(getRooms(res.data));
         })
         .catch((error) => {
