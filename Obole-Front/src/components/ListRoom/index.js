@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 // ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 // ==> Components
 import { Table } from 'antd';
@@ -16,8 +16,6 @@ const { Column } = Table;
 
 // ==> Composant
 const ListRoom = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
   const rooms = useSelector((state) => state.rooms);
 
   const data = rooms.map((room) => {
@@ -31,12 +29,6 @@ const ListRoom = () => {
 
   return (
     <Table
-      onRow={(record) => ({
-        onClick: () => {
-          // history.push(`/chambre/${record.key}`);
-          dispatch({ type: 'roomCard', id: record.key });
-        },
-      })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
     >
