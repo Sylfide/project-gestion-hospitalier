@@ -264,6 +264,8 @@ const dataMapper = {
 
         const allPresentDeceased = await db.query(`SELECT * FROM deceased WHERE exit_date IS NULL;`);
 
+        // console.log(allPresentDeceased.rows);
+
         return allPresentDeceased.rows;
     },
 
