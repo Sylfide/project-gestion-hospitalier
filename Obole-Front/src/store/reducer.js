@@ -7,6 +7,7 @@ import {
   GET_ROOMS,
   GET_DECEASED,
   INFO_MESSAGE,
+  CARD_EMBALMER,
 } from './actions';
 
 const initialState = {
@@ -27,11 +28,14 @@ const initialState = {
     code: '',
     text: '',
   },
-  roomCard: {
-    id: '',
-    name: '',
-    capacity: '',
-    occupation: '',
+  thanatoCard: {
+    firstname: '',
+    lastname: '',
+    address: '',
+    zip_code: '',
+    city: '',
+    tel: '',
+    email: '',
   },
 };
 
@@ -89,6 +93,15 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         rooms: action.values,
+      };
+    }
+
+    case CARD_EMBALMER: {
+      return {
+        ...state,
+        thanatoCard: {
+          ...action.values,
+        },
       };
     }
 

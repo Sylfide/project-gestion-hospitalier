@@ -30,24 +30,6 @@ export default (store) => (next) => (action) => {
       return;
     }
 
-    case 'roomCard': {
-      axios({
-        method: 'get',
-        url: `http://localhost:3000/room/details/${action.id}`,
-        headers: { authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          console.log('res : ', res.data);
-          // store.dispatch(infoMessage('success', 'Nouvelle chambre enregistrée'));
-          // store.dispatch(getRooms(res.data));
-        })
-        .catch((error) => {
-          // store.dispatch(infoMessage('error', 'Erreur lors de la création'));
-          console.log('error: ', error);
-        });
-      return;
-    }
-
     case UPDATE_ROOM: {
       axios({
         // TODO: check method
