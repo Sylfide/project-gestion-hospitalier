@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import axios from 'axios';
 import {
   CREATE_USER,
@@ -40,10 +41,11 @@ export default (store) => (next) => (action) => {
       })
         .then((res) => {
           sessionStorage.user = JSON.stringify(res.data);
+          store.dispatch(infoMessage('success', 'Modification enregistré'));
           store.dispatch(enterObole(res.data));
         })
         .catch((error) => {
-          // TODO: traitement d'erreur
+          store.dispatch(infoMessage('error', 'Erreur lors de la modification'));
           console.log('error: ', error);
         });
       return;

@@ -1,12 +1,21 @@
+/* eslint-disable linebreak-style */
 // ==> Import npm
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateUser } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
 import { EditOutlined } from '@ant-design/icons';
-import { Form, Input, Button, Row, Col, Switch } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Row,
+  Col,
+  Switch,
+  message,
+} from 'antd';
 
 // ==> Styles
 
@@ -31,12 +40,33 @@ const Container = styled.div`
 const Profil = () => {
   const [edit, setEdit] = useState(true);
   const dispatch = useDispatch();
-  const { id, firstname, lastname, email } = useSelector((state) => state.user);
+  const infoMessage = useSelector((state) => state.infoMessage);
+  const {
+    id, firstname, lastname, email,
+  } = useSelector((state) => state.user);
 
   const [form] = Form.useForm();
   const onReset = () => {
     form.resetFields();
   };
+
+  // ==> Message d'info (en haut de la fenêtre) suite a une requête
+  const clear = () => {
+    dispatch({ type: 'clear' });
+  };
+  const showMessage = (code, text) => {
+    // (text du message, durée d'affichage, callback)
+    message[code](text, 2, clear);
+  };
+  useEffect(() => {
+    if (infoMessage.code !== '') {
+      showMessage(infoMessage.code, infoMessage.text);
+    }
+    if (infoMessage.code === 'success') {
+      onReset();
+    }
+  }, [infoMessage]);
+
   const onEdit = () => {
     setEdit(!edit);
   };
