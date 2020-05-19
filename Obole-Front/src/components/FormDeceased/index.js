@@ -8,7 +8,18 @@ import fr from 'antd/es/date-picker/locale/fr_FR';
 import subForm from 'src/utils/subForm';
 
 // ==> Components
-import { Form, Input, Button, Select, Row, Col, DatePicker, Radio, Divider } from 'antd';
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Row,
+  Col,
+  DatePicker,
+  Radio,
+  Divider,
+  message,
+} from 'antd';
 
 // ==> Styles
 
@@ -36,6 +47,7 @@ const FormDeceased = () => {
   const dispatch = useDispatch();
   const embalmers = useSelector((state) => state.embalmers);
   const rooms = useSelector((state) => state.rooms);
+  const infoMessage = useSelector((state) => state.infoMessage);
 
   // Liste des chambres (JSX)
   const roomsList = rooms.map((room) => {
@@ -51,6 +63,23 @@ const FormDeceased = () => {
   const onReset = () => {
     form.resetFields();
   };
+
+  // ==> Message d'info (en haut de la fenêtre) suite a une requête
+  const clear = () => {
+    dispatch({ type: 'clear' });
+  };
+  const showMessage = (code, text) => {
+    // (text du message, durée d'affichage, callback)
+    message[code](text, 2, clear);
+  };
+  useEffect(() => {
+    if (infoMessage.code !== '') {
+      showMessage(infoMessage.code, infoMessage.text);
+    }
+    if (infoMessage.code === 'success') {
+      onReset();
+    }
+  }, [infoMessage]);
 
   return (
     <Container
