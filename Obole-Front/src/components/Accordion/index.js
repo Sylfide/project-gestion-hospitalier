@@ -123,7 +123,6 @@ const Accordion = ({ header }) => {
       destroyInactivePanel
     >
       <p>{header}</p>
-
       <Panel header="Nouveau" key="1">
         {header === 'Chambres' ? <FormRoom /> : null}
         {header === 'Employés' ? <FormUser /> : null}
