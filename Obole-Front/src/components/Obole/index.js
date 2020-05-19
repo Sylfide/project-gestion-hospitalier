@@ -11,6 +11,7 @@ import Menu from 'src/components/Menu';
 import Accordion from 'src/components/Accordion';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
+import CardThanato from 'src/components/CardThanato';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -35,11 +36,6 @@ const Obole = () => {
     <Container>
       <Menu />
       <Content>
-        {/* <TitleSection />
-        <ContentNav /> */}
-        <Route path="/chambre/:id">
-          <h6>Plop</h6>
-        </Route>
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
@@ -54,6 +50,9 @@ const Obole = () => {
         </Route>
         <Route path="/thanatos">
           <Accordion header="Thanatopracteurs" />
+        </Route>
+        <Route path="/thanato/:id">
+          <CardThanato />
         </Route>
         <Route path="/compte">
           <Profil />
