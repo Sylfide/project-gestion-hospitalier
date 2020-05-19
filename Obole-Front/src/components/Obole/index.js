@@ -37,6 +37,9 @@ const Obole = () => {
       <Content>
         {/* <TitleSection />
         <ContentNav /> */}
+        <Route path="/chambre/:id">
+          <h6>Plop</h6>
+        </Route>
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
