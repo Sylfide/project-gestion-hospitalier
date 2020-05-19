@@ -28,7 +28,7 @@ const initialState = {
     code: '',
     text: '',
   },
-  thanatoCard: {
+  embalmerCard: {
     firstname: '',
     lastname: '',
     address: '',
@@ -99,7 +99,7 @@ export default (state = initialState, action = {}) => {
     case CARD_EMBALMER: {
       return {
         ...state,
-        thanatoCard: {
+        embalmerCard: {
           ...action.values,
         },
       };
