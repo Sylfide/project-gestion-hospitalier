@@ -128,30 +128,6 @@ const deceasedController = {
                 // console.log(newDeceased);
                 // 7. renvoyer les infos nécessaires au front (infos du nouveau défunt ou juste un message du style ok ?)
                         // 7.1 appeler la méthode pour un défunt en lui passant le nouvel id
-                // const newDeceasedAllInfos = await dataMapper.getOneDeceased(newDeceased.id);
-                //         // 7.2 renvoyer les données
-                // // console.log(newDeceasedAllInfos);
-// 
-                // // construction d'un objet pour isoler les dates 
-                // const dates = {
-                //     birth_date: newDeceasedAllInfos.birth_date, 
-                //     deceased_date: newDeceasedAllInfos.deceased_date, 
-                //     entry_date: newDeceasedAllInfos.entry_date, 
-                //     exit_date: newDeceasedAllInfos.exit_date, 
-                //     burial_permit_date: newDeceasedAllInfos.burial_permit_date, 
-                //     conservation_date: newDeceasedAllInfos.conservation_date
-                // };
-    // 
-                // // boucle sur le précédent objet pour formater chaque date et remplacer les dates d'un défunt par les dates du nouvel objet pour avoir les bons formats de date 
-                // for (let date in dates) {
-                //     if (dates[date] !== null) {
-                //         // console.log(dates[date]);
-                //         dates[date] = moment(dates[date], "DD/MM/YYYY").format("DD/MM/YYYY");
-                //         // console.log('dates : ' + dates[date]);
-                //         // console.log('oneDeceased : ' + oneDeceased[date]);
-                //         newDeceasedAllInfos[date] = dates[date];
-                //     } 
-                // }
 
                 const allDeceased = await dataMapper.getAllPresentDeceased();
 
