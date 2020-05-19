@@ -1,9 +1,11 @@
+/* eslint-disable linebreak-style */
 import axios from 'axios';
 import {
   CREATE_ROOM,
   getRooms,
   UPDATE_ROOM,
   DELETE_ROOM,
+  infoMessage,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -18,11 +20,11 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          // TODO: success message
+          store.dispatch(infoMessage('success', 'Nouvelle chambre enregistré'));
           store.dispatch(getRooms(res.data));
         })
         .catch((error) => {
-          // TODO: error message
+          store.dispatch(infoMessage('error', 'Erreur lors de la création'));
           console.log('error: ', error);
         });
       return;
