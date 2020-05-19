@@ -125,7 +125,7 @@ const Accordion = ({ header }) => {
       <p>{header}</p>
       <Route
         path="/chambre/:id"
-        render={() => <h6>Plop</h6>}
+        render={() => <h6>Fiche chambre</h6>}
       />
       <Panel header="Nouveau" key="1">
         {header === 'Chambres' ? <FormRoom /> : null}
