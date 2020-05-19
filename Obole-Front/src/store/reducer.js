@@ -27,6 +27,12 @@ const initialState = {
     code: '',
     text: '',
   },
+  roomCard: {
+    id: '',
+    name: '',
+    capacity: '',
+    occupation: '',
+  },
 };
 
 export default (state = initialState, action = {}) => {
