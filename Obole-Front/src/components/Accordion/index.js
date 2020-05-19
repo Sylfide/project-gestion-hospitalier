@@ -17,6 +17,7 @@ import ListRoom from 'src/components/ListRoom';
 import ListUser from 'src/components/ListUser';
 import ListDeceased from 'src/components/ListDeceased';
 import ListEmbalmer from 'src/components/ListEmbalmer';
+import HistoryListDeceased from 'src/components/HistoryListDeceased';
 import { Collapse } from 'antd';
 
 // ==> Styles
@@ -97,6 +98,25 @@ const Accordion = ({ header }) => {
     [embalmers],
   );
 
+  // Récupérer l'historique des défunts
+  useEffect(
+    () => {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3000/deceased/list/history',
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          dispatch(getDeceased(res.data));
+        })
+        .catch((error) => {
+          // TODO: error
+          console.log('error: ', error);
+        });
+    },
+    [deceased],
+  );
+
   return (
     <Section
       accordion
@@ -116,7 +136,7 @@ const Accordion = ({ header }) => {
         {header === 'Thanatopracteurs' ? <ListEmbalmer /> : null}
       </Panel>
       {header === 'Défunts'
-        ? <Panel header="Historique" key="3">Historique de tous les trucs</Panel>
+        ? <Panel header="Historique" key="3"><HistoryListDeceased /></Panel>
         : null }
     </Section>
   );
