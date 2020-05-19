@@ -17,10 +17,10 @@ const { Column } = Table;
 // ==> CSS in JS
 
 // ==> Composant
-const ListDeceased = () => {
+const HistoryListDeceased = () => {
   const deceasedList = useSelector((state) => state.deceased);
   const rooms = useSelector((state) => state.rooms);
-  console.log(deceasedList);
+  // console.log(deceasedList);
   // Récupérer le nom d'une chambre par son id
   const getRoomName = (roomId) => {
     const roomInfo = rooms.find((room) => room.id === roomId);
@@ -83,4 +83,4 @@ const ListDeceased = () => {
 };
 
 // == Export
-export default ListDeceased;
+export default HistoryListDeceased;
