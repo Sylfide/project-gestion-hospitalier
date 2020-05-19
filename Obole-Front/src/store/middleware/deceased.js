@@ -2,8 +2,8 @@
 import axios from 'axios';
 import {
   ENTRY,
-  addDeceased,
   infoMessage,
+  getDeceased,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -22,7 +22,7 @@ export default (store) => (next) => (action) => {
           const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
           rooms[index].occupation++;
           store.dispatch(infoMessage('success', 'Nouveau défunt enregistré'));
-          store.dispatch(addDeceased(res.data, rooms));
+          store.dispatch(getDeceased(res.data));
         })
         .catch((error) => {
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
