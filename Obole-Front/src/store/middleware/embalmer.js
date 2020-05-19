@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 import axios from 'axios';
 import {
   CREATE_EMBALMER,
@@ -17,12 +18,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          // TODO: success message
+          store.dispatch(infoMessage('success', 'Nouveaux Thanatopracteur enregistré'));
           store.dispatch(getEmbalmers(res.data));
         })
         .catch((error) => {
-          console.log('error: ', error);
-          // TODO: error message
+          store.dispatch(infoMessage('error', 'Erreur lors de la création'));
+          console.log(error);
         });
       return;
     }
