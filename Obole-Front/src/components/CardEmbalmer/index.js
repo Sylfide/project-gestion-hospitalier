@@ -27,14 +27,14 @@ const Container = styled.div`
     border-radius: 6px;
     margin: 32px auto;
     min-width: 200px;
-    max-width: 50%;
+    max-width: 66%;
     text-align: start;
     display: grid;
     grid-template-columns: max-content 1fr max-content 1fr;
-    grid-gap: 12px 8px;
+    row-gap: 16px;
     align-items: baseline;
     & > * {
-      padding: 5px;
+      padding: 8px;
       height: 100%;
     }
     dt {
