@@ -3,6 +3,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { getDeceased, getEmbalmers } from 'src/store/actions';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -103,6 +104,10 @@ const Accordion = ({ header }) => {
       destroyInactivePanel
     >
       <p>{header}</p>
+      <Route
+        path="/chambre/:id"
+        render={() => <h6>Plop</h6>}
+      />
       <Panel header="Nouveau" key="1">
         {header === 'Chambres' ? <FormRoom /> : null}
         {header === 'Employés' ? <FormUser /> : null}
