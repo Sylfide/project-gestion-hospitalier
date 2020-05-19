@@ -2,6 +2,7 @@
 // ==> Import npm
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 
 // ==> Components
@@ -16,6 +17,7 @@ const { Column } = Table;
 
 // ==> Composant
 const ListRoom = () => {
+  const history = useHistory();
   const rooms = useSelector((state) => state.rooms);
 
   const data = rooms.map((room) => {
@@ -29,6 +31,11 @@ const ListRoom = () => {
 
   return (
     <Table
+      onRow={(record) => ({
+        onClick: (event) => {
+          history.push(`/chambre/${record.key}`);
+        },
+      })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
     >
