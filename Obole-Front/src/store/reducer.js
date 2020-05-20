@@ -7,6 +7,7 @@ import {
   GET_ROOMS,
   GET_DECEASED_HISTORY,
   GET_ALL_DECEASED,
+  ADD_DECEASED,
   INFO_MESSAGE,
   CARD_EMBALMER,
   CARD_DECEASED,
@@ -74,21 +75,21 @@ export default (state = initialState, action = {}) => {
     case GET_USERS: {
       return {
         ...state,
-        staffMembers: action.values,
+        staffMembers: [...action.values],
       };
     }
 
     case GET_EMBALMERS: {
       return {
         ...state,
-        embalmers: action.values,
+        embalmers: [...action.values],
       };
     }
 
     case GET_ROOMS: {
       return {
         ...state,
-        rooms: action.values,
+        rooms: [...action.values],
       };
     }
 
@@ -113,14 +114,22 @@ export default (state = initialState, action = {}) => {
     case GET_ALL_DECEASED: {
       return {
         ...state,
-        deceased: action.values,
+        deceased: [...action.values],
+      };
+    }
+
+    case ADD_DECEASED: {
+      return {
+        ...state,
+        rooms: [...action.rooms],
+        deceased: [...action.values],
       };
     }
 
     case GET_DECEASED_HISTORY: {
       return {
         ...state,
-        deceasedHistory: action.values,
+        deceasedHistory: [...action.values],
       };
     }
 
@@ -137,7 +146,9 @@ export default (state = initialState, action = {}) => {
     case 'clear': {
       return {
         ...state,
-        infoMessage: initialState.infoMessage,
+        infoMessage: {
+          ...initialState.infoMessage,
+        },
       };
     }
 

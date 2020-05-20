@@ -3,9 +3,10 @@ import axios from 'axios';
 import {
   ENTRY,
   infoMessage,
-  getAllDeceased,
+  addDeceased,
   GET_DECEASED,
   cardDeceased,
+  UPDATE_DECEASED,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -24,10 +25,31 @@ export default (store) => (next) => (action) => {
           const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
           rooms[index].occupation++;
           store.dispatch(infoMessage('success', 'Nouveau défunt enregistré'));
-          store.dispatch(getAllDeceased(res.data));
+          store.dispatch(addDeceased(res.data, rooms));
         })
         .catch((error) => {
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
+          console.log(error);
+        });
+      return;
+    }
+
+    case UPDATE_DECEASED: {
+      axios({
+        method: 'post',
+        url: `http://localhost:3000/deceased/${action.id}/update`,
+        data: action.values,
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          // const { rooms } = store.getState();
+          // const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
+          // rooms[index].occupation--;
+          store.dispatch(infoMessage('success', 'Modification enregistrée'));
+          store.dispatch(cardDeceased(res.data));
+        })
+        .catch((error) => {
+          store.dispatch(infoMessage('error', 'Erreur lors de l\'enregistrement'));
           console.log(error);
         });
       return;

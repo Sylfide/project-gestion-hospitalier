@@ -2,7 +2,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { entry } from 'src/store/actions';
+import { updateDeceased } from 'src/store/actions';
 import styled from 'styled-components';
 import fr from 'antd/es/date-picker/locale/fr_FR';
 import subForm from 'src/utils/subForm';
@@ -16,7 +16,7 @@ import {
   Row,
   Col,
   DatePicker,
-  Radio,
+  Checkbox,
   Divider,
   message,
 } from 'antd';
@@ -43,11 +43,12 @@ const Container = styled(Form)`
 `;
 
 // ==> Composant
-const FormDeceased = () => {
+const FormDeceased = ({ edit }) => {
   const dispatch = useDispatch();
   const embalmers = useSelector((state) => state.embalmers);
   const rooms = useSelector((state) => state.rooms);
   const infoMessage = useSelector((state) => state.infoMessage);
+  const deceasedCard = useSelector((state) => state.deceasedCard);
 
   // Liste des chambres (JSX)
   const roomsList = rooms.map((room) => {
@@ -76,7 +77,7 @@ const FormDeceased = () => {
     if (infoMessage.code !== '') {
       showMessage(infoMessage.code, infoMessage.text);
     }
-    if (infoMessage.code === 'success') {
+    if (infoMessage.code === 'success' && !edit) {
       onReset();
     }
   }, [infoMessage]);
@@ -87,9 +88,15 @@ const FormDeceased = () => {
       wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      onFinish={(values) => {
-        dispatch(entry(subForm(values)));
-      }}
+      // initialValues={edit ? { ...deceasedCard } : null}
+      onFinish={edit
+        ? (values) => {
+          dispatch(updateDeceased(deceasedCard.id, subForm(values)));
+        }
+        : (values) => {
+          console.log('values : ', values);
+          // dispatch(entry(subForm(values)));
+        }}
     >
       <Form.Item
         name="room"
@@ -224,11 +231,10 @@ const FormDeceased = () => {
         wrapperCol={{ span: 4 }}
         name="ritual"
         label="Rite religieux"
+        valuePropName="checked"
+        initialValue={false}
       >
-        <Radio.Group>
-          <Radio value="true">Oui</Radio>
-          <Radio value="false">Non</Radio>
-        </Radio.Group>
+        <Checkbox />
       </Form.Item>
 
       <Divider>Informations sur le soin</Divider>

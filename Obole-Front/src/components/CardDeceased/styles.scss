@@ -8,6 +8,7 @@
     font-size: 2rem;
     font-weight: bold;
     line-height: 1.5715;
+    margin-bottom: 24px;
   }
 
   #card {
@@ -19,7 +20,6 @@
     margin: 32px auto 0;
     min-width: 200px;
     max-width: 66%;
-    text-align: start;
 
     h4 {
       margin-bottom: 12px;
@@ -53,6 +53,10 @@
       }
       dd {
         background-color: #f0f2f5;
+        text-align: left;
+        &.check {
+          background-color: transparent;
+        }
       }
       .span {
         grid-column: 2 / -1;
