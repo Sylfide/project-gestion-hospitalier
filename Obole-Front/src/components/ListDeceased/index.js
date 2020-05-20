@@ -20,7 +20,7 @@ const { Column } = Table;
 const ListDeceased = () => {
   const deceasedList = useSelector((state) => state.deceased);
   const rooms = useSelector((state) => state.rooms);
-  console.log(deceasedList);
+
   // Récupérer le nom d'une chambre par son id
   const getRoomName = (roomId) => {
     const roomInfo = rooms.find((room) => room.id === roomId);
