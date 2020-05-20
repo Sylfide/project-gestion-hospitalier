@@ -23,6 +23,9 @@ const Nav = () => {
   if (role === 'admin') {
     return (
       <NavMenu mode="inline">
+        <Menu.Item key="0">
+          <Link to="/accueil">Accueil</Link>
+        </Menu.Item>
         <Menu.Item key="1">
           <Link to="/chambres">Chambres</Link>
         </Menu.Item>

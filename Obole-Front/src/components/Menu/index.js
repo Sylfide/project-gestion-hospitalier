@@ -47,10 +47,9 @@ const Menu = () => {
 
   return (
     <Container theme="light">
-      <Link to="/">
+      <Link to="/accueil">
         <img alt="logo" src={logo} />
       </Link>
-
       <Nav />
       <Popconfirm
         title="Confirmez-vous la déconnexion ?"

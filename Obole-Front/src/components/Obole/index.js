@@ -37,7 +37,9 @@ const Obole = () => {
     <Container>
       <Menu />
       <Content>
-        <Accueil />
+        <Route path="/accueil">
+          <Accueil />
+        </Route>
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
@@ -56,6 +58,7 @@ const Obole = () => {
         <Route path="/compte">
           <Profil />
         </Route>
+        
       </Content>
       <Activity />
     </Container>
