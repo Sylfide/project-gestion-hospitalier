@@ -26,7 +26,7 @@ const Card = styled.div`
     margin-bottom: 24px;
   }
   dl {
-    background-color: #ffffff;
+    background-color: #f3c19d;
     padding: 32px;
     border-radius: 6px;
     margin: 32px auto;
