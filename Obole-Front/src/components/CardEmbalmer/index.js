@@ -1,18 +1,21 @@
 // ==> Import npm
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 // import { useHistory } from 'react-router';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
+import FormEmbalmer from 'src/components/FormEmbalmer';
+import { Switch } from 'antd';
 
 // ==> Styles
+import { EditOutlined } from '@ant-design/icons';
 
 // ==> Ant Design sub components
 
 // ==> CSS in JS
-const Container = styled.div`
+const Card = styled.div`
   p {
     border: 1px solid #1aae9f;
     background: #8dd7cf;
@@ -20,6 +23,7 @@ const Container = styled.div`
     font-size: 2rem;
     font-weight: bold;
     line-height: 1.5715;
+    margin-bottom: 24px;
   }
   dl {
     background-color: #ffffff;
@@ -52,29 +56,40 @@ const Container = styled.div`
 
 // ==> Composant
 const CardEmbalmer = () => {
-  // const dispatch = useDispatch();
+  const [edit, setEdit] = useState(false);
   const embalmerCard = useSelector((state) => state.embalmerCard);
 
+  const onEdit = () => {
+    setEdit(!edit);
+  };
+
   return (
-    <Container>
+    <Card>
       <p>Fiche thanatopracteur</p>
-      <dl>
-        <dt>Prénom :</dt>
-        <dd className="span">{embalmerCard.firstname}</dd>
-        <dt>Nom :</dt>
-        <dd className="span">{embalmerCard.lastname}</dd>
-        <dt>Adresse :</dt>
-        <dd className="span">{embalmerCard.adress}</dd>
-        <dt>Code postal :</dt>
-        <dd>{embalmerCard.zip_code}</dd>
-        <dt>Ville :</dt>
-        <dd>{embalmerCard.city}</dd>
-        <dt>Téléphone :</dt>
-        <dd>{embalmerCard.tel}</dd>
-        <dt>Email :</dt>
-        <dd>{embalmerCard.email}</dd>
-      </dl>
-    </Container>
+      <Switch
+        checkedChildren={<EditOutlined />}
+        unCheckedChildren={<EditOutlined />}
+        onChange={onEdit}
+      />
+      {edit ? <FormEmbalmer init={embalmerCard} /> : (
+        <dl>
+          <dt>Prénom :</dt>
+          <dd className="span">{embalmerCard.firstname}</dd>
+          <dt>Nom :</dt>
+          <dd className="span">{embalmerCard.lastname}</dd>
+          <dt>Adresse :</dt>
+          <dd className="span">{embalmerCard.address}</dd>
+          <dt>Code postal :</dt>
+          <dd>{embalmerCard.zip_code}</dd>
+          <dt>Ville :</dt>
+          <dd>{embalmerCard.city}</dd>
+          <dt>Téléphone :</dt>
+          <dd>{embalmerCard.tel}</dd>
+          <dt>Email :</dt>
+          <dd>{embalmerCard.email}</dd>
+        </dl>
+      )}
+    </Card>
   );
 };
 

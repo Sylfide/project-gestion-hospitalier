@@ -25,7 +25,7 @@ const Container = styled(Form)`
 `;
 
 // ==> Composant
-const FormEmbalmer = () => {
+const FormEmbalmer = ( {init} ) => {
   const dispatch = useDispatch();
   const infoMessage = useSelector((state) => state.infoMessage);
 
@@ -57,6 +57,7 @@ const FormEmbalmer = () => {
       wrapperCol={{ span: 12 }}
       size="large"
       form={form}
+      initialValues={init ? { ...init } : null}
       onFinish={(values) => {
         dispatch(creatEmbalmer(values));
       }}
