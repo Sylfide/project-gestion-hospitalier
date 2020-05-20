@@ -2,10 +2,11 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateDeceased } from 'src/store/actions';
+import { entry, updateDeceased } from 'src/store/actions';
 import styled from 'styled-components';
 import fr from 'antd/es/date-picker/locale/fr_FR';
 import subForm from 'src/utils/subForm';
+import preForm from 'src/utils/preForm';
 
 // ==> Components
 import {
@@ -82,20 +83,29 @@ const FormDeceased = ({ edit }) => {
     }
   }, [infoMessage]);
 
+  // Récupérer le nom d'une chambre par son id
+  const getRoomName = (roomId) => {
+    const roomInfo = rooms.find((room) => room.id === roomId);
+    return roomInfo.name;
+  };
+
+  // Formatage des données pour pré-remplir le formulaire d'édition d'un défunt
+  const init = preForm(deceasedCard);
+  init.room = getRoomName(init.roomId);
+
   return (
     <Container
       labelCol={{ span: 6 }}
       wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      // initialValues={edit ? { ...deceasedCard } : null}
+      initialValues={edit ? { ...init } : null}
       onFinish={edit
         ? (values) => {
-          dispatch(updateDeceased(deceasedCard.id, subForm(values)));
+          dispatch(updateDeceased(init.id, subForm(values)));
         }
         : (values) => {
-          console.log('values : ', values);
-          // dispatch(entry(subForm(values)));
+          dispatch(entry(subForm(values)));
         }}
     >
       <Form.Item
@@ -232,7 +242,6 @@ const FormDeceased = ({ edit }) => {
         name="ritual"
         label="Rite religieux"
         valuePropName="checked"
-        initialValue={false}
       >
         <Checkbox />
       </Form.Item>
@@ -333,12 +342,12 @@ const FormDeceased = ({ edit }) => {
         </Col>
       </Row>
 
-      <Form.Item
+      {/* <Form.Item
         name="undertakers"
         label="Pompes Funèbres"
       >
         <Input />
-      </Form.Item>
+      </Form.Item> */}
 
       <Row justify="center" gutter={32}>
         <Col>

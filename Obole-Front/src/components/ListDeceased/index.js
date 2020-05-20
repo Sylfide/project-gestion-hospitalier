@@ -10,7 +10,6 @@ import { getDeceased } from 'src/store/actions';
 import { Table } from 'antd';
 
 // ==> Styles
-// import { SearchOutlined } from '@ant-design/icons';
 
 // ==> Ant Design sub components
 const { Column } = Table;
@@ -23,7 +22,7 @@ const ListDeceased = () => {
   const history = useHistory();
   const deceasedList = useSelector((state) => state.deceased);
   const rooms = useSelector((state) => state.rooms);
-  // console.log(deceasedList);
+
   // Récupérer le nom d'une chambre par son id
   const getRoomName = (roomId) => {
     const roomInfo = rooms.find((room) => room.id === roomId);
