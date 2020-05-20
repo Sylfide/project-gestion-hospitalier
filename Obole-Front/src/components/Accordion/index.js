@@ -3,7 +3,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDeceased, getDeceasedHistory, getEmbalmers } from 'src/store/actions';
+import { getAllDeceased, getDeceasedHistory, getEmbalmers } from 'src/store/actions';
 import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
