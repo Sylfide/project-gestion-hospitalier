@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {
   CREATE_EMBALMER,
+  UPDATE_EMBALMER,
   getEmbalmers,
   infoMessage,
   GET_EMBALMER,
@@ -25,6 +26,24 @@ export default (store) => (next) => (action) => {
         })
         .catch((error) => {
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
+          console.log(error);
+        });
+      return;
+    }
+
+    case UPDATE_EMBALMER: {
+      axios({
+        method: 'patch',
+        url: `http://localhost:3000/embalmer/${action.id}`,
+        data: action.values,
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          store.dispatch(infoMessage('success', 'Modification enregistrée'));
+          store.dispatch(cardEmbalmer(res.data));
+        })
+        .catch((error) => {
+          store.dispatch(infoMessage('error', 'Erreur lors de l\'enregistrement'));
           console.log(error);
         });
       return;

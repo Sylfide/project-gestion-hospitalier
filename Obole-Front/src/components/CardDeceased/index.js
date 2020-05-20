@@ -65,10 +65,10 @@ const CardDeceased = () => {
       <p>Fiche défunt</p>
       <h4>Informations sur le défunt</h4>
       <dl>
-        <dt>Prénom :</dt>
-        <dd className="span">{deceasedCard.firstname}</dd>
         <dt>Nom :</dt>
         <dd className="span">{deceasedCard.lastname}</dd>
+        <dt>Prénom :</dt>
+        <dd className="span">{deceasedCard.firstname}</dd>
         <dt>Naissance :</dt>
         <dd>{deceasedCard.birth_date}</dd>
         <dt>décès:</dt>

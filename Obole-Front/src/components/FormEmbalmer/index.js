@@ -2,7 +2,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { creatEmbalmer } from 'src/store/actions';
+import { creatEmbalmer, updateEmbalmer } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
@@ -25,8 +25,9 @@ const Container = styled(Form)`
 `;
 
 // ==> Composant
-const FormEmbalmer = ( {init} ) => {
+const FormEmbalmer = ( {edit} ) => {
   const dispatch = useDispatch();
+  const embalmerCard = useSelector((state) => state.embalmerCard);
   const infoMessage = useSelector((state) => state.infoMessage);
 
   const [form] = Form.useForm();
@@ -46,7 +47,7 @@ const FormEmbalmer = ( {init} ) => {
     if (infoMessage.code !== '') {
       showMessage(infoMessage.code, infoMessage.text);
     }
-    if (infoMessage.code === 'success') {
+    if (infoMessage.code === 'success' && !edit) {
       onReset();
     }
   }, [infoMessage]);
@@ -57,10 +58,14 @@ const FormEmbalmer = ( {init} ) => {
       wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      initialValues={init ? { ...init } : null}
-      onFinish={(values) => {
-        dispatch(creatEmbalmer(values));
-      }}
+      initialValues={edit ? { ...embalmerCard } : null}
+      onFinish={edit
+        ? (values) => {
+          dispatch(updateEmbalmer(embalmerCard.id, values));
+        }
+        : (values) => {
+          dispatch(creatEmbalmer(values));
+        }}
     >
 
       <Form.Item

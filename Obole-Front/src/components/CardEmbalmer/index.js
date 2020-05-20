@@ -71,12 +71,12 @@ const CardEmbalmer = () => {
         unCheckedChildren={<EditOutlined />}
         onChange={onEdit}
       />
-      {edit ? <FormEmbalmer init={embalmerCard} /> : (
+      {edit ? <FormEmbalmer edit /> : (
         <dl>
-          <dt>Prénom :</dt>
-          <dd className="span">{embalmerCard.firstname}</dd>
           <dt>Nom :</dt>
           <dd className="span">{embalmerCard.lastname}</dd>
+          <dt>Prénom :</dt>
+          <dd className="span">{embalmerCard.firstname}</dd>
           <dt>Adresse :</dt>
           <dd className="span">{embalmerCard.address}</dd>
           <dt>Code postal :</dt>
