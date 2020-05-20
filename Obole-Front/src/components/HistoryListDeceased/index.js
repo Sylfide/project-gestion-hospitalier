@@ -71,6 +71,12 @@ const HistoryListDeceased = () => {
         key="entryDate"
         render={(text) => moment(text).format('DD/MM/YYYY')}
       />
+      {/* <Column
+        title="Date de sortie"
+        dataIndex="exitDate"
+        key="exitDate"
+        render={(text) => moment(text).format('DD/MM/YYYY')}
+      /> */}
       <Column
         title="Chambre"
         dataIndex="roomName"
