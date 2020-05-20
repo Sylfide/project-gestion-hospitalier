@@ -1,8 +1,10 @@
 /* eslint-disable linebreak-style */
 // ==> Import npm
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { getDeceased } from 'src/store/actions';
 // import Highlighter from 'react-highlight-words';
 
 // ==> Components
@@ -18,6 +20,8 @@ const { Column } = Table;
 
 // ==> Composant
 const ListDeceased = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const deceasedList = useSelector((state) => state.deceased);
   const rooms = useSelector((state) => state.rooms);
   // console.log(deceasedList);
@@ -41,6 +45,11 @@ const ListDeceased = () => {
 
   return (
     <Table
+      onRow={(record) => ({
+        onClick: () => {
+          dispatch(getDeceased(history, record.key));
+        },
+      })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
       showSorterTooltip={false}

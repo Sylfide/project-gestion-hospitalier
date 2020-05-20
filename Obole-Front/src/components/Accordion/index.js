@@ -69,7 +69,7 @@ const Accordion = ({ header }) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          dispatch(getDeceased(res.data));
+          dispatch(getAllDeceased(res.data));
         })
         .catch((error) => {
           // TODO: error
