@@ -6,6 +6,7 @@ import {
   GET_EMBALMERS,
   GET_ROOMS,
   GET_DECEASED,
+  GET_DECEASED_HISTORY,
   INFO_MESSAGE,
 } from './actions';
 
@@ -23,6 +24,7 @@ const initialState = {
   embalmers: [],
   rooms: [],
   deceased: [],
+  deceasedHistory: [],
   infoMessage: {
     code: '',
     text: '',
@@ -90,6 +92,13 @@ export default (state = initialState, action = {}) => {
       return {
         ...state,
         deceased: action.values,
+      };
+    }
+
+    case GET_DECEASED_HISTORY: {
+      return {
+        ...state,
+        deceasedHistory: action.values,
       };
     }
 

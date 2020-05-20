@@ -17,8 +17,8 @@ const { Column } = Table;
 // ==> CSS in JS
 
 // ==> Composant
-const ListDeceased = () => {
-  const deceasedList = useSelector((state) => state.deceased);
+const HistoryListDeceased = () => {
+  const deceasedList = useSelector((state) => state.deceasedHistory);
   const rooms = useSelector((state) => state.rooms);
   // console.log(deceasedList);
   // Récupérer le nom d'une chambre par son id
@@ -71,6 +71,12 @@ const ListDeceased = () => {
         key="entryDate"
         render={(text) => moment(text).format('DD/MM/YYYY')}
       />
+      {/* <Column
+        title="Date de sortie"
+        dataIndex="exitDate"
+        key="exitDate"
+        render={(text) => moment(text).format('DD/MM/YYYY')}
+      /> */}
       <Column
         title="Chambre"
         dataIndex="roomName"
@@ -83,4 +89,4 @@ const ListDeceased = () => {
 };
 
 // == Export
-export default ListDeceased;
+export default HistoryListDeceased;
