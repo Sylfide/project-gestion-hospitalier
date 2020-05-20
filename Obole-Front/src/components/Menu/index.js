@@ -1,7 +1,10 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable import/no-unresolved */
 // == Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 import { logout } from 'src/store/actions';
 import styled from 'styled-components';
 
@@ -44,7 +47,10 @@ const Menu = () => {
 
   return (
     <Container theme="light">
-      <img alt="logo" src={logo} />
+      <Link to="/">
+        <img alt="logo" src={logo} />
+      </Link>
+
       <Nav />
       <Popconfirm
         title="Confirmez-vous la déconnexion ?"

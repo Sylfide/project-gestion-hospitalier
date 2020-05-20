@@ -1,7 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable import/no-unresolved */
 // ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 
 // ==> Components

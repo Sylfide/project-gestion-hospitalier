@@ -1,13 +1,15 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable import/no-unresolved */
 // ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
 
 // ==> Components
 import Menu from 'src/components/Menu';
+import Accueil from 'src/components/Accueil';
 import Accordion from 'src/components/Accordion';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
@@ -35,8 +37,7 @@ const Obole = () => {
     <Container>
       <Menu />
       <Content>
-        {/* <TitleSection />
-        <ContentNav /> */}
+        <Accueil />
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
