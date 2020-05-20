@@ -5,7 +5,6 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { getDeceased } from 'src/store/actions';
-// import Highlighter from 'react-highlight-words';
 
 // ==> Components
 import { Table } from 'antd';

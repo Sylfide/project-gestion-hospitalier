@@ -87,7 +87,7 @@ const CardDeceased = () => {
       <h4>Informations sur le soin</h4>
       <dl>
         <dt>Thanatopracteur :</dt>
-        <dd className="span">{`${deceasedCard.embalmer_firstname} ${deceasedCard.embalmer_lastname}`}</dd>
+        <dd className="span">{deceasedCard.embalmer_firstname ? `${deceasedCard.embalmer_firstname} ${deceasedCard.embalmer_lastname}` : null }</dd>
         <dt>Soin :</dt>
         <dd className="span">{deceasedCard.conservation_date}</dd>
       </dl>
