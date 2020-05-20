@@ -20,6 +20,7 @@ export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
 
 export const ENTRY = 'actions/ENTRY';
 export const GET_DECEASED = 'actions/GET_DECEASED';
+export const GET_DECEASED_HISTORY = 'actions/GET_DECEASED_HISTORY';
 
 export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
 
@@ -45,5 +46,6 @@ export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
 
 export const entry = (values) => ({ type: ENTRY, values });
 export const getDeceased = (values) => ({ type: GET_DECEASED, values });
+export const getDeceasedHistory = (values) => ({ type: GET_DECEASED_HISTORY, values });
 
 export const infoMessage = (code, text) => ({ type: INFO_MESSAGE, code, text });

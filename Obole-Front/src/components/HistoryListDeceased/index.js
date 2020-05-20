@@ -18,7 +18,7 @@ const { Column } = Table;
 
 // ==> Composant
 const HistoryListDeceased = () => {
-  const deceasedList = useSelector((state) => state.deceased);
+  const deceasedList = useSelector((state) => state.deceasedHistory);
   const rooms = useSelector((state) => state.rooms);
   // console.log(deceasedList);
   // Récupérer le nom d'une chambre par son id
