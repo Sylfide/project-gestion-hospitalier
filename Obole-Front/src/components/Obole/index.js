@@ -11,10 +11,7 @@ import Menu from 'src/components/Menu';
 import Accordion from 'src/components/Accordion';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
-<<<<<<< HEAD
 import CardDeceased from 'src/components/CardDeceased';
-=======
->>>>>>> 4334351d17c3510a562c5c6f3b018288daa6e26c
 import CardEmbalmer from 'src/components/CardEmbalmer';
 
 // Ant Design
