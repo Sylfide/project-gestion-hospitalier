@@ -11,6 +11,7 @@ import Menu from 'src/components/Menu';
 import Accordion from 'src/components/Accordion';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
+import CardDeceased from 'src/components/CardDeceased';
 import CardEmbalmer from 'src/components/CardEmbalmer';
 
 // Ant Design
@@ -32,6 +33,7 @@ const Obole = () => {
   // const dispatch = useDispatch();
   const role = useSelector((state) => state.user.role);
   const { lastname } = useSelector((state) => state.embalmerCard);
+  const { firstname } = useSelector((state) => state.deceasedCard);
 
   return (
     <Container>
@@ -49,11 +51,14 @@ const Obole = () => {
         <Route path="/defunts">
           <Accordion header="Défunts" />
         </Route>
+        <Route path="/defunt/:id">
+          {firstname ? <CardDeceased /> : <Redirect to="/defunts" />}
+        </Route>
         <Route path="/thanatos">
           <Accordion header="Thanatopracteurs" />
         </Route>
         <Route path="/thanato/:id">
-          {lastname !== '' ? <CardEmbalmer /> : <Redirect to="/" />}
+          {lastname ? <CardEmbalmer /> : <Redirect to="/thanatos" />}
         </Route>
         <Route path="/compte">
           <Profil />

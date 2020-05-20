@@ -3,7 +3,7 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getDeceased, getEmbalmers } from 'src/store/actions';
+import { getAllDeceased, getEmbalmers } from 'src/store/actions';
 import axios from 'axios';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -68,7 +68,7 @@ const Accordion = ({ header }) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          dispatch(getDeceased(res.data));
+          dispatch(getAllDeceased(res.data));
         })
         .catch((error) => {
           // TODO: error

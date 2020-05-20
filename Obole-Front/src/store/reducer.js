@@ -5,9 +5,10 @@ import {
   GET_USERS,
   GET_EMBALMERS,
   GET_ROOMS,
-  GET_DECEASED,
+  GET_ALL_DECEASED,
   INFO_MESSAGE,
   CARD_EMBALMER,
+  CARD_DECEASED,
 } from './actions';
 
 const initialState = {
@@ -28,15 +29,8 @@ const initialState = {
     code: '',
     text: '',
   },
-  embalmerCard: {
-    firstname: '',
-    lastname: '',
-    address: '',
-    zip_code: '',
-    city: '',
-    tel: '',
-    email: '',
-  },
+  embalmerCard: {},
+  deceasedCard: {},
 };
 
 export default (state = initialState, action = {}) => {
@@ -105,7 +99,16 @@ export default (state = initialState, action = {}) => {
       };
     }
 
-    case GET_DECEASED: {
+    case CARD_DECEASED: {
+      return {
+        ...state,
+        deceasedCard: {
+          ...action.values,
+        },
+      };
+    }
+
+    case GET_ALL_DECEASED: {
       return {
         ...state,
         deceased: action.values,

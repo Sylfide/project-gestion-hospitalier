@@ -21,7 +21,9 @@ export const UPDATE_EMBALMER = 'actions/UPDATE_EMBALMER';
 export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
 
 export const ENTRY = 'actions/ENTRY';
+export const GET_ALL_DECEASED = 'actions/GET_ALL_DECEASED';
 export const GET_DECEASED = 'actions/GET_DECEASED';
+export const CARD_DECEASED = 'actions/CARD_DECEASED';
 
 export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
 
@@ -48,6 +50,8 @@ export const updateEmbalmer = (id, values) => ({ type: UPDATE_EMBALMER, id, valu
 export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
 
 export const entry = (values) => ({ type: ENTRY, values });
-export const getDeceased = (values) => ({ type: GET_DECEASED, values });
+export const getAllDeceased = (values) => ({ type: GET_ALL_DECEASED, values });
+export const getDeceased = (history, id) => ({ type: GET_DECEASED, history, id });
+export const cardDeceased = (values) => ({ type: CARD_DECEASED, values });
 
 export const infoMessage = (code, text) => ({ type: INFO_MESSAGE, code, text });

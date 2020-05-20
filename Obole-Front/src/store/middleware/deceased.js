@@ -3,7 +3,9 @@ import axios from 'axios';
 import {
   ENTRY,
   infoMessage,
-  getDeceased,
+  getAllDeceased,
+  GET_DECEASED,
+  cardDeceased,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -22,11 +24,27 @@ export default (store) => (next) => (action) => {
           const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
           rooms[index].occupation++;
           store.dispatch(infoMessage('success', 'Nouveau défunt enregistré'));
-          store.dispatch(getDeceased(res.data));
+          store.dispatch(getAllDeceased(res.data));
         })
         .catch((error) => {
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
           console.log(error);
+        });
+      return;
+    }
+
+    case GET_DECEASED: {
+      axios({
+        method: 'get',
+        url: `http://localhost:3000/deceased/${action.id}`,
+        headers: { authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          store.dispatch(cardDeceased(res.data));
+          action.history.push(`/defunt/${action.id}`);
+        })
+        .catch((error) => {
+          console.log('error: ', error);
         });
       return;
     }
