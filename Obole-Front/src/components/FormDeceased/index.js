@@ -102,7 +102,7 @@ const FormDeceased = ({ edit }) => {
       initialValues={edit ? { ...init } : null}
       onFinish={edit
         ? (values) => {
-          dispatch(updateDeceased(init.id, subForm(values)));
+          dispatch(updateDeceased(deceasedCard.id, subForm(values)));
         }
         : (values) => {
           dispatch(entry(subForm(values)));

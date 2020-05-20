@@ -36,15 +36,12 @@ export default (store) => (next) => (action) => {
 
     case UPDATE_DECEASED: {
       axios({
-        method: 'post',
+        method: 'patch',
         url: `http://localhost:3000/deceased/${action.id}/update`,
         data: action.values,
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
-          // const { rooms } = store.getState();
-          // const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
-          // rooms[index].occupation--;
           store.dispatch(infoMessage('success', 'Modification enregistrée'));
           store.dispatch(cardDeceased(res.data));
         })
