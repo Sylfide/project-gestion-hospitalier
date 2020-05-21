@@ -1,6 +1,8 @@
 // ==> Import npm
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEmbalmer } from 'src/store/actions';
 
 // ==> Components
 import { Table } from 'antd';
@@ -14,6 +16,8 @@ const { Column } = Table;
 
 // ==> Composant
 const ListEmbalmer = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const embalmers = useSelector((state) => state.embalmers);
   const data = embalmers.map((embalmer) => {
     const rObj = {
@@ -31,6 +35,11 @@ const ListEmbalmer = () => {
 
   return (
     <Table
+      onRow={(record) => ({
+        onClick: () => {
+          dispatch(getEmbalmer(history, record.key));
+        },
+      })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
     >

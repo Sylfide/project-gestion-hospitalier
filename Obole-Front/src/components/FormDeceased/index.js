@@ -2,10 +2,11 @@
 // ==> Import npm
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { entry } from 'src/store/actions';
+import { entry, updateDeceased } from 'src/store/actions';
 import styled from 'styled-components';
 import fr from 'antd/es/date-picker/locale/fr_FR';
 import subForm from 'src/utils/subForm';
+import preForm from 'src/utils/preForm';
 
 // ==> Components
 import {
@@ -16,7 +17,7 @@ import {
   Row,
   Col,
   DatePicker,
-  Radio,
+  Checkbox,
   Divider,
   message,
 } from 'antd';
@@ -43,11 +44,12 @@ const Container = styled(Form)`
 `;
 
 // ==> Composant
-const FormDeceased = () => {
+const FormDeceased = ({ edit }) => {
   const dispatch = useDispatch();
   const embalmers = useSelector((state) => state.embalmers);
   const rooms = useSelector((state) => state.rooms);
   const infoMessage = useSelector((state) => state.infoMessage);
+  const deceasedCard = useSelector((state) => state.deceasedCard);
 
   // Liste des chambres (JSX)
   const roomsList = rooms.map((room) => {
@@ -76,10 +78,19 @@ const FormDeceased = () => {
     if (infoMessage.code !== '') {
       showMessage(infoMessage.code, infoMessage.text);
     }
-    if (infoMessage.code === 'success') {
+    if (infoMessage.code === 'success' && !edit) {
       onReset();
     }
   }, [infoMessage]);
+
+  // Récupérer le nom d'une chambre par son id
+  const getRoomName = (roomId) => {
+    const roomInfo = rooms.find((room) => room.id === roomId);
+    return roomInfo.name;
+  };
+
+  // Formatage des données pour pré-remplir le formulaire d'édition d'un défunt
+  const init = preForm(deceasedCard);
 
   return (
     <Container
@@ -87,9 +98,17 @@ const FormDeceased = () => {
       wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      onFinish={(values) => {
-        dispatch(entry(subForm(values)));
-      }}
+      initialValues={edit ? {
+        ...init,
+        room: getRoomName(init.roomId),
+      } : null}
+      onFinish={edit
+        ? (values) => {
+          dispatch(updateDeceased(deceasedCard.id, subForm(values)));
+        }
+        : (values) => {
+          dispatch(entry(subForm(values)));
+        }}
     >
       <Form.Item
         name="room"
@@ -224,11 +243,9 @@ const FormDeceased = () => {
         wrapperCol={{ span: 4 }}
         name="ritual"
         label="Rite religieux"
+        valuePropName="checked"
       >
-        <Radio.Group>
-          <Radio value="true">Oui</Radio>
-          <Radio value="false">Non</Radio>
-        </Radio.Group>
+        <Checkbox />
       </Form.Item>
 
       <Divider>Informations sur le soin</Divider>
@@ -327,12 +344,12 @@ const FormDeceased = () => {
         </Col>
       </Row>
 
-      <Form.Item
+      {/* <Form.Item
         name="undertakers"
         label="Pompes Funèbres"
       >
         <Input />
-      </Form.Item>
+      </Form.Item> */}
 
       <Row justify="center" gutter={32}>
         <Col>

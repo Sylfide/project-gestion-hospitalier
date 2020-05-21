@@ -11,6 +11,9 @@ import Menu from 'src/components/Menu';
 import Accordion from 'src/components/Accordion';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
+import CardDeceased from 'src/components/CardDeceased';
+import CardEmbalmer from 'src/components/CardEmbalmer';
+import Graph from 'src/components/Graph';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -30,18 +33,18 @@ const Container = styled(Layout)`
 const Obole = () => {
   // const dispatch = useDispatch();
   const role = useSelector((state) => state.user.role);
+  const { lastname } = useSelector((state) => state.embalmerCard);
+  const { firstname } = useSelector((state) => state.deceasedCard);
 
   return (
     <Container>
       <Menu />
       <Content>
-        {/* <TitleSection />
-        <ContentNav /> */}
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
         <Route path="/graph">
-          {role === 'admin' ? <Accordion header="Graphiques" /> : <Redirect to="/" />}
+          <Graph />
         </Route>
         <Route path="/employes">
           {role === 'admin' ? <Accordion header="Employés" /> : <Redirect to="/" />}
@@ -49,8 +52,14 @@ const Obole = () => {
         <Route path="/defunts">
           <Accordion header="Défunts" />
         </Route>
+        <Route path="/defunt/:id">
+          {firstname ? <CardDeceased /> : <Redirect to="/defunts" />}
+        </Route>
         <Route path="/thanatos">
           <Accordion header="Thanatopracteurs" />
+        </Route>
+        <Route path="/thanato/:id">
+          {lastname ? <CardEmbalmer /> : <Redirect to="/thanatos" />}
         </Route>
         <Route path="/compte">
           <Profil />

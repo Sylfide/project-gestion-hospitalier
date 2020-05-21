@@ -1,15 +1,15 @@
 /* eslint-disable linebreak-style */
 // ==> Import npm
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-// import Highlighter from 'react-highlight-words';
+import { getDeceased } from 'src/store/actions';
 
 // ==> Components
 import { Table } from 'antd';
 
 // ==> Styles
-// import { SearchOutlined } from '@ant-design/icons';
 
 // ==> Ant Design sub components
 const { Column } = Table;
@@ -18,9 +18,11 @@ const { Column } = Table;
 
 // ==> Composant
 const ListDeceased = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const deceasedList = useSelector((state) => state.deceased);
   const rooms = useSelector((state) => state.rooms);
-  // console.log(deceasedList);
+
   // Récupérer le nom d'une chambre par son id
   const getRoomName = (roomId) => {
     const roomInfo = rooms.find((room) => room.id === roomId);
@@ -41,6 +43,11 @@ const ListDeceased = () => {
 
   return (
     <Table
+      onRow={(record) => ({
+        onClick: () => {
+          dispatch(getDeceased(history, record.key));
+        },
+      })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
       showSorterTooltip={false}

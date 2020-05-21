@@ -15,12 +15,18 @@ export const DELETE_USER = 'actions/DELETE_USER';
 
 export const CREATE_EMBALMER = 'actions/CREATE_EMBALMER';
 export const GET_EMBALMERS = 'actions/GET_EMBALMERS';
+export const GET_EMBALMER = 'actions/GET_EMBALMER';
+export const CARD_EMBALMER = 'actions/CARD_EMBALMER';
 export const UPDATE_EMBALMER = 'actions/UPDATE_EMBALMER';
 export const DELETE_EMBALMER = 'actions/DELETE_EMBALMER';
 
 export const ENTRY = 'actions/ENTRY';
+export const ADD_DECEASED = 'actions/ADD_DECEASED';
+export const GET_ALL_DECEASED = 'actions/GET_ALL_DECEASED';
 export const GET_DECEASED = 'actions/GET_DECEASED';
 export const GET_DECEASED_HISTORY = 'actions/GET_DECEASED_HISTORY';
+export const CARD_DECEASED = 'actions/CARD_DECEASED';
+export const UPDATE_DECEASED = 'actions/UPDATE_DECEASED';
 
 export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
 
@@ -41,11 +47,17 @@ export const deleteUser = (id) => ({ type: DELETE_USER, id });
 
 export const creatEmbalmer = (values) => ({ type: CREATE_EMBALMER, values });
 export const getEmbalmers = (values) => ({ type: GET_EMBALMERS, values });
+export const getEmbalmer = (history, id) => ({ type: GET_EMBALMER, history, id });
+export const cardEmbalmer = (values) => ({ type: CARD_EMBALMER, values });
 export const updateEmbalmer = (id, values) => ({ type: UPDATE_EMBALMER, id, values });
 export const deleteEmbalmer = (id) => ({ type: DELETE_EMBALMER, id });
 
 export const entry = (values) => ({ type: ENTRY, values });
-export const getDeceased = (values) => ({ type: GET_DECEASED, values });
 export const getDeceasedHistory = (values) => ({ type: GET_DECEASED_HISTORY, values });
+export const addDeceased = (values, rooms) => ({ type: ADD_DECEASED, values, rooms });
+export const getAllDeceased = (values) => ({ type: GET_ALL_DECEASED, values });
+export const getDeceased = (history, id) => ({ type: GET_DECEASED, history, id });
+export const cardDeceased = (values) => ({ type: CARD_DECEASED, values });
+export const updateDeceased = (id, values) => ({ type: UPDATE_DECEASED, id, values });
 
 export const infoMessage = (code, text) => ({ type: INFO_MESSAGE, code, text });

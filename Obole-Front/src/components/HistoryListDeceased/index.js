@@ -1,9 +1,10 @@
 /* eslint-disable linebreak-style */
 // ==> Import npm
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
-// import Highlighter from 'react-highlight-words';
+import { getDeceased } from 'src/store/actions';
 
 // ==> Components
 import { Table } from 'antd';
@@ -18,6 +19,8 @@ const { Column } = Table;
 
 // ==> Composant
 const HistoryListDeceased = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const deceasedList = useSelector((state) => state.deceasedHistory);
   const rooms = useSelector((state) => state.rooms);
   // console.log(deceasedList);
@@ -41,6 +44,11 @@ const HistoryListDeceased = () => {
 
   return (
     <Table
+      onRow={(record) => ({
+        onClick: () => {
+          dispatch(getDeceased(history, record.key));
+        },
+      })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
       showSorterTooltip={false}
