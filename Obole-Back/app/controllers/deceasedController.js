@@ -339,7 +339,7 @@ const deceasedController = {
             
             // 4.1 si currentDeceased.conservation_id === null && conservationInfo contient des données, appeler datamapper pour ajouter le soin en lui passant updatedDeceased.id et conservationInfo
             if (currentDeceased.conservation_id === null && conservationInfoValues.length) {
-                await dataMapper.addConservation(updatedDeceased.id, conservationInfo);
+                await dataMapper.addConservation(currentDeceased.id, conservationInfo);
             } else if (currentDeceased.conservation_id !== null && conservationInfoValues.length) {
                 // 4.2 sinon si currentDeceased.conservation_id !== null && conservationInfo contient des données : 
                     // 4.2.1 faire la méthode datamapper updateConservation

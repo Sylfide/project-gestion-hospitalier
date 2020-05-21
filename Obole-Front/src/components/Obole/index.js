@@ -13,6 +13,7 @@ import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
 import CardDeceased from 'src/components/CardDeceased';
 import CardEmbalmer from 'src/components/CardEmbalmer';
+import Graph from 'src/components/Graph';
 
 // Ant Design
 import { Layout } from 'antd';
@@ -43,7 +44,7 @@ const Obole = () => {
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
         <Route path="/graph">
-          {role === 'admin' ? <Accordion header="Graphiques" /> : <Redirect to="/" />}
+          <Graph />
         </Route>
         <Route path="/employes">
           {role === 'admin' ? <Accordion header="Employés" /> : <Redirect to="/" />}
