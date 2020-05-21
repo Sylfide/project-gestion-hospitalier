@@ -7,6 +7,7 @@ import {
   infoMessage,
   GET_EMBALMER,
   cardEmbalmer,
+  loading,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -14,6 +15,7 @@ export default (store) => (next) => (action) => {
   const token = user ? user.token : null;
   switch (action.type) {
     case CREATE_EMBALMER: {
+      store.dispatch(loading(true));
       axios({
         method: 'post',
         url: 'http://localhost:3000/embalmer/new',
@@ -21,10 +23,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('success', 'Nouveau thanatopracteur enregistré'));
           store.dispatch(getEmbalmers(res.data));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
           console.log(error);
         });
@@ -32,6 +36,7 @@ export default (store) => (next) => (action) => {
     }
 
     case UPDATE_EMBALMER: {
+      store.dispatch(loading(true));
       axios({
         method: 'patch',
         url: `http://localhost:3000/embalmer/${action.id}`,
@@ -39,10 +44,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('success', 'Modification enregistrée'));
           store.dispatch(cardEmbalmer(res.data));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de l\'enregistrement'));
           console.log(error);
         });

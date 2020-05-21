@@ -254,6 +254,7 @@ const FormDeceased = ({ edit }) => {
         label="Thanatopracteur"
       >
         <Select>
+          <Option key={0} value={null}>(aucun)</Option>
           {embalmersList}
         </Select>
       </Form.Item>

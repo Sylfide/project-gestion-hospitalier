@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
 import {
+  LOADING,
   ENTER_OBOLE,
   LOGOUT,
   GET_USERS,
@@ -15,6 +16,7 @@ import {
 
 const initialState = {
   reset: false,
+  loading: false,
   user: {
     id: '',
     role: '',
@@ -38,6 +40,13 @@ const initialState = {
 
 export default (state = initialState, action = {}) => {
   switch (action.type) {
+    case LOADING: {
+      return {
+        ...state,
+        loading: action.bool,
+      };
+    }
+
     case ENTER_OBOLE: {
       return {
         ...state,

@@ -42,6 +42,7 @@ const ListEmbalmer = () => {
       })}
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
+      rowClassName="pointer"
     >
       <Column title="Prénom" dataIndex="firstname" key="firstname" />
       <Column title="Nom" dataIndex="lastname" key="lastname" />

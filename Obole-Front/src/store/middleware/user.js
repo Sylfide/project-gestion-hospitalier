@@ -8,6 +8,7 @@ import {
   DELETE_USER,
   infoMessage,
   LOGOUT,
+  loading,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -15,6 +16,7 @@ export default (store) => (next) => (action) => {
   const token = user ? user.token : null;
   switch (action.type) {
     case CREATE_USER: {
+      store.dispatch(loading(true));
       axios({
         method: 'post',
         url: 'http://localhost:3000/user/new',
@@ -22,10 +24,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('success', 'Nouvel utilisateur enregistré'));
           store.dispatch(getUsers(res.data));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
           console.log(error);
         });
@@ -33,6 +37,7 @@ export default (store) => (next) => (action) => {
     }
 
     case UPDATE_USER: {
+      store.dispatch(loading(true));
       axios({
         method: 'patch',
         url: `http://localhost:3000/user/${action.id}`,
@@ -40,11 +45,13 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           sessionStorage.user = JSON.stringify(res.data);
           store.dispatch(infoMessage('success', 'Modification enregistré'));
           store.dispatch(enterObole(res.data));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de la modification'));
           console.log('error: ', error);
         });
