@@ -91,7 +91,6 @@ const FormDeceased = ({ edit }) => {
 
   // Formatage des données pour pré-remplir le formulaire d'édition d'un défunt
   const init = preForm(deceasedCard);
-  init.room = getRoomName(init.roomId);
 
   return (
     <Container
@@ -99,7 +98,10 @@ const FormDeceased = ({ edit }) => {
       wrapperCol={{ span: 12 }}
       size="large"
       form={form}
-      initialValues={edit ? { ...init } : null}
+      initialValues={edit ? {
+        ...init,
+        room: getRoomName(init.roomId),
+      } : null}
       onFinish={edit
         ? (values) => {
           dispatch(updateDeceased(deceasedCard.id, subForm(values)));

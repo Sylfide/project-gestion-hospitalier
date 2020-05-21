@@ -70,7 +70,7 @@ const CardDeceased = () => {
             <dt>Nom :</dt>
             <dd className="span">{deceasedCard.deceased_ref_lastname}</dd>
             <dt>Adresse :</dt>
-            <dd className="span">{deceasedCard.deceased_ref_adress}</dd>
+            <dd className="span">{deceasedCard.deceased_ref_address}</dd>
             <dt>Code postal :</dt>
             <dd>{deceasedCard.deceased_ref_zip_code}</dd>
             <dt>Ville :</dt>
