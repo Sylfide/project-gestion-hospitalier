@@ -9,7 +9,6 @@ import styled from 'styled-components';
 
 // ==> Components
 import Menu from 'src/components/Menu';
-import Accueil from 'src/components/Accueil';
 import Accordion from 'src/components/Accordion';
 import Profil from 'src/components/Profil';
 import Activity from 'src/components/Activity';
@@ -37,9 +36,6 @@ const Obole = () => {
     <Container>
       <Menu />
       <Content>
-        <Route path="/accueil">
-          <Accueil />
-        </Route>
         <Route path="/chambres">
           {role === 'admin' ? <Accordion header="Chambres" /> : <Redirect to="/" />}
         </Route>
@@ -58,7 +54,6 @@ const Obole = () => {
         <Route path="/compte">
           <Profil />
         </Route>
-        
       </Content>
       <Activity />
     </Container>
