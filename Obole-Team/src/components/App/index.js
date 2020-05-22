@@ -13,7 +13,7 @@ const App = () => {
   return (
     <div className="app">
       <img className="obole" src={OboleLogo} alt="obole logo" />
-      <p className="title">Présentation de la Team Obole</p>
+      {/* <p className="title">Présentation de la Team Obole</p> */}
       <Accueil />
     </div>
   );

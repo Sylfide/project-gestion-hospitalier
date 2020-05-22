@@ -58,13 +58,13 @@ const Accueil = () =>{
         <div className="text">
           <Card>
             <p>Obole est un logiciel de gestion d'une chambre mortuaire.</p>
-            <p>Elles nous à été commander par une cliente qui travaillait dans le dommaine de la médecine légale afin de pouvoir gérer plusieurs apects du métier.</p>
-            <p>En effet ces métiers sont très peu voir pas du tout informatiser et demande pourtant une grosse gestion.</p>
+            <p>Il nous a été commandé par une cliente qui travaillait dans le domaine de la médecine légale afin de pouvoir gérer plusieurs aspects du métier.</p>
+            <p>En effet ces métiers sont très peu, voire pas du tout, informatisé et demandent pourtant une grosse gestion.</p>
             <div className="border"></div>
             <p>Les principales demandes sont :</p>
             <p><em>la gestion de l'entrée et la sortie des défunts,</em></p>
-            <p><em>l'impression d'un état de service (sorte de facture) pour les thanatopracteurs et les familles,</em></p>
-            <p><em>la gestion de la place dans les chambres ainsi que la création de celle-ci.</em></p>
+            <p><em>le suivi de l'occupation des chambres mortuaires,</em></p>
+            <p><em>la consultation de l'activité d'un thanatopracteur (intervenant externe).</em></p>
           </Card>
         </div>
       </div>
@@ -253,8 +253,8 @@ const Accueil = () =>{
       <div className="text">
       <Card>
         <p>Dans la Grèce antique, l’obole était une pièce de monnaie de faible valeur.</p>
-        <p> Avant les funérailles, il était coutume d’en placer une dans la bouche du défunt.</p>
-        <p> Elle permettait de payer le nocher Charon qui assurait la traversée du fleuve Styx entourant les Enfers.</p>
+        <p>Avant les funérailles, il était coutume d’en placer une dans la bouche du défunt.</p>
+        <p>Elle permettait de payer le nocher Charon qui assurait la traversée du fleuve Styx entourant les Enfers.</p>
       </Card>
       </div>
       
