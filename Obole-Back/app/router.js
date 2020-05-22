@@ -14,6 +14,7 @@ const roomController=require('./controllers/roomController');
 const deceasedController=require('./controllers/deceasedController')
 const embalmerController = require('./controllers/embalmerController');
 const conservationController=require('./controllers/conservationController');
+const statController = require('./controllers/statController');
 
 // les routes
 router.get('/', mainController.homePage);
@@ -56,6 +57,12 @@ router.delete('/embalmer/:id/delete', userAuthentified, embalmerController.delet
 router.post('/embalmer_summary/create/:embalmerId',userAuthentified,conservationController.embalmerMonthlySummary);
 router.get('/summary/get/:embalmerId/:month',userAuthentified,conservationController.getMonthlySummary);
 router.get('/deceased_ref_summary/:deceasedId',userAuthentified,conservationController.createDeceasedFamilyRecap);
+
+// route test stats 
+router.get('/stats/monthly/total', adminAuthentified, statController.monthlyOccupation);
+router.get('/stats/monthly/roomDetails', adminAuthentified, statController.monthlyRoomDetailsOccupation);
+router.get('/stats/weekly/total', adminAuthentified, statController.weeklyOccupation);
+router.get('/stats/weekly/roomDetails', adminAuthentified, statController.weeklyRoomDetailsOccupation);
 
 // traitement 404
 router.use( (req, res) => {res.status(404).send('404')});
