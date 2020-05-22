@@ -1,7 +1,8 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable import/no-unresolved */
 // ==> Import npm
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-// import { useHistory } from 'react-router';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { } from 'src/store/actions';
 import styled from 'styled-components';
