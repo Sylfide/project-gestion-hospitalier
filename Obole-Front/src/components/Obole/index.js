@@ -16,9 +16,10 @@ import CardEmbalmer from 'src/components/CardEmbalmer';
 import Graph from 'src/components/Graph';
 
 // Ant Design
-import { Layout } from 'antd';
+import { Layout, Spin } from 'antd';
 
 // ==> Styles
+import { SyncOutlined } from '@ant-design/icons';
 
 // ==> Ant Design sub components
 const { Content } = Layout;
@@ -27,17 +28,31 @@ const { Content } = Layout;
 const Container = styled(Layout)`
   height: 100vh;
   text-align: center;
+  .loader {
+    position: fixed;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    z-index: 999;
+  }
 `;
 
 // ==> Composant
 const Obole = () => {
   // const dispatch = useDispatch();
   const role = useSelector((state) => state.user.role);
+  const loading = useSelector((state) => state.loading);
   const { lastname } = useSelector((state) => state.embalmerCard);
   const { firstname } = useSelector((state) => state.deceasedCard);
 
   return (
     <Container>
+      <Spin
+        spinning={loading}
+        className="loader"
+        size="large"
+        indicator={<SyncOutlined spin />}
+      />
       <Menu />
       <Content>
         <Route path="/chambres">

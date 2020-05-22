@@ -29,6 +29,7 @@ export const CARD_DECEASED = 'actions/CARD_DECEASED';
 export const UPDATE_DECEASED = 'actions/UPDATE_DECEASED';
 
 export const INFO_MESSAGE = 'actions/INFO_MESSAGE';
+export const LOADING = 'actions/LOADING';
 
 // ==> Action creators
 export const login = (values) => ({ type: LOGIN, values });
@@ -61,3 +62,4 @@ export const cardDeceased = (values) => ({ type: CARD_DECEASED, values });
 export const updateDeceased = (id, values) => ({ type: UPDATE_DECEASED, id, values });
 
 export const infoMessage = (code, text) => ({ type: INFO_MESSAGE, code, text });
+export const loading = (bool) => ({ type: LOADING, bool });

@@ -6,6 +6,7 @@ import {
   UPDATE_ROOM,
   DELETE_ROOM,
   infoMessage,
+  loading,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -13,6 +14,7 @@ export default (store) => (next) => (action) => {
   const token = user ? user.token : null;
   switch (action.type) {
     case CREATE_ROOM: {
+      store.dispatch(loading(true));
       axios({
         method: 'post',
         url: 'http://localhost:3000/room/new',
@@ -20,10 +22,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('success', 'Nouvelle chambre enregistrée'));
           store.dispatch(getRooms(res.data));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
           console.log('error: ', error);
         });
@@ -32,7 +36,6 @@ export default (store) => (next) => (action) => {
 
     case UPDATE_ROOM: {
       axios({
-        // TODO: check method
         method: 'patch',
         url: `http://localhost:3000/room/modify/${action.id}`,
         data: action.values,

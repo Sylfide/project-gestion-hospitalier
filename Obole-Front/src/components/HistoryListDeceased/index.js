@@ -49,6 +49,7 @@ const HistoryListDeceased = () => {
           dispatch(getDeceased(history, record.key));
         },
       })}
+      rowClassName="pointer"
       dataSource={data}
       pagination={{ position: ['bottomCenter'], hideOnSinglePage: true }}
       showSorterTooltip={false}

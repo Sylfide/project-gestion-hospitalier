@@ -7,6 +7,7 @@ import {
   GET_DECEASED,
   cardDeceased,
   UPDATE_DECEASED,
+  loading,
 } from 'src/store/actions';
 
 export default (store) => (next) => (action) => {
@@ -14,6 +15,7 @@ export default (store) => (next) => (action) => {
   const token = user ? user.token : null;
   switch (action.type) {
     case ENTRY: {
+      store.dispatch(loading(true));
       axios({
         method: 'post',
         url: 'http://localhost:3000/deceased/entry',
@@ -21,6 +23,7 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           const { rooms } = store.getState();
           const index = rooms.findIndex((room) => room.name === action.values.deceased.room);
           rooms[index].occupation++;
@@ -28,6 +31,7 @@ export default (store) => (next) => (action) => {
           store.dispatch(addDeceased(res.data, rooms));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de la création'));
           console.log(error);
         });
@@ -35,6 +39,7 @@ export default (store) => (next) => (action) => {
     }
 
     case UPDATE_DECEASED: {
+      store.dispatch(loading(true));
       axios({
         method: 'patch',
         url: `http://localhost:3000/deceased/${action.id}/update`,
@@ -42,10 +47,12 @@ export default (store) => (next) => (action) => {
         headers: { authorization: `Bearer ${token}` },
       })
         .then((res) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('success', 'Modification enregistrée'));
           store.dispatch(cardDeceased(res.data));
         })
         .catch((error) => {
+          store.dispatch(loading(false));
           store.dispatch(infoMessage('error', 'Erreur lors de l\'enregistrement'));
           console.log(error);
         });
