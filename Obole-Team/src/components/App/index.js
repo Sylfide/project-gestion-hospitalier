@@ -5,7 +5,7 @@ import React from 'react';
 import Accueil from 'src/components/Accueil';
 
 // == Import
-import OboleLogo from './logo-obole.svg';
+import OboleLogo from './obole_team-logo.svg';
 import './styles.css';
 
 // == Composant
