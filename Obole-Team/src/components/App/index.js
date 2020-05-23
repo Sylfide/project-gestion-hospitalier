@@ -2,7 +2,7 @@
 import React from 'react';
 
 // ==> Components
-import Accueil from 'src/components/Accueil';
+import Presentation from 'src/components/Presentation';
 
 // == Import
 import OboleLogo from './obole_team-logo.svg';
@@ -14,7 +14,7 @@ const App = () => {
     <div className="app">
       <img className="obole" src={OboleLogo} alt="obole logo" />
       {/* <p className="title">Présentation de la Team Obole</p> */}
-      <Accueil />
+      <Presentation />
     </div>
   );
 };
