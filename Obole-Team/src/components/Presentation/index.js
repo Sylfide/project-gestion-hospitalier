@@ -105,7 +105,7 @@ const Presentation = () =>{
               background: '#96c3ec',
             }}
           >
-            <IconContext.Provider value={{ color: "black", size: "2em" }}>
+            <IconContext.Provider value={{ color: "#363333", size: "2em" }}>
               <FaNodeJs />
               <DiPostgresql className="psql" />
               <div className="expressJS">
@@ -127,7 +127,7 @@ const Presentation = () =>{
               background: '#96c3ec'
             }}
           >
-            <IconContext.Provider value={{ color: "black", size: "2em" }}>
+            <IconContext.Provider value={{ color: "#363333", size: "2em" }}>
               <FaReact />
               <img src={redux} className="redux"/>
               <img src={axios} className="axios"/>
@@ -146,7 +146,7 @@ const Presentation = () =>{
               background: '#96c3ec'
             }}
           >
-            <IconContext.Provider value={{ color: "black", size: "2em" }}>
+            <IconContext.Provider value={{ color: "#363333", size: "2em" }}>
               <DiVisualstudio />
               <FaGit  />
               <FaGithub />
