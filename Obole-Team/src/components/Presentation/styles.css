@@ -1,1 +1,33 @@
+.border {
+  border: 1px solid #1aae9f;
+  margin: 2% 35%;
+}
 
+.expressJS {
+  display: flex;
+}
+
+.expressJS p {
+  align-self: center;
+}
+
+.FaJs {
+  align-self: center;
+}
+
+/* .psql {
+  font-size: 1.3em;
+} */
+
+.sqitch {
+  width: 2em;
+  height: 28px;
+}
+
+.redux {
+  width: 2em;
+}
+
+.axios {
+  width: 6em;
+}
