@@ -78,9 +78,9 @@ const Presentation = () =>{
             <p>En effet ces métiers sont très peu, voire pas du tout, informatisé et demandent pourtant une grosse gestion.</p>
             <div className="border"></div>
             <p>Les principales demandes sont :</p>
-            <p><em>la gestion de l'entrée et la sortie des défunts,</em></p>
-            <p><em>le suivi de l'occupation des chambres mortuaires,</em></p>
-            <p><em>la consultation de l'activité d'un thanatopracteur (intervenant externe).</em></p>
+            <p>- <em>la gestion de l'entrée et la sortie des défunts,</em></p>
+            <p>- <em>le suivi de l'occupation des chambres mortuaires,</em></p>
+            <p>- <em>la consultation de l'activité d'un thanatopracteur (intervenant externe).</em></p>
           </Card>
         </div>
       </div>
@@ -333,7 +333,7 @@ const Presentation = () =>{
           fontSize: '1.5em'
         }}
       >
-        Histoire du nom : Obole
+        Mythologie : Obole
       </Divider>
       <div className="text">
       <Card>
