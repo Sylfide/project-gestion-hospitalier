@@ -6,6 +6,10 @@ import styled from 'styled-components';
 
 // ==> Components antd
 import { Card, Avatar, Divider, Tag } from 'antd';
+import { IconContext } from "react-icons";
+import { DiVisualstudio, DiPostgresql } from 'react-icons/di';
+import { FaSlack, FaJs, FaDiscord, FaTrello, FaGit, FaGithub, FaReact, FaNodeJs } from 'react-icons/fa';
+import { AiOutlineAntDesign } from 'react-icons/ai';
 
 // ==> Photos
 import Laura from 'src/assets/img/Laura01.jpg';
@@ -13,21 +17,10 @@ import Sylvie from 'src/assets/img/Sylvie_Morin01.jpg';
 import Reuben from 'src/assets/img/Reuben.jpg';
 import Vincent from 'src/assets/img/Vincent.png';
 
-// ==> Logo
-import Discord from 'src/assets/img/logo/Discord.png';
-import Redux from 'src/assets/img/logo/redux.png';
-import GitHub from 'src/assets/img/logo/github.png';
-import Git from 'src/assets/img/logo/git.png';
-import Sqitch from 'src/assets/img/logo/sqitch.png';
-import AntDesign from 'src/assets/img/logo/ant-design.png';
-import Axios from 'src/assets/img/logo/axios.png';
-import NodeJs from 'src/assets/img/logo/NodeJS.png';
-import PostgreSQL from 'src/assets/img/logo/postgresql.png';
-import LogoReact from 'src/assets/img/logo/react-logo.svg';
-import Slack from 'src/assets/img/logo/slack.png';
-import Trello from 'src/assets/img/logo/trello.png';
-import VisualStudioCode from 'src/assets/img/logo/VSC.png';
-import ExpressJS from 'src/assets/img/logo/JS.png';
+// ==> Logos
+import sqitch from 'src/assets/img/logo/sqitch.png';
+import axios from 'src/assets/img/logo/axios.png';
+import redux from 'src/assets/img/logo/redux.png';
 
 // ==> Styles
 import './styles.css';
@@ -47,34 +40,11 @@ const Container = styled(Divider)`
     border-top-color: #e8833a;
   }
 
-  .ant-card-body {
+  .borderCard .ant-card-body {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
-  }
-
-  .ant-card-body img {
-    max-width: 25%;
-    margin: 5% 0;
-  }
-
-  .nodejs, .axios {
-    max-width: 54% !important;
-  }
-  .expressjs  {
-    max-width: 40% !important;
-  }
-  .react, .trello {
-    max-width: 38% !important;
-  }
-  .vsc, .slack {
-    max-width: 37% !important;
-  }
-  .redux, .antdesign{
-    max-width: 32% !important;
-  }
-  .git, .github {
-    max-width: 20% !important;
+    border-top: 1px solid #2c88d9;
   }
 
   .tag, .stack {
@@ -135,42 +105,55 @@ const Presentation = () =>{
               background: '#96c3ec',
             }}
           >
-            <img src={NodeJs} className="nodejs"/>
-            <img src={ExpressJS} className="expressjs"/>
-            <img src={PostgreSQL} />
-            <img src={Sqitch} />
+            <IconContext.Provider value={{ color: "#363333", size: "2em" }}>
+              <FaNodeJs />
+              <DiPostgresql className="psql" />
+              <div className="expressJS">
+                <p>EXPRESS</p>
+                <FaJs className="FaJs" />
+              </div>
+              <img src={sqitch} className="sqitch"/>
+              
+            </IconContext.Provider>
           </Card>
         </div>
 
         <div>
-        <Card 
-            title="Stack Back-End" 
+        <Card
+          className="borderCard"
+            title="Stack Front-End" 
             style={{ 
               width: 300,
               background: '#96c3ec'
             }}
           >
-            <img src={LogoReact} className="react"/>
-            <img src={Redux} className="redux"/>
-            <img src={Axios} className="axios"/>
-            <img src={AntDesign} className="antdesign"/>
+            <IconContext.Provider value={{ color: "#363333", size: "2em" }}>
+              <FaReact />
+              <img src={redux} className="redux"/>
+              <img src={axios} className="axios"/>
+              <AiOutlineAntDesign />
+              
+            </IconContext.Provider>
           </Card>
         </div>
 
         <div>
-        <Card 
-            title="Stack Back-End" 
+        <Card
+            className="borderCard"
+            title="Stack Projet" 
             style={{ 
               width: 300,
               background: '#96c3ec'
             }}
           >
-            <img src={VisualStudioCode} className="vsc"/>
-            <img src={GitHub} className="github"/>
-            <img src={Git} className="git"/>
-            <img src={Trello} className="trello"/>
-            <img src={Slack} className="slack"/>
-            <img src={Discord} />
+            <IconContext.Provider value={{ color: "#363333", size: "2em" }}>
+              <DiVisualstudio />
+              <FaGit  />
+              <FaGithub />
+              <FaTrello />
+              <FaSlack />
+              <FaDiscord />
+            </IconContext.Provider>
           </Card>
         </div>
       </div>
